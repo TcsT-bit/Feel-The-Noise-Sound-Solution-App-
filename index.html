@@ -104,7 +104,7 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 
 <div id="invoiceModal" class="modal"> <div class="modal-content"> <h3>📄 Edit Quote Details</h3> <input type="text" id="invCustName" placeholder="Customer Name"> <input type="tel" id="invCustPhone" placeholder="Customer Phone"> <input type="email" id="invCustEmail" placeholder="Customer Email"> <input type="text" id="invCustAddress" placeholder="Customer Address"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invTaxToggle"> Add 15% VAT</label> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invPaidToggle"> Mark as PAID</label> <button class="btn" onclick="downloadFinalInvoice()" style="width:100%">Download PDF</button> <button class="btn-gray" onclick="document.getElementById('invoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 
-<div id="customerModal" class="modal"> <div class="modal-content"> <h3>Customer Details</h3> <input type="text" id="custName" placeholder="Your Name"> <input type="tel" id="custPhone" placeholder="Your Phone Number"> <input type="email" id="custEmail" placeholder="Your Email Address"> <div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec<br>Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 WhatsApp Only</b><br>Send proof to WhatsApp after booking</div> <button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button> <button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<div id="customerModal" class="modal"> <div class="modal-content"> <h3>Customer Details</h3> <input type="text" id="custName" placeholder="Your Name"> <input type="tel" id="custPhone" placeholder="Your Phone Number"> <input type="email" id="custEmail" placeholder="Your Email Address"> <div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec<br>Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 mdkoscar50@gmail.com</b><br>Send proof to WhatsApp or Email after booking</div> <button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button> <button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 
 <div id="clientView" style="display:none">
   <div class="client-header">
@@ -116,7 +116,7 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
   <div class="container">
     <div class="client-link"><b>📲 Share this with customers:</b><br><code id="clientLink"></code></div>
     <div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div>
-    <div class="bank-info"><b>📍 Location:</b> Shushumela Ext 2<br><b>🏦 Pay to:</b> Capitec 1621732043 | <b>📱 WhatsApp:</b> 066 279 6762 | <b>📞 Calls:</b> 071 213 4478</div>
+    <div class="bank-info"><b>📍 Location:</b> Shushumela Ext 2<br><b>🏦 Pay to:</b> Capitec 1621732043 | <b>📱 WhatsApp:</b> 066 279 6762 | <b>📞 Calls:</b> 071 213 4478 | <b>📧 Email:</b> mdkoscar50@gmail.com</div>
     <div class="nav-cats">
       <button onclick="filterCat('All', event)" class="active">All</button>
       <button onclick="filterCat('Sound', event)">Sound</button>
@@ -133,7 +133,7 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
   </div>
   <footer class="site-footer">
     <div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div>
-    <div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a></div>
+    <div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div>
     <div class="footer-line">📍 Shushumela Ext 2</div>
     <div class="footer-line">🏦 Capitec: 1621732043</div>
     <div class="footer-copy">© 2026 Feel The Noise Sound Solution. Reg: Twinz Cooperate Services Pty Ltd 2024/4444303/07</div>
@@ -197,7 +197,7 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
             <button class="btn-blue" onclick="previewClient()">Preview</button>
           </div>
         </div>
-        <div class="bank-info"><b>🏦 Business Account:</b> Capitec 1621732043<br><b>📱 WhatsApp:</b> 066 279 6762<br><b>📞 Calls:</b> 071 213 4478<br><b>📍 Address:</b> Shushumela Ext 2</div>
+        <div class="bank-info"><b>🏦 Business Account:</b> Capitec 1621732043<br><b>📱 WhatsApp:</b> 066 279 6762<br><b>📞 Calls:</b> 071 213 4478<br><b>📧 Email:</b> mdkoscar50@gmail.com<br><b>📍 Address:</b> Shushumela Ext 2</div>
         <button class="btn-blue" onclick="document.getElementById('quickInvoiceModal').style.display='flex'" style="margin-bottom:15px">🧾 Quick Quote</button>
       </div>
       <div id="tab-products" style="display:none">
@@ -234,7 +234,7 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
   </div>
   <footer class="site-footer">
     <div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div>
-    <div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a></div>
+    <div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div>
     <div class="footer-line">📍 Shushumela Ext 2</div>
     <div class="footer-line">🏦 Capitec: 1621732043</div>
     <div class="footer-copy">© 2026 Feel The Noise Sound Solution. Reg: Twinz Cooperate Services Pty Ltd 2024/4444303/07</div>
@@ -437,7 +437,7 @@ document.addEventListener('DOMContentLoaded', () => {
     doc.addImage(COMPANY_LOGO, 'JPEG', 10, 10, 25, 25);
     doc.setFontSize(16); doc.setFont(undefined, 'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION", 40, 18);
     doc.setFontSize(9); doc.setFont(undefined, 'normal');
-    doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043", 40, 24);
+    doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com", 40, 24);
     doc.line(10, 40, 200, 40);
 
     if(isPaid){
@@ -469,7 +469,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     doc.setFontSize(8); doc.setFont(undefined, 'normal');
-    doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762", 105, 270, {align: "center"});
+    doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762 | Email: mdkoscar50@gmail.com", 105, 270, {align: "center"});
     doc.text("Thank you for choosing FEEL THE NOISE SOUND SOLUTION", 105, 280, {align: "center"});
     doc.save(`FEELTHE${isPaid? 'Invoice' : 'Quote'}-${currentInvoiceId.slice(-6)}.pdf`);
     document.getElementById('invoiceModal').style.display='none';
@@ -513,7 +513,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const doc = new jsPDF();
     doc.addImage(COMPANY_LOGO, 'JPEG', 10, 10, 25, 25);
     doc.setFontSize(16); doc.setFont(undefined, 'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION", 40, 18);
-    doc.setFontSize(9); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043", 40, 24); doc.line(10, 40, 200, 40);
+    doc.setFontSize(9); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com", 40, 24); doc.line(10, 40, 200, 40);
 
     if(isPaid){
       doc.setTextColor(0, 184, 148);
@@ -541,7 +541,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     doc.setFontSize(8); doc.setFont(undefined, 'normal');
-    doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762", 105, 270, {align: "center"});
+    doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762 | Email: mdkoscar50@gmail.com", 105, 270, {align: "center"});
     doc.text("Thank you for choosing FEEL THE NOISE SOUND SOLUTION", 105, 280, {align: "center"});
     doc.save(`FEELTHE${isPaid? 'Invoice' : 'Quote'}-${invId}.pdf`);
 
@@ -599,7 +599,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const orderId = Date.now().toString();
     const order = { user: isClientMode? name : currentUser.email, customerName: name, customerPhone: phone, customerEmail: email, items: cart, total: cart.reduce((a,b)=>a+b.qty*b.price,0), date: new Date().toISOString(), status: 'Pending' };
     set(ref(db, 'feelthenoisesoundsolution/requests/' + orderId), order);
-    let msg = `📦 NEW QUOTE REQUEST - FEEL THE NOISE SOUND SOLUTION\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n` + cart.map(i=>`${i.name} x${i.qty} - R${i.price}`).join('\n') + `\nTotal: R${order.total}\n\n🏦 Pay to: ${BANK_ACCOUNT}\n📱 Send proof to WhatsApp: 066 279 6762`;
+    let msg = `📦 NEW QUOTE REQUEST - FEEL THE NOISE SOUND SOLUTION\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n` + cart.map(i=>`${i.name} x${i.qty} - R${i.price}`).join('\n') + `\nTotal: R${order.total}\n\n🏦 Pay to: ${BANK_ACCOUNT}\n📱 WhatsApp: 066 279 6762\n📧 Email: mdkoscar50@gmail.com`;
     window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`);
     cart = []; updateCart(); renderProducts(); renderClientProducts();
     document.getElementById('customerModal').style.display='none'; document.getElementById('custName').value=''; document.getElementById('custPhone').value=''; document.getElementById('custEmail').value='';
@@ -611,7 +611,8 @@ document.addEventListener('DOMContentLoaded', () => {
     doc.text(`Total Services: ${Object.keys(products).length}`, 10, 20);
     doc.text(`Total Stock: ${Object.values(products).reduce((a,b)=>a+(b.stock||0),0)}`, 10, 30);
     doc.text(`Pending Requests: ${Object.values(orders).filter(o=>o.status=='Pending').length}`, 10, 40);
-    doc.text(`Generated: ${new Date().toLocaleString()}`, 10, 50); doc.save("FEELTHE-Report.pdf");
+    doc.text(`Contact: mdkoscar50@gmail.com`, 10, 50);
+    doc.text(`Generated: ${new Date().toLocaleString()}`, 10, 60); doc.save("FEELTHE-Report.pdf");
   }
 
   window.downloadCSV = () => {
@@ -631,7 +632,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if(document.getElementById('clientLink')) document.getElementById('clientLink').innerText = link;
   }
   window.copyClientLink = () => { let link = document.getElementById('clientShareLink'); link.select(); document.execCommand('copy'); alert('Quote link copied! 📋'); }
-  window.shareClientWhatsApp = () => { let link = document.getElementById('clientShareLink').value; let msg = `📦 REQUEST QUOTE FROM FEEL THE NOISE SOUND SOLUTION\nBook services here:\n${link}\n\nBank: ${BANK_ACCOUNT}\nWhatsApp: 066 279 6762`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
+  window.shareClientWhatsApp = () => { let link = document.getElementById('clientShareLink').value; let msg = `📦 REQUEST QUOTE FROM FEEL THE NOISE SOUND SOLUTION\nBook services here:\n${link}\n\nBank: ${BANK_ACCOUNT}\nWhatsApp: 066 279 6762\nEmail: mdkoscar50@gmail.com`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
   window.previewClient = () => { window.open(window.location.origin + window.location.pathname + '?client=1', '_blank'); }
   window.toggleDark = () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
   if(localStorage.getItem('darkMode')==='true') document.body.classList.add('dark-mode');
