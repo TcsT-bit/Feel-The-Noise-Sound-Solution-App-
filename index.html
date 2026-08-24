@@ -80,20 +80,16 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 .dark-mode{--bg:#1a1a1a;--card:#2d3436;--text:#fff;--border:#444}
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:999}
 .modal-content{background:var(--card);padding:20px;border-radius:15px;width:90%;max-width:400px;border:1px solid var(--border)}
-/* ADDED - missing parts */
 .progress-bar{height:22px;background:#222;border-radius:11px;overflow:hidden;margin:10px 0;border:1px solid var(--border)}.progress-fill{height:100%;background:linear-gradient(90deg,#00b894,#00cec9);transition:width 0.6s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
-.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center}
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center;position:relative}
 .note-card{background:#111;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid var(--accent);position:relative;animation:slideDown 0.3s}.note-pinned{border-left:4px solid var(--green);background:rgba(0,184,148,0.15);box-shadow:0 0 10px rgba(0,184,148,0.2)}
 #customCtx{position:fixed;background:#222;border:1px solid #444;border-radius:10px;z-index:9999;display:none;min-width:230px;box-shadow:0 4px 15px rgba(0,0,0,0.5);overflow:hidden}
 #customCtx button{display:block;width:100%;text-align:left;background:none;border:none;color:#fff;padding:13px 15px;font-size:13px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06)}
 #customCtx button:hover{background:var(--accent)}
-@media(max-width:600px){
-.grid{grid-template-columns:1fr!important}
-.stats{grid-template-columns:repeat(2,1fr)}
-.tabs{font-size:12px}
-.tab{padding:8px 10px}
-.card-imgs img{width:38px;height:38px}
-}
+.link-box{background:#111;padding:12px;border-radius:10px;border-left:4px solid #00b894;word-break:break-all;margin:10px 0;font-size:11px;color:#00ffab}
+.catbox-view{margin:0;padding:0;background:#000;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.catbox-bar{position:fixed;top:0;left:0;right:0;background:rgba(0,0,0,0.85);padding:10px;display:flex;gap:6px;z-index:99}
+@media(max-width:600px){.grid{grid-template-columns:1fr!important}.stats{grid-template-columns:repeat(2,1fr)}.tabs{font-size:12px}.tab{padding:8px 10px}.card-imgs img{width:38px;height:38px}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
@@ -108,6 +104,8 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
   <button onclick="ctxAction('share')">Share image</button>
 </div>
 
+<div id="docboxFullViewer" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:#000;z-index:99999;overflow:auto"></div>
+
 <div id="installBanner" class="install-banner">
   📲 <b>Install FEEL THE NOISE App</b> - Request quotes faster
   <button class="btn" style="padding:5px 10px;margin-left:10px;background:#fff;color:var(--accent)" id="installBtn">Install</button>
@@ -117,9 +115,8 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 <div id="quickInvoiceModal" class="modal"> <div class="modal-content"> <h3>🧾 Quick Quote</h3> <input type="text" id="quickInvName" placeholder="Customer Name"> <input type="tel" id="quickInvPhone" placeholder="Customer Phone"> <input type="email" id="quickInvEmail" placeholder="Customer Email"> <input type="text" id="quickInvItem" placeholder="Service Name"> <input type="number" id="quickInvQty" placeholder="Qty" value="1"> <input type="number" id="quickInvPrice" placeholder="Price R"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvTax"> Add 15% VAT</label> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvPaid"> Mark as PAID</label> <button class="btn" onclick="downloadQuickInvoice()" style="width:100%">Download PDF</button> <button class="btn-gray" onclick="document.getElementById('quickInvoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 <div id="invoiceModal" class="modal"> <div class="modal-content"> <h3>📄 Edit Quote Details</h3> <input type="text" id="invCustName" placeholder="Customer Name"> <input type="tel" id="invCustPhone" placeholder="Customer Phone"> <input type="email" id="invCustEmail" placeholder="Customer Email"> <input type="text" id="invCustAddress" placeholder="Customer Address"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invTaxToggle"> Add 15% VAT</label> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invPaidToggle"> Mark as PAID</label> <button class="btn" onclick="downloadFinalInvoice()" style="width:100%">Download PDF</button> <button class="btn-gray" onclick="document.getElementById('invoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 <div id="customerModal" class="modal"> <div class="modal-content"> <h3>Customer Details</h3> <input type="text" id="custName" placeholder="Your Name"> <input type="tel" id="custPhone" placeholder="Your Phone Number"> <input type="email" id="custEmail" placeholder="Your Email Address"> <div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec<br>Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 mdkoscar50@gmail.com</b><br>Send proof to WhatsApp or Email after booking</div> <button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button> <button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
-<!-- ADDED MODALS -->
 <div id="noteModal" class="modal"> <div class="modal-content"> <h3 id="noteModalTitle">📝 Add Admin Note</h3> <input type="text" id="noteTitle" placeholder="Title"> <select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up Call</option></select> <textarea id="noteContent" placeholder="Details..."></textarea> <input type="date" id="noteDate"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="notePinned"> 📌 Pin this note</label> <button class="btn" onclick="saveNote()" style="width:100%">Save Note</button> <button class="btn-gray" onclick="document.getElementById('noteModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
-<div id="vaultEditModal" class="modal"> <div class="modal-content"> <h3>✏️ Edit Document</h3> <input type="text" id="vaultEditName" placeholder="Document Name"> <select id="vaultEditType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select> <input type="text" id="vaultEditUrl" placeholder="Catbox URL - https://files.catbox.moe/..."> <button class="btn" onclick="saveVaultEdit()" style="width:100%">Save Changes</button> <button class="btn-gray" onclick="document.getElementById('vaultEditModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<div id="vaultEditModal" class="modal"> <div class="modal-content"> <h3>✏️ Edit Document</h3> <input type="text" id="vaultEditName" placeholder="Document Name"> <select id="vaultEditType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select> <input type="text" id="vaultEditUrl" placeholder="Link or base64"> <button class="btn" onclick="saveVaultEdit()" style="width:100%">Save Changes</button> <button class="btn-gray" onclick="document.getElementById('vaultEditModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 
 <div id="clientView" style="display:none">
   <div class="client-header">
@@ -190,7 +187,6 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
       <div class="tabs">
         <div class="tab active" onclick="showTab('dashboard', this)">Dashboard</div>
         <div class="tab" onclick="showTab('products', this)">Services</div>
-        <!-- ADDED TABS -->
         <div class="tab" onclick="showTab('income', this)">💰 Income</div>
         <div class="tab" onclick="showTab('tax', this)">🧾 Tax</div>
         <div class="tab" onclick="showTab('funding', this)">🏦 Funding</div>
@@ -228,7 +224,6 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
         <button class="btn-blue" onclick="document.getElementById('quickInvoiceModal').style.display='flex'" style="margin-bottom:15px">🧾 Quick Quote</button>
       </div>
 
-      <!-- ADDED MISSING TAB CONTENTS -->
       <div id="tab-income" style="display:none">
         <h3>💰 Daily Income Tracker</h3>
         <div class="stats">
@@ -261,17 +256,51 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
         <button class="btn" onclick="downloadFundingReport()">📄 Download Funding Report PDF</button>
       </div>
 
+      <!-- ===== VAULT ENHANCED TO DOCBOX - NO CATBOX UPLOAD ===== -->
       <div id="tab-vault" style="display:none">
-        <h3>📁 Document Vault - Catbox.moe Upload (PDF & Images) + PDF Download</h3>
-        <p style="font-size:12px;color:var(--muted)">Upload to catbox.moe - permanent catmoe link - supports PDF, JPG, PNG. Long-press image to get PDF option like your screenshot.</p>
+        <h3>📁 Document Vault - DOCBOX Realtime (Enhanced)</h3>
+        <p style="font-size:11px;color:var(--muted)">Now uses DOCBOX Realtime DB (base64) - No catbox.moe upload needed. Max 7MB per file. Links open like catbox.moe full-screen. Real image thumbnails.</p>
+
         <select id="vaultType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select>
-        <label style="font-size:12px;margin-top:10px;display:block">📤 Method 1: Upload File directly to Catbox (auto link):</label>
-        <input type="file" id="vaultFile" accept="image/*,.pdf">
-        <button class="btn" id="vaultUploadBtn" onclick="uploadVaultCatbox()">⬆️ Upload to Catbox.moe & Save to Vault</button>
-        <div id="vaultUploadStatus" style="font-size:12px;margin:8px 0;color:var(--green)"></div>
-        <label style="font-size:12px;margin-top:15px;display:block">🔗 Method 2: Paste existing Catbox / Catmoe link:</label>
-        <input type="text" id="vaultLinkInput" placeholder="https://files.catbox.moe/xxxxxx.pdf or.jpg">
+
+        <label style="font-size:12px;margin-top:10px;display:block">📤 Upload to DOCBOX Vault (Image & PDF - Like catbox):</label>
+        <div style="border:2px dashed #ff0064;border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:rgba(255,0,100,0.05)" onclick="document.getElementById('vaultFile').click()">
+          <h4 style="margin:0">📤 Click or Drop Image/PDF Here</h4>
+          <p style="font-size:10px;color:#aaa">JPG, PNG, WEBP, GIF, PDF, DOC - Max 7MB - Generates?docbox= link</p>
+          <input type="file" id="vaultFile" accept="image/*,.pdf,.doc,.docx,.xls,.xlsx" style="display:none">
+        </div>
+
+        <div id="vaultFileInfo" style="display:none;margin-top:10px">
+          <p id="vaultFName" style="font-weight:700"></p>
+          <p id="vaultFSize" style="font-size:11px;color:#aaa"></p>
+          <img id="vaultImgPrev" style="display:none;max-width:100%;max-height:180px;border-radius:8px;margin:8px 0;border:1px solid #333">
+          <button class="btn" id="vaultUploadBtn" onclick="uploadVaultCatbox()">⬆️ Upload to DOCBOX & Save to Vault</button>
+          <div id="vaultUploadStatus" style="font-size:12px;margin:8px 0;color:var(--green)"></div>
+        </div>
+
+        <div id="vaultResult" style="display:none;background:#111;padding:12px;border-radius:10px;border-left:4px solid #00b894;margin:12px 0">
+          <b style="color:#00b894">✅ DOCBOX Link Ready - Send like catbox.moe:</b>
+          <div class="link-box" id="vaultShareLink"></div>
+          <button class="btn-green" onclick="copyVaultDocboxLink()">📋 Copy Link (Opens like catbox)</button>
+          <a id="vaultOpenLink" target="_blank" class="btn btn-blue" style="display:block;text-align:center;text-decoration:none;margin-top:6px">👁️ Open Like Catbox - Full Screen</a>
+          <div id="vaultRPreview" style="margin-top:10px"></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:8px">
+            <button class="btn btn-dark" onclick="downloadVaultCurrent()">⬇️ Download</button>
+            <button class="btn btn-purple" onclick="downloadVaultCurrentAsPDF()">📄 As PDF</button>
+          </div>
+          <button class="btn-red" onclick="deleteVaultCurrent()" style="margin-top:6px">🗑️ Delete - Free Space</button>
+        </div>
+
+        <label style="font-size:12px;margin-top:15px;display:block">🔗 Or Paste Existing Link (old catbox links still work):</label>
+        <input type="text" id="vaultLinkInput" placeholder="https://files.catbox.moe/xxxxxx.pdf or?docbox= link">
         <button class="btn-blue" onclick="saveVaultLink()">💾 Save Link to Vault</button>
+
+        <div style="background:#111;padding:10px;border-radius:10px;margin:12px 0">
+          <b>💾 Vault Space:</b> <span id="vaultUsageText">Calculating...</span>
+          <div style="background:#222;border-radius:10px;height:12px;overflow:hidden;margin:8px 0"><div id="vaultUsageFill" style="height:100%;background:linear-gradient(90deg,#00b894,#00cec9);width:0%"></div></div>
+          <button class="btn btn-dark" onclick="clearAllVault()" style="font-size:10px">🗑️ Delete All Vault (DOCBOX Only) - Feel The Noise Data Safe</button>
+        </div>
+
         <div class="vault-grid" id="vaultGrid" style="margin-top:15px"></div>
       </div>
 
@@ -344,6 +373,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setClientLink();
   const urlParams = new URLSearchParams(window.location.search);
   const isClientMode = urlParams.has('client');
+  const docboxParam = urlParams.get('docbox') || urlParams.get('id');
   const app = initializeApp(firebaseConfig);
   const analytics = getAnalytics(app);
   const db = getDatabase(app);
@@ -351,10 +381,51 @@ document.addEventListener('DOMContentLoaded', () => {
   const productsRef = ref(db, 'feelthenoisesoundsolution/categories');
   const ordersRef = ref(db, 'feelthenoisesoundsolution/requests');
   const vaultRef = ref(db, 'feelthenoisesoundsolution/vault');
+  const docboxRef = ref(db, 'docbox');
   const notesRef = ref(db, 'feelthenoisesoundsolution/notes');
   let products = {}; let orders = {}; let vault = {}; let notes = {}; let cart = [];
   let currentUser = {role:'reception'}; let currentFilter = 'All'; let editingId = null; let editingNoteId = null; let editingVaultId = null; let deferredPrompt; let currentInvoiceId = null;
   let ctxUrl='', ctxName='';
+  let vaultFile=null, vaultCurrentId='', vaultCurrentData=null, vaultShareUrl='', vaultBlobUrl='';
+
+  function base64ToBlob(base64, mime){
+    try{
+      let byteString=atob((base64.split(',')[1]||base64));
+      let ab=new ArrayBuffer(byteString.length);
+      let ia=new Uint8Array(ab);
+      for(let i=0;i<byteString.length;i++) ia[i]=byteString.charCodeAt(i);
+      return new Blob([ab],{type:mime});
+    }catch(e){ return null; }
+  }
+
+  // Handle?docbox=XXXX link - opens like catbox.moe full screen
+  if(docboxParam){
+    get(ref(db, 'docbox/'+docboxParam)).then(async snap=>{
+      let v=snap.val();
+      if(!v){
+        let snap2=await get(ref(db, 'feelthenoisesoundsolution/vault/'+docboxParam));
+        v=snap2.val();
+      }
+      if(!v) return;
+      let viewer=document.getElementById('docboxFullViewer');
+      viewer.style.display='block';
+      let blobUrl='';
+      if(v.base64){
+        let blob=base64ToBlob(v.base64, v.fileType);
+        if(blob) blobUrl=URL.createObjectURL(blob);
+        else blobUrl=v.base64;
+      } else {
+        blobUrl=v.url;
+      }
+      let name=v.name||v.originalName||'file';
+      if(v.fileType?.startsWith('image/') || name.match(/\.(jpg|jpeg|png|webp|gif)$/i)){
+        viewer.innerHTML=`<div class="catbox-bar"><button onclick="document.getElementById('docboxFullViewer').style.display='none'; location.href=location.pathname" style="background:#ff0064;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:800">⬆️ FEEL THE NOISE</button><button onclick="window.open('${blobUrl}','_blank')" style="background:#00b894;color:#fff;border:none;padding:6px 12px;border-radius:6px">⬇️ Download</button><span style="color:#aaa;font-size:11px;margin-left:auto;display:flex;align-items:center">${name}</span></div><div style="background:#000;min-height:100vh;display:flex;align-items:center;justify-content:center;padding-top:50px"><img src="${blobUrl}" style="max-width:100vw;max-height:95vh;object-fit:contain"></div>`;
+      } else {
+        viewer.innerHTML=`<div class="catbox-bar"><button onclick="document.getElementById('docboxFullViewer').style.display='none'; location.href=location.pathname" style="background:#ff0064;color:#fff;border:none;padding:6px 12px;border-radius:6px;font-weight:800">⬆️ BACK</button><button onclick="window.open('${blobUrl}','_blank')" style="background:#00b894;color:#fff;border:none;padding:6px 12px;border-radius:6px">⬇️ Download</button></div><iframe src="${blobUrl}" style="width:100vw;height:100vh;border:none;background:#fff"></iframe>`;
+      }
+    });
+  }
+
   window.addEventListener('beforeinstallprompt', (e) => {e.preventDefault();deferredPrompt = e;document.getElementById('installBanner').style.display = 'block';});
   document.getElementById('installBtn').onclick = () => {if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(() => {deferredPrompt = null;document.getElementById('installBanner').style.display = 'none';});}};
   if(isClientMode){document.getElementById('loginScreen').style.display = 'none';document.getElementById('app').style.display = 'none';document.getElementById('clientView').style.display = 'block';document.getElementById('clientLink').innerText = window.location.origin + window.location.pathname + '?client=1';}
@@ -383,6 +454,7 @@ document.addEventListener('DOMContentLoaded', () => {
   onValue(ordersRef, snap => { orders = snap.val() || {}; buildOrders(); updateDashboard(); loadIncome(); loadTax(); loadFunding(); })
   onValue(vaultRef, snap => { vault = snap.val() || {}; loadVault(); loadFunding(); })
   onValue(notesRef, snap => { notes = snap.val() || {}; loadNotes(); })
+  onValue(docboxRef, snap => { /* for space calc only */ })
 
   function updateDashboard(){
     document.getElementById('statProducts').innerText = Object.keys(products).length;
@@ -483,47 +555,183 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // CATBOX.MOE VAULT + PDF DOWNLOAD OPTIONS
+  // ===== VAULT - ENHANCED TO DOCBOX ONLY - NO CATBOX.MOE UPLOAD =====
+  const vaultFileInput = document.getElementById('vaultFile');
+  if(vaultFileInput){
+    vaultFileInput.onchange = e=>{
+      if(e.target.files[0]){
+        vaultFile=e.target.files[0];
+        if(vaultFile.size>7*1024*1024) return alert('Vault DOCBOX limit 7MB (Realtime). File is '+(vaultFile.size/1024/1024).toFixed(2)+'MB. Compress image.');
+        document.getElementById('vaultFName').innerText='📄 '+vaultFile.name;
+        document.getElementById('vaultFSize').innerText=`${vaultFile.type||'file'} • ${(vaultFile.size/1024/1024).toFixed(2)} MB`;
+        document.getElementById('vaultFileInfo').style.display='block';
+        document.getElementById('vaultResult').style.display='none';
+        if(vaultFile.type.startsWith('image/')){
+          let url=URL.createObjectURL(vaultFile);
+          let img=document.getElementById('vaultImgPrev'); img.src=url; img.style.display='block';
+        } else {
+          document.getElementById('vaultImgPrev').style.display='none';
+        }
+      }
+    };
+  }
+
   window.uploadVaultCatbox = async () => {
-    let file=document.getElementById('vaultFile').files[0]; let type=document.getElementById('vaultType').value; let statusEl=document.getElementById('vaultUploadStatus'); let btn=document.getElementById('vaultUploadBtn');
-    if(!file) return alert('Pick a file - PDF or Image to upload to Catbox.moe'); if(file.size > 200*1024*1024) return alert('File too big - Catbox limit 200MB');
-    statusEl.innerText='⏳ Uploading to catbox.moe... please wait'; btn.disabled=true; btn.innerText='Uploading...';
-    try { let form=new FormData(); form.append('reqtype','fileupload'); form.append('fileToUpload',file); let res=await fetch('https://catbox.moe/user/api.php',{method:'POST',body:form}); let url=(await res.text()).trim(); if(!url.startsWith('http')) throw new Error('Upload failed: '+url); let id=Date.now().toString(); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url, name:file.name, fileType:file.type, size:file.size, date:new Date().toISOString(), source:'catbox'}); statusEl.innerText='✅ Uploaded! Link: '+url; document.getElementById('vaultFile').value=''; alert('✅ Uploaded to Catbox.moe! Saved to Vault:\n'+url); } catch(e){ statusEl.innerText='❌ Failed: '+e.message; alert('Upload failed: '+e.message); } btn.disabled=false; btn.innerText='⬆️ Upload to Catbox.moe & Save to Vault';
+    if(!vaultFile) return alert('Pick file first');
+    let btn=document.getElementById('vaultUploadBtn');
+    let statusEl=document.getElementById('vaultUploadStatus');
+    btn.disabled=true; btn.innerText='⏳ Converting to base64...';
+    statusEl.innerText='⏳ Converting image to base64 (DOCBOX Realtime, no catbox.moe)...';
+
+    let reader=new FileReader();
+    reader.onload=async e=>{
+      try{
+        let base64=e.target.result;
+        let shortId=Math.random().toString(36).substring(2,6).toUpperCase();
+        let id=Date.now().toString();
+        let docType=document.getElementById('vaultType').value;
+
+        let data={
+          base64: base64,
+          originalName: vaultFile.name,
+          name: vaultFile.name,
+          fileType: vaultFile.type||'application/octet-stream',
+          url: base64,
+          type: docType,
+          size: vaultFile.size,
+          date: new Date().toISOString(),
+          shortId: shortId,
+          storage: 'DOCBOX-Realtime'
+        };
+
+        statusEl.innerText='⏳ Saving to Vault (Realtime DB)...';
+        await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), data);
+        await set(ref(db, 'docbox/'+shortId), data);
+
+        vaultCurrentId=id; vaultCurrentData=data;
+        vaultBlobUrl=URL.createObjectURL(vaultFile);
+        vaultShareUrl=location.origin+location.pathname+'?docbox='+shortId;
+
+        document.getElementById('vaultShareLink').innerText=vaultShareUrl;
+        document.getElementById('vaultOpenLink').href=vaultShareUrl;
+        document.getElementById('vaultResult').style.display='block';
+        document.getElementById('vaultRPreview').innerHTML=data.fileType.startsWith('image/')?`<img src="${vaultBlobUrl}" style="max-width:100%;border-radius:10px">`:`<div style="padding:20px;text-align:center">📄 ${data.name}</div>`;
+        statusEl.innerText='✅ Saved to Vault as DOCBOX! Link opens like catbox.moe';
+        btn.disabled=false; btn.innerText='⬆️ Upload to DOCBOX & Save to Vault';
+      }catch(err){
+        statusEl.innerText='❌ Failed: '+err.message;
+        btn.disabled=false; btn.innerText='⬆️ Upload to DOCBOX & Save to Vault';
+        alert('Failed: '+err.message);
+      }
+    };
+    reader.readAsDataURL(vaultFile);
+  };
+
+  window.copyVaultDocboxLink=()=>{ navigator.clipboard.writeText(vaultShareUrl).then(()=>alert('📋 DOCBOX link copied (opens like catbox.moe):\n'+vaultShareUrl)); };
+  window.copyVaultLink = (url) => { navigator.clipboard.writeText(url).then(()=>alert('📋 Link copied:\n'+url)); }
+  window.downloadVaultFile = async (url, name) => {
+    try {
+      if(url.startsWith('data:')){
+        let blob=base64ToBlob(url, 'application/octet-stream');
+        let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name||'document'; a.click(); return;
+      }
+      let res=await fetch(url); let blob=await res.blob(); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name||'document'; a.click();
+    } catch(e){ window.open(url,'_blank'); }
   }
-  window.saveVaultLink = async () => {
-    let link=document.getElementById('vaultLinkInput').value.trim(); let type=document.getElementById('vaultType').value; if(!link ||!link.startsWith('http')) return alert('Paste valid catbox link'); if(!link.includes('catbox.moe')){ if(!confirm('This is not a catbox.moe link. Save anyway?')) return; } let id=Date.now().toString(); let isPdf=link.toLowerCase().endsWith('.pdf'); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url:link, name:link.split('/').pop(), fileType:isPdf?'application/pdf':'image/*', size:0, date:new Date().toISOString(), source:'catbox-link'}); document.getElementById('vaultLinkInput').value=''; alert('✅ Catbox link saved to Vault!');
-  }
-  window.downloadVaultFile = async (url, name) => { try { let res=await fetch(url); let blob=await res.blob(); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name||'document'; a.click(); } catch(e){ window.open(url,'_blank'); } }
   window.downloadVaultAsPDF = async (url, name) => {
     try {
-      let isPdf=url.toLowerCase().endsWith('.pdf')||name.toLowerCase().endsWith('.pdf'); if(isPdf){ downloadVaultFile(url,name); return; }
-      let res=await fetch(url); let blob=await res.blob(); let reader=new FileReader();
+      let isPdf=url.toLowerCase().includes('.pdf')||name.toLowerCase().endsWith('.pdf');
+      if(isPdf){ downloadVaultFile(url,name); return; }
+      let blobUrl=url;
+      if(url.startsWith('data:')) blobUrl=url;
+      else {
+        let res=await fetch(url); let b=await res.blob(); blobUrl=URL.createObjectURL(b);
+      }
+      let reader=new FileReader();
       reader.onload=()=>{ const doc=new jsPDF(); doc.addImage(reader.result,'JPEG',10,10,190,0); doc.save((name||'document').replace(/\.[^/.]+$/,"")+'.pdf'); };
-      reader.readAsDataURL(blob);
+      let r=await fetch(blobUrl); let bl=await r.blob(); reader.readAsDataURL(bl);
     } catch(e){ alert('PDF convert failed, opening original'); window.open(url,'_blank'); }
   }
+  window.downloadVaultCurrent=()=>{
+    if(!vaultCurrentData) return;
+    let blob=base64ToBlob(vaultCurrentData.base64, vaultCurrentData.fileType);
+    let url=URL.createObjectURL(blob);
+    let a=document.createElement('a'); a.href=url; a.download=vaultCurrentData.name; a.click();
+  };
+  window.downloadVaultCurrentAsPDF=()=>{
+    if(!vaultCurrentData) return;
+    if(vaultCurrentData.name.toLowerCase().endsWith('.pdf')){ downloadVaultCurrent(); return; }
+    if(vaultCurrentData.fileType.startsWith('image/')){
+      let blob=base64ToBlob(vaultCurrentData.base64, vaultCurrentData.fileType);
+      let url=URL.createObjectURL(blob);
+      fetch(url).then(r=>r.blob()).then(b=>{
+        let reader=new FileReader();
+        reader.onload=()=>{ const doc=new jsPDF(); doc.addImage(reader.result,'JPEG',10,10,190,0); doc.save(vaultCurrentData.name.replace(/\.[^/.]+$/,"")+'.pdf'); };
+        reader.readAsDataURL(b);
+      });
+    } else downloadVaultCurrent();
+  };
+  window.deleteVaultCurrent=async()=>{
+    if(!vaultCurrentId) return;
+    if(!confirm('Delete this Vault file? Space will be freed.')) return;
+    await remove(ref(db, 'feelthenoisesoundsolution/vault/'+vaultCurrentId));
+    if(vaultCurrentData?.shortId) await remove(ref(db, 'docbox/'+vaultCurrentData.shortId));
+    alert('✅ Deleted! Space freed.');
+    location.reload();
+  };
+  window.clearAllVault=async()=>{
+    if(!confirm('Delete ALL Vault files? This frees DOCBOX space.')) return;
+    if(!confirm('Are you 100% sure?')) return;
+    let snap=await get(ref(db, 'feelthenoisesoundsolution/vault'));
+    let data=snap.val()||{};
+    for(let k of Object.keys(data)){
+      await remove(ref(db, 'feelthenoisesoundsolution/vault/'+k));
+      if(data[k].shortId) await remove(ref(db, 'docbox/'+data[k].shortId));
+    }
+    alert('✅ All Vault files deleted');
+  };
   window.showCustomMenu = (e, url, name) => { e.preventDefault(); ctxUrl=url; ctxName=name; let menu=document.getElementById('customCtx'); menu.style.left=(e.touches?e.touches[0].clientX:e.clientX)+'px'; menu.style.top=(e.touches?e.touches[0].clientY:e.clientY)+'px'; menu.style.display='block'; }
   window.ctxAction = (type) => { let menu=document.getElementById('customCtx'); menu.style.display='none'; if(type==='open') window.open(ctxUrl,'_blank'); if(type==='preview') window.open(ctxUrl,'_blank'); if(type==='copy') copyVaultLink(ctxUrl); if(type==='download') downloadVaultFile(ctxUrl,ctxName); if(type==='pdf') downloadVaultAsPDF(ctxUrl,ctxName); if(type==='share' && navigator.share) navigator.share({url:ctxUrl,title:ctxName}); }
   document.addEventListener('click',()=>{ let m=document.getElementById('customCtx'); if(m) m.style.display='none'; });
 
   window.loadVault = () => {
     let grid=document.getElementById('vaultGrid'); if(!grid) return; grid.innerHTML='';
-    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload via Catbox.moe - PDF & Images get permanent link. Long-press for PDF option.</p>'; return; }
-    Object.entries(vault).forEach(([id,v])=>{
-      let isPdf = v.fileType==='application/pdf' || v.url?.toLowerCase().endsWith('.pdf') || v.name?.toLowerCase().endsWith('.pdf');
-      let preview = isPdf? `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>` : `<img src="${v.url}" oncontextmenu="showCustomMenu(event,'${v.url}','${v.name}')" ontouchstart="if(window.tmr) clearTimeout(window.tmr); window.tmr=setTimeout(()=>showCustomMenu(event,'${v.url}','${v.name}'),700)" ontouchend="if(window.tmr) clearTimeout(window.tmr)" style="width:100%;height:80px;object-fit:cover;border-radius:6px" onerror="this.src='${COMPANY_LOGO}'">`;
-      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:8px;color:var(--green);word-break:break-all">🔗 ${v.url.substring(0,35)}...</div><div style="font-size:9px;color:var(--muted)">${isPdf?'PDF':'Image'} • ${v.source||'catbox'}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px"><a href="${v.url}" target="_blank" style="background:var(--blue);color:#fff;padding:5px;border-radius:6px;font-size:10px;text-decoration:none;text-align:center">👁️ View</a><button onclick="downloadVaultFile('${v.url}','${v.name}')" style="background:#444;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">⬇️ Download</button></div><button onclick="downloadVaultAsPDF('${v.url}','${v.name}')" style="width:100%;margin-top:4px;background:var(--purple);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">📄 Download as PDF</button><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px"><button onclick="openVaultEdit('${id}')" style="background:var(--green);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">✏️ Edit</button><button onclick="copyVaultLink('${v.url}')" style="background:#333;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">📋 Copy</button></div><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">🗑️ Delete</button></div>`;
-    })
+    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload via DOCBOX - Images show real thumbnails. Link opens like catbox.moe.</p>'; return; }
+    let totalBytes=0;
+    Object.entries(vault).reverse().forEach(([id,v])=>{
+      totalBytes+=(v.base64?.length||0)*0.75;
+      let isPdf = v.fileType==='application/pdf' || v.url?.toLowerCase().includes('pdf') || v.name?.toLowerCase().endsWith('.pdf');
+      let isImg = v.fileType?.startsWith('image/') || v.name?.match(/\.(jpg|jpeg|png|webp|gif)$/i);
+      let src = v.base64 || v.url;
+      let preview = isImg? `<img src="${src}" oncontextmenu="showCustomMenu(event,'${src}','${v.name}')" ontouchstart="if(window.tmr) clearTimeout(window.tmr); window.tmr=setTimeout(()=>showCustomMenu(event,'${src}','${v.name}'),700)" ontouchend="if(window.tmr) clearTimeout(window.tmr)" style="width:100%;height:80px;object-fit:cover;border-radius:6px" onerror="this.src='${COMPANY_LOGO}'">` : `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>`;
+      let docboxLink = v.shortId? location.origin+location.pathname+'?docbox='+v.shortId : src;
+      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:8px;color:var(--green);word-break:break-all">🔗 ${v.shortId||id.slice(-6)}</div><div style="font-size:9px;color:var(--muted)">${isImg?'Image':isPdf?'PDF':'Doc'} • ${v.storage||'DOCBOX'}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px"><a href="${docboxLink}" target="_blank" style="background:var(--blue);color:#fff;padding:5px;border-radius:6px;font-size:10px;text-decoration:none;text-align:center">👁️ View</a><button onclick="downloadVaultFile('${src}','${v.name}')" style="background:#444;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">⬇️ Download</button></div><button onclick="downloadVaultAsPDF('${src}','${v.name}')" style="width:100%;margin-top:4px;background:var(--purple);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">📄 As PDF</button><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px"><button onclick="openVaultEdit('${id}')" style="background:var(--green);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">✏️ Edit</button><button onclick="copyVaultLink('${docboxLink}')" style="background:#333;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">📋 Copy</button></div><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">🗑️ Delete</button></div>`;
+    });
+    let mb=totalBytes/1024/1024;
+    let t=document.getElementById('vaultUsageText'); if(t) t.innerText=mb.toFixed(2)+' MB • '+Object.keys(vault).length+' files';
+    let f=document.getElementById('vaultUsageFill'); if(f) f.style.width=Math.min(100,mb/10*100)+'%';
   }
-  window.copyVaultLink = (url) => { navigator.clipboard.writeText(url).then(()=>alert('📋 Catbox link copied:\n'+url)); }
-  window.openVaultEdit = (id) => { editingVaultId=id; let v=vault[id]; document.getElementById('vaultEditName').value=v.name; document.getElementById('vaultEditType').value=v.type; document.getElementById('vaultEditUrl').value=v.url; document.getElementById('vaultEditModal').style.display='flex'; }
-  window.saveVaultEdit = () => { if(!editingVaultId) return; let name=document.getElementById('vaultEditName').value.trim(); let type=document.getElementById('vaultEditType').value; let url=document.getElementById('vaultEditUrl').value.trim(); if(!name) return alert('Enter name'); if(!url.startsWith('http')) return alert('Enter valid URL'); update(ref(db, 'feelthenoisesoundsolution/vault/'+editingVaultId), {name, type, url}); document.getElementById('vaultEditModal').style.display='none'; editingVaultId=null; }
-  window.deleteVault = (id) => { if(confirm('Delete this document permanently from Vault? (Catbox file stays)')) remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)) }
+  window.saveVaultLink = async () => {
+    let link=document.getElementById('vaultLinkInput').value.trim(); let type=document.getElementById('vaultType').value; if(!link) return alert('Paste link');
+    let id=Date.now().toString();
+    let isPdf=link.toLowerCase().includes('.pdf');
+    let shortId=link.includes('?docbox=')? link.split('?docbox=')[1].split('&')[0] : Math.random().toString(36).substring(2,6).toUpperCase();
+    if(link.startsWith('data:')){
+      await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url:link, base64:link, name:'Pasted DOCBOX file', fileType:isPdf?'application/pdf':'image/*', size:0, date:new Date().toISOString(), shortId, storage:'DOCBOX-Pasted'});
+      if(!link.includes('catbox')) await set(ref(db, 'docbox/'+shortId), {type, url:link, base64:link, name:'Pasted DOCBOX file', fileType:isPdf?'application/pdf':'image/*', size:0, date:new Date().toISOString(), shortId});
+    } else {
+      await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url:link, name:link.split('/').pop()||'file', fileType:isPdf?'application/pdf':'image/*', size:0, date:new Date().toISOString(), shortId, storage:link.includes('catbox')?'catbox-link':'link'});
+    }
+    document.getElementById('vaultLinkInput').value=''; alert('✅ Link saved to Vault!');
+  }
+  window.openVaultEdit = (id) => { editingVaultId=id; let v=vault[id]; document.getElementById('vaultEditName').value=v.name; document.getElementById('vaultEditType').value=v.type; document.getElementById('vaultEditUrl').value=v.url?.substring(0,200)||''; document.getElementById('vaultEditModal').style.display='flex'; }
+  window.saveVaultEdit = () => { if(!editingVaultId) return; let name=document.getElementById('vaultEditName').value.trim(); let type=document.getElementById('vaultEditType').value; let url=document.getElementById('vaultEditUrl').value.trim(); if(!name) return alert('Enter name'); update(ref(db, 'feelthenoisesoundsolution/vault/'+editingVaultId), {name, type}); document.getElementById('vaultEditModal').style.display='none'; editingVaultId=null; }
+  window.deleteVault = (id) => { if(confirm('Delete this document from Vault? Space will be freed.')){ let v=vault[id]; remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)); if(v?.shortId) remove(ref(db, 'docbox/'+v.shortId)); } }
 
   function getImages(p){ if(!p.img) return [COMPANY_LOGO]; return p.img.split(',').map(s=>s.trim()).filter(s=>s); }
   window.switchImage = (cardId, imgUrl, thumb) => { document.getElementById('main_'+cardId).src = imgUrl; document.querySelectorAll(`#card_${cardId}.card-imgs img`).forEach(i=>i.classList.remove('active')); if(thumb) thumb.classList.add('active'); }
   function getCartControls(id){ let item=cart.find(x=>x.id==id); if(!item) return `<button class="btn-cart" onclick="addToCart('${id}')">Request Quote</button>`; return `<div class="qty-controls"><button class="qty-btn" onclick="decreaseQty('${id}')">-</button><div class="qty-text">${item.qty}</div><button class="qty-btn" onclick="addToCart('${id}')">+</button></div>`; }
-   function renderClientProducts(){ if(!isClientMode) return; clientProductGrid.innerHTML=''; if(Object.keys(products).length===0){ clientProductGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">Loading services...</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(clientSearchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; clientProductGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
+  function renderClientProducts(){ if(!isClientMode) return; clientProductGrid.innerHTML=''; if(Object.keys(products).length===0){ clientProductGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">Loading services...</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(clientSearchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; clientProductGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
   function renderProducts(){ if(isClientMode) return; productGrid.innerHTML=''; if(Object.keys(products).length===0){ productGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">No services yet. Click "Load FEEL THE NOISE Services"</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(searchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; productGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
   window.searchProducts = () => { renderProducts(); renderClientProducts(); }
   window.filterCat = (cat, e) => { currentFilter=cat; renderProducts(); renderClientProducts(); document.querySelectorAll('.nav-cats button').forEach(b=>b.classList.remove('active')); if(e) e.target.classList.add('active'); }
@@ -532,28 +740,34 @@ document.addEventListener('DOMContentLoaded', () => {
   window.updateOrderStatus = (id, status) => { set(ref(db, 'feelthenoisesoundsolution/requests/' + id + '/status'), status); }
   window.deleteOrder = (id) => { if(currentUser.role!= 'ceo' && currentUser.role!= 'manager') return alert('No permission'); if(confirm('Delete this request?')) remove(ref(db, 'feelthenoisesoundsolution/requests/' + id)) }
   window.openInvoiceModal = (id) => { currentInvoiceId=id; let o=orders[id]; document.getElementById('invCustName').value=o.customerName||''; document.getElementById('invCustPhone').value=o.customerPhone||''; document.getElementById('invCustEmail').value=o.customerEmail||''; document.getElementById('invCustAddress').value=o.customerAddress||''; document.getElementById('invPaidToggle').checked=o.status=='Paid'; document.getElementById('invoiceModal').style.display='flex'; }
-  window.downloadFinalInvoice = () => { let o=orders[currentInvoiceId]; let custName=document.getElementById('invCustName').value||o.customerName||'Guest'; let custPhone=document.getElementById('invCustPhone').value||o.customerPhone||''; let custEmail=document.getElementById('invCustEmail').value||o.customerEmail||''; let custAddress=document.getElementById('invCustAddress').value||''; let addTax=document.getElementById('invTaxToggle').checked; let isPaid=document.getElementById('invPaidToggle').checked; let subtotal=o.total; let tax=addTax?subtotal*0.15:0; let grandTotal=subtotal+tax; set(ref(db, 'feelthenoisesoundsolution/requests/' + currentInvoiceId + '/status'), isPaid? 'Paid' : 'Pending'); const doc=new jsPDF(); doc.addImage(COMPANY_LOGO,'JPEG',10,10,25,25); doc.setFontSize(16); doc.setFont(undefined,'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION",40,18); doc.setFontSize(9); doc.setFont(undefined,'normal'); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com",40,24); doc.line(10,40,200,40); if(isPaid){ doc.setTextColor(0,184,148); doc.setFontSize(28); doc.setFont(undefined,'bold'); doc.text("PAID",150,35,{angle:-20}); doc.setTextColor(0,0,0); } doc.setFontSize(18); doc.setFont(undefined,'bold'); doc.text(isPaid?"TAX INVOICE":"QUOTATION",150,50); doc.setFontSize(10); doc.text(`Quote #: ${currentInvoiceId.slice(-6)}`,150,57); doc.text(`Date: ${new Date(o.date).toLocaleDateString()}`,150,62); doc.setFontSize(12); doc.text("TO:",10,50); doc.setFontSize(10); doc.text(custName,10,57); if(custPhone) doc.text(custPhone,10,62); if(custEmail) doc.text(custEmail,10,67); if(custAddress) doc.text(custAddress,10,72); let y=90; doc.setFontSize(10); doc.setFont(undefined,'bold'); doc.text("Service",10,y); doc.text("Qty",120,y); doc.text("Rate",145,y); doc.text("Amount",175,y); y+=5; doc.line(10,y,200,y); y+=7; doc.setFont(undefined,'normal'); o.items.forEach(i=>{ doc.text(i.name.substring(0,35),10,y); doc.text(i.qty.toString(),120,y); doc.text(`R${i.price}`,145,y); doc.text(`R${i.price*i.qty}`,175,y); y+=7; }); y+=5; doc.line(120,y,200,y); y+=7; doc.text("Subtotal:",145,y); doc.text(`R${subtotal.toFixed(2)}`,175,y); y+=7; if(addTax){ doc.text("VAT 15%:",145,y); doc.text(`R${tax.toFixed(2)}`,175,y); y+=7; } doc.setFont(undefined,'bold'); doc.setFontSize(12); doc.text("TOTAL:",145,y); doc.text(`R${grandTotal.toFixed(2)}`,175,y); if(isPaid){ y+=10; doc.setFontSize(10); doc.setTextColor(0,184,148); doc.text("✓ PAYMENT RECEIVED - THANK YOU",145,y); doc.setTextColor(0,0,0); } doc.setFontSize(8); doc.setFont(undefined,'normal'); doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762 | Email: mdkoscar50@gmail.com",105,270,{align:"center"}); doc.text("Thank you for choosing FEEL THE NOISE SOUND SOLUTION",105,280,{align:"center"}); doc.save(`FEELTHE${isPaid?'Invoice':'Quote'}-${currentInvoiceId.slice(-6)}.pdf`); document.getElementById('invoiceModal').style.display='none'; }
-  window.downloadQuickInvoice = () => { let name=document.getElementById('quickInvName').value; let phone=document.getElementById('quickInvPhone').value; let email=document.getElementById('quickInvEmail').value; let item=document.getElementById('quickInvItem').value; let qty=Number(document.getElementById('quickInvQty').value)||1; let price=Number(document.getElementById('quickInvPrice').value)||0; let addTax=document.getElementById('quickInvTax').checked; let isPaid=document.getElementById('quickInvPaid').checked; if(!name||!item||!price) return alert('Please fill Name, Service and Price'); let subtotal=qty*price; let tax=addTax?subtotal*0.15:0; let grandTotal=subtotal+tax; let invId=Date.now().toString().slice(-6); let orderId=Date.now().toString(); const order={user:'Walk-In',customerName:name,customerPhone:phone,customerEmail:email,items:[{name:item,qty:qty,price:price}],total:grandTotal,subtotal:subtotal,tax:tax,vat:addTax,paid:isPaid,date:new Date().toISOString(),status:isPaid?'Paid':'Pending',type:'Walk-In Quote'}; set(ref(db,'feelthenoisesoundsolution/requests/'+orderId),order); const doc=new jsPDF(); doc.addImage(COMPANY_LOGO,'JPEG',10,10,25,25); doc.setFontSize(16); doc.setFont(undefined,'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION",40,18); doc.setFontSize(9); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com",40,24); doc.line(10,40,200,40); if(isPaid){ doc.setTextColor(0,184,148); doc.setFontSize(28); doc.setFont(undefined,'bold'); doc.text("PAID",150,35,{angle:-20}); doc.setTextColor(0,0,0); } doc.setFontSize(18); doc.setFont(undefined,'bold'); doc.text(isPaid?"TAX INVOICE":"QUOTATION",150,50); doc.setFontSize(10); doc.text(`Quote #: ${invId}`,150,57); doc.text(`Date: ${new Date().toLocaleDateString()}`,150,62); doc.setFontSize(12); doc.text("TO:",10,50); doc.setFontSize(10); doc.text(name,10,57); if(phone) doc.text(phone,10,62); if(email) doc.text(email,10,67); let y=90; doc.setFont(undefined,'bold'); doc.text("Service",10,y); doc.text("Qty",120,y); doc.text("Rate",145,y); doc.text("Amount",175,y); y+=5; doc.line(10,y,200,y); y+=7; doc.setFont(undefined,'normal'); doc.text(item.substring(0,35),10,y); doc.text(qty.toString(),120,y); doc.text(`R${price}`,145,y); doc.text(`R${subtotal}`,175,y); y+=7; y+=5; doc.line(120,y,200,y); y+=7; doc.text("Subtotal:",145,y); doc.text(`R${subtotal.toFixed(2)}`,175,y); y+=7; if(addTax){ doc.text("VAT 15%:",145,y); doc.text(`R${tax.toFixed(2)}`,175,y); y+=7; } doc.setFont(undefined,'bold'); doc.setFontSize(12); doc.text("TOTAL:",145,y); doc.text(`R${grandTotal.toFixed(2)}`,175,y); if(isPaid){ y+=10; doc.setFontSize(10); doc.setTextColor(0,184,148); doc.text("✓ PAYMENT RECEIVED - THANK YOU",145,y); doc.setTextColor(0,0,0); } doc.setFontSize(8); doc.setFont(undefined,'normal'); doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762 | Email: mdkoscar50@gmail.com",105,270,{align:"center"}); doc.text("Thank you for choosing FEEL THE NOISE SOUND SOLUTION",105,280,{align:"center"}); doc.save(`FEELTHE${isPaid?'Invoice':'Quote'}-${invId}.pdf`); document.getElementById('quickInvoiceModal').style.display='none'; alert(`✅ ${isPaid?'Invoice':'Quote'} saved! It will now appear in Requests + CSV`) }
-  window.editProduct = (id) => { if(currentUser.role=='reception') return alert('No permission'); let p=products[id]; editingId=id; pName.value=p.name; pCat.value=p.category; pImg.value=p.img; pPrice.value=p.price; pOldPrice.value=p.oldPrice; pStock.value=p.stock; pDesc.value=p.desc; formTitle.innerText="✏️ Editing: "+p.name; saveBtn.innerText="Update Service"; saveBtn.style.background="var(--blue)"; cancelBtn.style.display="block"; document.getElementById('tab-products').scrollIntoView(); }
-  window.cancelEdit = () => { editingId=null; [pName,pImg,pPrice,pOldPrice,pStock,pDesc].forEach(i=>i.value=''); formTitle.innerText="➕ Add Service"; saveBtn.innerText="Save Service"; saveBtn.style.background="var(--accent)"; cancelBtn.style.display="none"; }
-  window.saveProduct = () => { if(currentUser.role=='reception') return alert('No permission'); let productData={name:pName.value.trim(),category:pCat.value,img:pImg.value.trim()||COMPANY_LOGO,price:Number(pPrice.value)||0,oldPrice:Number(pOldPrice.value)||0,stock:Number(pStock.value)||0,desc:pDesc.value.trim()}; if(!productData.name){ return alert('Please enter service name') } if(editingId){ set(ref(db,'feelthenoisesoundsolution/categories/'+editingId),productData).then(()=>{ alert('Service Updated!'); cancelEdit(); }).catch(err=>alert('Error: '+err.message)); } else { let id=Date.now().toString(); set(ref(db,'feelthenoisesoundsolution/categories/'+id),productData).then(()=>{ [pName,pImg,pPrice,pOldPrice,pStock,pDesc].forEach(i=>i.value=''); alert('Service Added!'); }).catch(err=>alert('Error: '+err.message)); } }
-  function buildStockList(){ stockList.innerHTML=''; Object.entries(products).forEach(([id,p])=>{ stockList.innerHTML+=`<div style="display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid var(--border);border-radius:8px;margin:5px 0"><div><b>${p.name}</b><br><small class="${p.stock<10?'stock-low':''}">Stock: ${p.stock}</small></div><div><input type="number" id="stock_${id}" value="0" style="width:80px"><button class="btn-green" onclick="updateStock('${id}')">+ Add</button></div></div>`; }) }
-  window.seedDatabase = () => { if(currentUser.role!='ceo'&&currentUser.role!='manager') return alert('No permission'); const defaultData=[{name:"Sound Engineering - Small Event",category:"Sound",price:2500,stock:10,img:COMPANY_LOGO,desc:"DJ, Live Band, Up to 200 People"},{name:"Sound Engineering - Big Event",category:"Sound",price:8000,stock:5,img:COMPANY_LOGO,desc:"Festival, Concert, Full PA System"},{name:"Event Promotion Package",category:"Promotion",price:1500,stock:20,img:COMPANY_LOGO,desc:"Social Media + Posters + Street Promo"},{name:"Event Hosting + MC",category:"Hosting",price:1200,stock:15,img:COMPANY_LOGO,desc:"Professional MC + Event Management"},{name:"Full Event Package",category:"Events",price:15000,stock:3,img:COMPANY_LOGO,desc:"Sound + Promotion + Hosting"}]; defaultData.forEach(p=>{ let id=Date.now().toString()+Math.random(); set(ref(db,'feelthenoisesoundsolution/categories/'+id),p); }); alert('✅ Sample Services loaded!') }
-  window.deleteProduct = (id) => { if(currentUser.role!='ceo') return alert('CEO only'); if(confirm('Delete this service?')) remove(ref(db,'feelthenoisesoundsolution/categories/'+id)) }
-  window.updateStock = (id) => { let add=parseInt(document.getElementById('stock_'+id).value); set(ref(db,'feelthenoisesoundsolution/categories/'+id+'/stock'),(products[id].stock||0)+add); document.getElementById('stock_'+id).value=0; }
-  window.addToCart = (id) => { let p=products[id]; let item=cart.find(x=>x.id==id); if(item){ item.qty++ } else { cart.push({id,name:p.name,price:p.price,qty:1,category:p.category}) } updateCart(); renderProducts(); renderClientProducts(); }
-  window.decreaseQty = (id) => { let item=cart.find(x=>x.id==id); if(item){ item.qty--; if(item.qty<=0){ cart=cart.filter(x=>x.id!=id); } } updateCart(); renderProducts(); renderClientProducts(); }
-  function updateCart(){ cartBar.style.display=cart.length?'block':'none'; clientCartBar.style.display=cart.length?'block':'none'; let count=cart.reduce((a,b)=>a+b.qty,0); let total=cart.reduce((a,b)=>a+b.qty*b.price,0); if(cartCount) cartCount.innerText=count; if(clientCartCount) clientCartCount.innerText=count; if(cartTotal) cartTotal.innerText=total; if(clientCartTotal) clientCartTotal.innerText=total; }
-  window.openCustomerModal = () => { if(cart.length===0) return alert('Cart empty'); document.getElementById('customerModal').style.display='flex'; }
-  window.sendQuote = () => { let name=document.getElementById('custName').value.trim(); let phone=document.getElementById('custPhone').value.trim(); let email=document.getElementById('custEmail').value.trim(); if(!name||!phone) return alert('Please enter Name and Phone'); const orderId=Date.now().toString(); const order={user:isClientMode?name:currentUser.email,customerName:name,customerPhone:phone,customerEmail:email,items:cart,total:cart.reduce((a,b)=>a+b.qty*b.price,0),date:new Date().toISOString(),status:'Pending'}; set(ref(db,'feelthenoisesoundsolution/requests/'+orderId),order); let msg=`📦 NEW QUOTE REQUEST - FEEL THE NOISE SOUND SOLUTION\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n`+cart.map(i=>`${i.name} x${i.qty} - R${i.price}`).join('\n')+`\nTotal: R${order.total}\n\n🏦 Pay to: ${BANK_ACCOUNT}\n📱 WhatsApp: 066 279 6762`; window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`); cart=[]; updateCart(); renderProducts(); renderClientProducts(); document.getElementById('customerModal').style.display='none'; document.getElementById('custName').value=''; document.getElementById('custPhone').value=''; document.getElementById('custEmail').value=''; alert('Quote request sent to WhatsApp!') }
-  window.downloadReport = () => { const doc=new jsPDF(); doc.text("FEEL THE NOISE Business Report",10,10); doc.text(`Total Services: ${Object.keys(products).length}`,10,20); doc.text(`Total Stock: ${Object.values(products).reduce((a,b)=>a+(b.stock||0),0)}`,10,30); doc.text(`Pending Requests: ${Object.values(orders).filter(o=>o.status=='Pending').length}`,10,40); doc.text(`Generated: ${new Date().toLocaleString()}`,10,60); doc.save("FEELTHE-Report.pdf"); }
-  window.downloadCSV = () => { if(Object.keys(orders).length===0) return alert('No requests to export'); let csv='Request ID,Date,Customer Name,Phone,Email,Services,Total R,Status\n'; Object.entries(orders).forEach(([id,o])=>{ let items=o.items.map(i=>`${i.name} x${i.qty}`).join('; '); let date=new Date(o.date).toLocaleDateString(); csv+=`"${id.slice(-6)}","${date}","${o.customerName||'Guest'}","${o.customerPhone||''}","${o.customerEmail||''}","${items}",${o.total},"${o.status}"\n`; }); const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}); const link=document.createElement("a"); link.href=URL.createObjectURL(blob); link.download=`FEELTHE-Requests-${new Date().toISOString().split('T')[0]}.csv`; link.click(); }
-  function setClientLink(){ let link=window.location.origin+window.location.pathname+'?client=1'; if(document.getElementById('clientShareLink')) document.getElementById('clientShareLink').value=link; if(document.getElementById('clientLink')) document.getElementById('clientLink').innerText=link; }
-  window.copyClientLink = () => { let link=document.getElementById('clientShareLink'); link.select(); document.execCommand('copy'); alert('Quote link copied! 📋'); }
-  window.shareClientWhatsApp = () => { let link=document.getElementById('clientShareLink').value; let msg=`📦 REQUEST QUOTE FROM FEEL THE NOISE SOUND SOLUTION\nBook services here:\n${link}\n\nBank: ${BANK_ACCOUNT}\nWhatsApp: 066 279 6762`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
-  window.previewClient = () => { window.open(window.location.origin+window.location.pathname+'?client=1','_blank'); }
-  window.toggleDark = () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode',document.body.classList.contains('dark-mode')); }
-  if(localStorage.getItem('darkMode')==='true') document.body.classList.add('dark-mode');
+  window.downloadFinalInvoice = () => {
+    let o=orders[currentInvoiceId]; let custName=document.getElementById('invCustName').value||o.customerName||'Guest'; let custPhone=document.getElementById('invCustPhone').value||o.customerPhone||''; let custEmail=document.getElementById('invCustEmail').value||o.customerEmail||''; let custAddress=document.getElementById('invCustAddress').value||''; let addTax=document.getElementById('invTaxToggle').checked; let isPaid=document.getElementById('invPaidToggle').checked; let subtotal=o.total; let tax=addTax?subtotal*0.15:0; let grandTotal=subtotal+tax; set(ref(db, 'feelthenoisesoundsolution/requests/' + currentInvoiceId + '/status'), isPaid? 'Paid' : 'Pending'); const doc=new jsPDF(); doc.addImage(COMPANY_LOGO,'JPEG',10,10,25,25); doc.setFontSize(16); doc.setFont(undefined,'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION",40,18); doc.setFontSize(9); doc.setFont(undefined,'normal'); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com",40,24); doc.line(10,40,200,40); if(isPaid){ doc.setTextColor(0,184,148); doc.setFontSize(28); doc.setFont(undefined,'bold'); doc.text("PAID",160,35); doc.setTextColor(0,0,0); } doc.setFontSize(12); doc.text(`Quote #${currentInvoiceId.slice(-6)}`,10,50); doc.setFontSize(10); doc.text(`Customer: ${custName}`,10,58); doc.text(`Phone: ${custPhone}`,10,63); doc.text(`Email: ${custEmail}`,10,68); doc.text(`Address: ${custAddress}`,10,73); doc.text(`Date: ${new Date().toLocaleDateString()}`,10,78); let y=90; doc.setFont(undefined,'bold'); doc.text("Item",10,y); doc.text("Qty",120,y); doc.text("Price",150,y); doc.text("Total",180,y); y+=6; doc.setFont(undefined,'normal'); o.items.forEach(item=>{ doc.text(item.name.substring(0,30),10,y); doc.text(item.qty.toString(),120,y); doc.text('R'+item.price,150,y); doc.text('R'+(item.price*item.qty),180,y); y+=6; }); y+=6; doc.text(`Subtotal: R${subtotal}`,150,y); y+=6; if(addTax){ doc.text(`VAT 15%: R${tax.toFixed(2)}`,150,y); y+=6; } doc.setFont(undefined,'bold'); doc.text(`TOTAL: R${grandTotal.toFixed(2)}`,150,y); doc.save(`Quote-${currentInvoiceId.slice(-6)}.pdf`);
+  }
+  window.addToCart = (id) => { let existing=cart.find(x=>x.id==id); if(existing){ existing.qty++; } else { let p=products[id]; cart.push({id, name:p.name, price:p.price, qty:1}); } updateCartUI(); renderProducts(); renderClientProducts(); }
+  window.decreaseQty = (id) => { let item=cart.find(x=>x.id==id); if(!item) return; item.qty--; if(item.qty<=0) cart=cart.filter(x=>x.id!=id); updateCartUI(); renderProducts(); renderClientProducts(); }
+  function updateCartUI(){ let total=cart.reduce((a,b)=>a+b.price*b.qty,0); let count=cart.reduce((a,b)=>a+b.qty,0); if(cartCount) cartCount.innerText=count; if(cartTotal) cartTotal.innerText=total; if(clientCartCount) clientCartCount.innerText=count; if(clientCartTotal) clientCartTotal.innerText=total; if(count>0){ if(cartBar) cartBar.style.display='block'; if(clientCartBar) clientCartBar.style.display='block'; } else { if(cartBar) cartBar.style.display='none'; if(clientCartBar) clientCartBar.style.display='none'; } }
+  window.openCustomerModal = () => { document.getElementById('customerModal').style.display='flex'; }
+  window.sendQuote = () => {
+    let name=document.getElementById('custName').value||'Guest'; let phone=document.getElementById('custPhone').value||''; let email=document.getElementById('custEmail').value||'';
+    let msg=`Hello FEEL THE NOISE,%0A%0AName: ${name}%0APhone: ${phone}%0AEmail: ${email}%0A%0ARequest:%0A`; cart.forEach(i=>{ msg+=`${i.name} x${i.qty} - R${i.price*i.qty}%0A`; }); let total=cart.reduce((a,b)=>a+b.price*b.qty,0); msg+=`%0ATotal: R${total}%0A%0ABank: ${BANK_ACCOUNT}`;
+    let id=Date.now().toString(); set(ref(db, 'feelthenoisesoundsolution/requests/'+id), {customerName:name, customerPhone:phone, customerEmail:email, user:phone||name, items:cart, total, date:new Date().toISOString(), status:'Pending'});
+    window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${msg}`,'_blank'); cart=[]; updateCartUI(); renderProducts(); renderClientProducts(); document.getElementById('customerModal').style.display='none';
+  }
+  window.saveProduct = () => { let id=editingId||Date.now().toString(); let data={name:pName.value, category:pCat.value, img:pImg.value, price:parseFloat(pPrice.value)||0, oldPrice:parseFloat(pOldPrice.value)||0, stock:parseInt(pStock.value)||0, desc:pDesc.value}; set(ref(db, 'feelthenoisesoundsolution/categories/'+id), data); cancelEdit(); }
+  window.editProduct = (id) => { let p=products[id]; editingId=id; pName.value=p.name; pCat.value=p.category; pImg.value=p.img; pPrice.value=p.price; pOldPrice.value=p.oldPrice||''; pStock.value=p.stock; pDesc.value=p.desc||''; formTitle.innerText='✏️ Edit Service'; saveBtn.innerText='Update'; cancelBtn.style.display='block'; window.scrollTo(0,0); }
+  window.cancelEdit = () => { editingId=null; pName.value=''; pCat.value='Sound'; pImg.value=''; pPrice.value=''; pOldPrice.value=''; pStock.value=''; pDesc.value=''; formTitle.innerText='➕ Add Service'; saveBtn.innerText='Save Service'; cancelBtn.style.display='none'; }
+  window.deleteProduct = (id) => { if(confirm('Delete?')) remove(ref(db, 'feelthenoisesoundsolution/categories/'+id)); }
+  window.seedDatabase = () => { let samples={ [Date.now()]:{name:"Basic Sound System",category:"Sound",img:COMPANY_LOGO,price:1500,oldPrice:2000,stock:5,desc:"2 Speakers,Mixer,Mic"} }; Object.entries(samples).forEach(([id,p])=>set(ref(db, 'feelthenoisesoundsolution/categories/'+id), p)); }
+  window.downloadReport = () => { const doc=new jsPDF(); doc.text("FEEL THE NOISE Report",10,10); doc.text(`Products: ${Object.keys(products).length}`,10,20); doc.text(`Requests: ${Object.keys(orders).length}`,10,30); doc.save("Report.pdf"); }
+  window.downloadCSV = () => { let csv='Name,Category,Price,Stock\n'; Object.values(products).forEach(p=>{ csv+=`${p.name},${p.category},${p.price},${p.stock}\n`; }); let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='products.csv'; a.click(); }
+  window.downloadQuickInvoice = () => { let name=document.getElementById('quickInvName').value||'Customer'; let item=document.getElementById('quickInvItem').value||'Service'; let qty=parseInt(document.getElementById('quickInvQty').value)||1; let price=parseFloat(document.getElementById('quickInvPrice').value)||0; let addTax=document.getElementById('quickInvTax').checked; let isPaid=document.getElementById('quickInvPaid').checked; let subtotal=qty*price; let tax=addTax?subtotal*0.15:0; let total=subtotal+tax; const doc=new jsPDF(); doc.text(`Quote for ${name}`,10,10); doc.text(`${item} x${qty} = R${subtotal}`,10,20); if(addTax) doc.text(`VAT 15%: R${tax.toFixed(2)}`,10,30); doc.text(`TOTAL: R${total.toFixed(2)} - ${isPaid?'PAID':'UNPAID'}`,10,40); doc.save(`QuickQuote-${name}.pdf`); }
+  function setClientLink(){ let linkEl=document.getElementById('clientShareLink'); if(linkEl) linkEl.value=location.origin+location.pathname+'?client=1'; }
+  window.copyClientLink = () => { let l=document.getElementById('clientShareLink').value; navigator.clipboard.writeText(l).then(()=>alert('Copied: '+l)); }
+  window.shareClientWhatsApp = () => { let l=document.getElementById('clientShareLink').value; window.open(`https://wa.me/?text=${encodeURIComponent('Request quote here: '+l)}`,'_blank'); }
+  window.previewClient = () => { let l=document.getElementById('clientShareLink').value; window.open(l,'_blank'); }
+  window.toggleDark = () => { document.body.classList.toggle('dark-mode'); }
+  function buildStockList(){ if(!stockList) return; stockList.innerHTML=''; Object.entries(products).forEach(([id,p])=>{ stockList.innerHTML+=`<div style="padding:10px;border:1px solid var(--border);margin:5px 0;background:#111;display:flex;justify-content:space-between"><span>${p.name} - Stock: ${p.stock}</span><div><button class="btn-green" style="padding:5px 10px" onclick="updateStock('${id}',1)">+1</button><button class="btn-danger" style="padding:5px 10px" onclick="updateStock('${id}',-1)">-1</button></div></div>`; }); }
+  window.updateStock = (id,delta) => { let p=products[id]; let newStock=(p.stock||0)+delta; if(newStock<0) newStock=0; update(ref(db, 'feelthenoisesoundsolution/categories/'+id), {stock:newStock}); }
 });
 </script>
 </body>
