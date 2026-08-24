@@ -14,7 +14,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 :root{--bg:#060607;--card:rgba(20,20,25,0.6);--accent:#ff0064;--accent2:#ff3385;--green:#00b894;--blue:#0064ff;--purple:#6c5ce7;--text:#fff;--muted:#aaa;--border:rgba(255,255,255,0.1);--shadow:0 2px 8px rgba(255,0,100,0.2);--danger:#d63031}
-*{box-sizing:border-box;font-family:'Poppins',sans-serif}body{margin:0;background:var(--bg);color:var(--text);backdrop-filter: blur(0px)}
+*{box-sizing:border-box;font-family:'Poppins',sans-serif}body{margin:0;background:var(--bg);color:var(--text)}
 html, body{overflow-x:hidden; width:100%}
 .header{background:linear-gradient(90deg,#ff0064,#ff3385);padding:12px;color:#fff;position:sticky;top:0;z-index:99;box-shadow:var(--shadow)}
 .header-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.logo{width:50px;height:50px;border-radius:12px;background:#fff;padding:3px;object-fit:cover;box-shadow:0 0 15px rgba(255,0,100,0.4)}
@@ -81,9 +81,8 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:999}
 .modal-content{background:var(--card);padding:20px;border-radius:15px;width:90%;max-width:400px;border:1px solid var(--border)}
 .progress-bar{height:22px;background:#222;border-radius:11px;overflow:hidden;margin:10px 0;border:1px solid var(--border)}.progress-fill{height:100%;background:linear-gradient(90deg,#00b894,#00cec9);transition:width 0.6s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
-.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:8px;border:1px solid var(--border);text-align:center}
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center}
 .note-card{background:#111;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid var(--accent);position:relative;animation:slideDown 0.3s}.note-pinned{border-left:4px solid var(--green);background:rgba(0,184,148,0.15);box-shadow:0 0 10px rgba(0,184,148,0.2)}
-.badge{display:inline-block;padding:3px 8px;border-radius:12px;font-size:10px;font-weight:700;margin:2px;background:var(--accent);color:#fff}
 @media(max-width:600px){
 .grid{grid-template-columns:1fr!important}
 .stats{grid-template-columns:repeat(2,1fr)}
@@ -106,6 +105,7 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 <div id="invoiceModal" class="modal"> <div class="modal-content"> <h3>📄 Edit Quote Details</h3> <input type="text" id="invCustName" placeholder="Customer Name"> <input type="tel" id="invCustPhone" placeholder="Customer Phone"> <input type="email" id="invCustEmail" placeholder="Customer Email"> <input type="text" id="invCustAddress" placeholder="Customer Address"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invTaxToggle"> Add 15% VAT</label> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invPaidToggle"> Mark as PAID</label> <button class="btn" onclick="downloadFinalInvoice()" style="width:100%">Download PDF</button> <button class="btn-gray" onclick="document.getElementById('invoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 <div id="customerModal" class="modal"> <div class="modal-content"> <h3>Customer Details</h3> <input type="text" id="custName" placeholder="Your Name"> <input type="tel" id="custPhone" placeholder="Your Phone Number"> <input type="email" id="custEmail" placeholder="Your Email Address"> <div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec<br>Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 mdkoscar50@gmail.com</b><br>Send proof to WhatsApp or Email after booking</div> <button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button> <button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 <div id="noteModal" class="modal"> <div class="modal-content"> <h3 id="noteModalTitle">📝 Add Admin Note</h3> <input type="text" id="noteTitle" placeholder="Title - e.g. John hasn't paid R500"> <select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do / Next Step</option><option value="followup">📞 Follow-Up Call</option></select> <textarea id="noteContent" placeholder="Details - what to do next..."></textarea> <input type="date" id="noteDate"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="notePinned"> 📌 Pin this note to top</label> <button class="btn" onclick="saveNote()" style="width:100%">Save Note</button> <button class="btn-gray" onclick="document.getElementById('noteModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<div id="vaultEditModal" class="modal"> <div class="modal-content"> <h3>✏️ Edit Document</h3> <input type="text" id="vaultEditName" placeholder="Document Name"> <select id="vaultEditType"><option value="ID Document">ID Document</option><option value="CIPC Certificate">CIPC Certificate</option><option value="Proof of Address">Proof of Address</option><option value="Bank Confirmation">Bank Confirmation</option><option value="Tax Clearance">Tax Clearance</option><option value="Other">Other</option></select> <button class="btn" onclick="saveVaultEdit()" style="width:100%">Save Changes</button> <button class="btn-gray" onclick="document.getElementById('vaultEditModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
 
 <div id="clientView" style="display:none">
   <div class="client-header">
@@ -253,17 +253,18 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
       </div>
 
       <div id="tab-vault" style="display:none">
-        <h3>📁 Document Vault (Catmoe Storage)</h3>
-        <p style="font-size:12px;color:var(--muted)">Upload ID, CIPC, Proof of Address, Bank Letter - Required for Standard Bank & Funding</p>
+        <h3>📁 Document Vault - PDF & Images</h3>
+        <p style="font-size:12px;color:var(--muted)">Upload ID, CIPC, Proof of Address, Bank Letter - Supports PDF, JPG, PNG. Required for funding.</p>
         <select id="vaultType">
           <option value="ID Document">ID Document</option>
           <option value="CIPC Certificate">CIPC Certificate</option>
           <option value="Proof of Address">Proof of Address</option>
           <option value="Bank Confirmation">Bank Confirmation Letter</option>
           <option value="Tax Clearance">Tax Clearance</option>
+          <option value="Other">Other</option>
         </select>
         <input type="file" id="vaultFile" accept="image/*,.pdf">
-        <button class="btn" onclick="uploadVault()">Upload to Vault</button>
+        <button class="btn" onclick="uploadVault()">⬆️ Upload PDF / Image to Vault</button>
         <div class="vault-grid" id="vaultGrid" style="margin-top:15px"></div>
       </div>
 
@@ -348,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const vaultRef = ref(db, 'feelthenoisesoundsolution/vault');
   const notesRef = ref(db, 'feelthenoisesoundsolution/notes');
   let products = {}; let orders = {}; let vault = {}; let notes = {}; let cart = [];
-  let currentUser = {role:'reception'}; let currentFilter = 'All'; let editingId = null; let editingNoteId = null; let deferredPrompt; let currentInvoiceId = null;
+  let currentUser = {role:'reception'}; let currentFilter = 'All'; let editingId = null; let editingNoteId = null; let editingVaultId = null; let deferredPrompt; let currentInvoiceId = null;
 
   window.addEventListener('beforeinstallprompt', (e) => {e.preventDefault();deferredPrompt = e;document.getElementById('installBanner').style.display = 'block';});
   document.getElementById('installBtn').onclick = () => {if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(() => {deferredPrompt = null;document.getElementById('installBanner').style.display = 'none';});}};
@@ -425,10 +426,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function calcFundingScore(){
     let score=0; let details=[]; let badges=[]; let next="";
-
     let months={}; Object.values(orders).forEach(o=>{ let key=new Date(o.date).toISOString().slice(0,7); months[key]=(months[key]||0)+o.total; });
     let monthCount=Object.keys(months).length; let totalIncome=Object.values(orders).reduce((a,b)=>a+b.total,0); let avgMonthly=monthCount>0?totalIncome/monthCount:0; let salesCount=Object.keys(orders).length;
-
     if(monthCount>=1){ score+=5; details.push(`✅ ${monthCount} month(s) sales history tracked (5%)`); } else { details.push(`❌ No sales history yet (0%) - Record your first sale!`); if(!next) next="Record first sale (+5%)"; }
     if(monthCount>=3){ score+=10; badges.push("📅 3-Month Hustler"); details.push(`✅ 3+ months continuous sales (10%) - Banks love consistency!`); } else if(monthCount>0){ details.push(`❌ Only ${monthCount}/3 months - Keep selling monthly (+10%)`); if(!next) next="Reach 3 months history (+10%)"; }
     if(avgMonthly>=1000){ score+=5; details.push(`✅ Avg R${avgMonthly.toFixed(0)}/month (5%)`); }
@@ -436,15 +435,12 @@ document.addEventListener('DOMContentLoaded', () => {
     if(salesCount>=5){ score+=5; details.push(`✅ ${salesCount} transactions (5%)`); }
     if(salesCount>=10){ score+=10; badges.push("🔥 10 Sales Club"); details.push(`✅ ${salesCount} sales records (10%) - Proven demand!`); } else { details.push(`❌ ${salesCount}/10 sales - Get to 10 sales (+10%)`); if(!next) next=`Get ${10-salesCount} more sales (+10%)`; }
     if(totalIncome>=5000){ score+=5; details.push(`✅ R${totalIncome} total income (5%)`); }
-
     let hasID=Object.values(vault).some(v=>v.type==='ID Document'); let hasCIPC=Object.values(vault).some(v=>v.type==='CIPC Certificate'); let hasAddress=Object.values(vault).some(v=>v.type==='Proof of Address'); let hasBank=Object.values(vault).some(v=>v.type==='Bank Confirmation'); let hasTax=Object.values(vault).some(v=>v.type==='Tax Clearance');
-
     if(hasID){ score+=10; badges.push("🪪 ID Verified"); details.push(`✅ ID Document uploaded (10%)`); } else { details.push(`❌ Missing ID Document (0%) - Upload now +10%`); if(!next) next="Upload ID Document (+10%)"; }
     if(hasCIPC){ score+=15; badges.push("🏢 CIPC Registered"); details.push(`✅ CIPC Certificate (15%) - Formal business!`); } else { details.push(`❌ Missing CIPC (0%) - Get CIPC +15%`); if(!next) next="Upload CIPC Certificate (+15%)"; }
     if(hasAddress){ score+=5; details.push(`✅ Proof of Address (5%)`); } else { details.push(`❌ Missing Proof of Address (0%) +5%`); if(!next) next="Upload Proof of Address (+5%)"; }
     if(hasBank){ score+=10; badges.push("🏦 Bank Ready"); details.push(`✅ Bank Confirmation Letter (10%)`); } else { details.push(`❌ Missing Bank Letter (0%) +10%`); if(!next) next="Upload Bank Confirmation (+10%)"; }
     if(hasTax){ score+=10; badges.push("🧾 Tax Compliant"); details.push(`✅ Tax Clearance (10%) - Investor ready!`); } else { details.push(`❌ Missing Tax Clearance (0%) +10%`); if(!next) next="Upload Tax Clearance (+10%)"; }
-
     score=Math.min(score,100);
     let level=""; let motivate="";
     if(score<20){ level="LEVEL 1: Hustler 🌱"; motivate="You just started! Every big business started with 1 sale. Upload your ID to get +10% instantly and unlock Level 2!"; }
@@ -453,7 +449,6 @@ document.addEventListener('DOMContentLoaded', () => {
     else if(score<80){ level="LEVEL 4: CEO 🚀"; motivate="CEO level! You can walk into Standard Bank now and they will listen. Just need Tax Clearance for 100% funding power!"; }
     else if(score<100){ level="LEVEL 5: Funding Ready 🏦"; motivate="🔥 You are FUNDING READY! Apply for SEFA, NYDA, Standard Bank Enterprise Direct - you meet all minimums!"; }
     else { level="LEVEL 6: Investor Ready 👑"; motivate="👑 MAX LEVEL! You are ready for investors. Your business pack is bank-proof. Go pitch!"; }
-
     return {score, details, level, badge: badges.join(" ")||"🎯 Complete tasks to earn badges", next: next||"✅ All tasks done! You are 100%!", motivate, totalIncome, monthCount, avgMonthly};
   }
 
@@ -500,19 +495,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
   window.uploadVault = async () => {
     let file=document.getElementById('vaultFile').files[0]; let type=document.getElementById('vaultType').value;
-    if(!file) return alert('Pick file');
+    if(!file) return alert('Pick a file - PDF or Image');
     let refS=sRef(storage, `vault/${Date.now()}-${file.name}`);
     await uploadBytes(refS, file); let url=await getDownloadURL(refS);
-    let id=Date.now().toString(); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url, name:file.name, date:new Date().toISOString()});
-    alert('Uploaded to Vault!');
+    let id=Date.now().toString();
+    await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url, name:file.name, fileType:file.type, size:file.size, date:new Date().toISOString()});
+    document.getElementById('vaultFile').value=''; alert('✅ Uploaded to Vault! PDF/Image saved.');
   }
   window.loadVault = () => {
     let grid=document.getElementById('vaultGrid'); if(!grid) return; grid.innerHTML='';
+    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload ID, CIPC, etc.</p>'; return; }
     Object.entries(vault).forEach(([id,v])=>{
-      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b><br><img src="${v.url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px;margin:5px 0"><br><small>${v.name}</small><br><a href="${v.url}" target="_blank" style="color:var(--accent);font-size:10px">View</a> | <span onclick="deleteVault('${id}')" style="color:red;cursor:pointer;font-size:10px">Delete</span></div>`;
+      let isPdf = v.fileType==='application/pdf' || v.name?.toLowerCase().endsWith('.pdf');
+      let preview = isPdf? `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>` : `<img src="${v.url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px">`;
+      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:9px;color:var(--muted)">${isPdf?'PDF':'Image'} • ${v.date?new Date(v.date).toLocaleDateString():''}</div><div style="display:flex;gap:4px;margin-top:6px"><a href="${v.url}" target="_blank" style="flex:1;background:var(--blue);color:#fff;padding:4px 6px;border-radius:6px;font-size:10px;text-decoration:none;text-align:center">👁️ View</a><button onclick="openVaultEdit('${id}')" style="flex:1;background:var(--green);color:#fff;border:none;padding:4px 6px;border-radius:6px;font-size:10px;cursor:pointer">✏️ Edit</button></div><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:4px 6px;border-radius:6px;font-size:10px;cursor:pointer">🗑️ Delete</button></div>`;
     })
   }
-  window.deleteVault = (id) => { if(confirm('Delete document?')) remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)) }
+  window.openVaultEdit = (id) => { editingVaultId=id; let v=vault[id]; document.getElementById('vaultEditName').value=v.name; document.getElementById('vaultEditType').value=v.type; document.getElementById('vaultEditModal').style.display='flex'; }
+  window.saveVaultEdit = () => { if(!editingVaultId) return; let name=document.getElementById('vaultEditName').value.trim(); let type=document.getElementById('vaultEditType').value; if(!name) return alert('Enter name'); update(ref(db, 'feelthenoisesoundsolution/vault/'+editingVaultId), {name, type}); document.getElementById('vaultEditModal').style.display='none'; editingVaultId=null; }
+  window.deleteVault = (id) => { if(confirm('Delete this document permanently?')) remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)) }
 
   function getImages(p){ if(!p.img) return [COMPANY_LOGO]; return p.img.split(',').map(s=>s.trim()).filter(s=>s); }
   window.switchImage = (cardId, imgUrl, thumb) => { document.getElementById('main_'+cardId).src = imgUrl; document.querySelectorAll(`#card_${cardId}.card-imgs img`).forEach(i=>i.classList.remove('active')); thumb.classList.add('active'); }
