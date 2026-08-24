@@ -17,13 +17,11 @@
 *{box-sizing:border-box;font-family:'Poppins',sans-serif}body{margin:0;background:var(--bg);color:var(--text)}
 html, body{overflow-x:hidden; width:100%}
 .header{background:linear-gradient(90deg,#ff0064,#ff3385);padding:12px;color:#fff;position:sticky;top:0;z-index:99;box-shadow:var(--shadow)}
-.header-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.logo{width:50px;height:50px;border-radius:12px;background:#fff;padding:3px;object-fit:cover;box-shadow:0 0 15px rgba(255,0,100,0.4)}
+.header-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.logo{width:50px;height:50px;border-radius:12px;background:#fff;padding:3px;object-fit:cover}
 .search-box{flex:1;background:rgba(255,255,255,0.9);border-radius:25px;padding:8px 15px;display:flex;align-items:center}
 .search-box input{border:none;outline:none;width:100%;background:transparent;color:#000}
-.nav-cats{display:flex;gap:15px;overflow-x:auto;margin-top:10px;padding-bottom:5px;padding-right:15px}
+.nav-cats{display:flex;gap:15px;overflow-x:auto;margin-top:10px;padding-bottom:5px}
 .nav-cats button{background:rgba(255,255,255,0.2);border:none;color:#fff;padding:6px 12px;border-radius:20px;font-weight:600;cursor:pointer;white-space:nowrap}
-#clientView.nav-cats button{background:#fff!important;color:#2d3436!important;border:1px solid #dfe6e9!important;opacity:1!important;font-weight:600!important}
-#clientView.nav-cats button.active{background:var(--accent)!important;color:#fff!important;border:1px solid var(--accent)!important;border-bottom:3px solid #000!important;font-weight:800!important}
 .container{max-width:100%;margin:0 auto;padding:10px}
 .banner{background:linear-gradient(135deg,#ff0064,#ff3385);color:#fff;padding:20px;border-radius:15px;text-align:center;margin:15px 0;font-weight:800;font-size:18px}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
@@ -34,11 +32,10 @@ html, body{overflow-x:hidden; width:100%}
 .card-imgs{display:flex;gap:4px;margin-top:5px;overflow-x:auto}
 .card-imgs img{width:45px;height:45px;border-radius:6px;object-fit:cover;cursor:pointer;border:2px solid transparent}
 .card-imgs img.active{border:2px solid var(--accent)}
-.old-price{text-decoration:line-through;color:var(--muted);font-size:11px}
 .btn-cart{background:var(--accent);color:#fff;border:none;width:100%;padding:8px;border-radius:8px;font-weight:700;cursor:pointer}
 .btn-oos{background:#555;color:#fff;border:none;width:100%;padding:8px;border-radius:8px;font-weight:700;cursor:not-allowed}
 .qty-controls{display:flex;gap:5px;align-items:center;margin-top:8px}
-.qty-btn{background:var(--accent);color:#fff;border:none;width:32px;height:32px;border-radius:8px;font-weight:800;cursor:pointer;font-size:16px}
+.qty-btn{background:var(--accent);color:#fff;border:none;width:32px;height:32px;border-radius:8px;font-weight:800;cursor:pointer}
 .qty-text{background:#222;border:1px solid var(--border);padding:6px 10px;border-radius:8px;font-weight:700;min-width:40px;text-align:center}
 .admin{background:var(--card);backdrop-filter: blur(16px);padding:15px;border-radius:12px;margin:15px 0;box-shadow:var(--shadow);border:1px solid var(--border)}
 .login-box{max-width:400px;margin:40px auto;background:var(--card);padding:25px;border-radius:15px;box-shadow:var(--shadow);border:1px solid var(--border)}
@@ -51,54 +48,42 @@ html, body{overflow-x:hidden; width:100%}
 input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(--border);border-radius:8px;background:#111;color:#fff}
 .btn{background:var(--accent);color:#fff;border:none;padding:10px 15px;border-radius:8px;font-weight:700;cursor:pointer}
 .btn-blue{background:var(--blue)}.btn-green{background:var(--green)}.btn-purple{background:var(--purple)}.btn-gray{background:var(--muted)}.btn-danger{background:var(--danger)}
-.cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);backdrop-filter: blur(16px);padding:12px;box-shadow:0 -2px 10px rgba(0,0,0,0.2);display:none;z-index:100;border-top:1px solid var(--border)}
+.cart-bar{position:fixed;bottom:0;left:0;right:0;background:var(--card);backdrop-filter: blur(16px);padding:12px;display:none;z-index:100;border-top:1px solid var(--border)}
 .loading{text-align:center;padding:40px}
 .error{color:var(--accent);text-align:center;padding:10px}
 .order-card{background:var(--card);padding:12px;border-radius:10px;margin:10px 0;border-left:4px solid var(--accent);border:1px solid var(--border)}
 .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:15px}
 .stat-card{background:linear-gradient(135deg,#ff0064,#ff3385);color:#fff;padding:15px;border-radius:10px;text-align:center}
 .stat-card h4{margin:0;font-size:24px}
-.install-banner{background:var(--accent);color:#fff;padding:12px;border-radius:10px;margin:10px 0;text-align:center;display:none}
-.client-header{text-align:center;padding:15px;background:linear-gradient(90deg,#ff0064,#ff3385);color:#fff}
-.brand-tag{background:rgba(255,0,100,0.2);padding:4px 8px;border-radius:15px;font-size:10px;margin:2px;display:inline-block}
-.client-link{margin:15px 0;padding:12px;background:rgba(255,0,100,0.1);border-radius:10px;text-align:center;font-size:12px}
 .bank-info{background:rgba(255,0,100,0.1);border-left:4px solid var(--accent);padding:10px;border-radius:8px;margin:10px 0;font-size:12px}
 .site-footer{background:#000;color:#fff;padding:5px 10px;text-align:center;margin-top:20px;font-size:9px;border-top:1px solid rgba(255,255,255,0.05)}
-.footer-title{font-size:10px;font-weight:700;margin-bottom:2px;color:var(--accent)}
-.footer-line{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:1px 0}
-.footer-line a{color:#ff3385;text-decoration:none;font-size:9px}
-.dark-mode{--bg:#1a1a1a;--card:#2d3436;--text:#fff;--border:#444}
+.footer-title{font-size:10px;font-weight:700;color:var(--accent)}
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:999}
 .modal-content{background:#111;padding:20px;border-radius:15px;width:90%;max-width:400px;border:1px solid var(--border)}
 .progress-bar{height:22px;background:#222;border-radius:11px;overflow:hidden;margin:10px 0;border:1px solid var(--border)}.progress-fill{height:100%;background:linear-gradient(90deg,#00b894,#00cec9);transition:width 0.6s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
-.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center}
-.note-card{background:#111;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid var(--accent);position:relative}.note-pinned{border-left:4px solid var(--green);background:rgba(0,184,148,0.15);box-shadow:0 0 10px rgba(0,184,148,0.2)}
+.vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center;position:relative}
+.note-card{background:#111;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid var(--accent)}.note-pinned{border-left:4px solid var(--green);background:rgba(0,184,148,0.15)}
 @media(max-width:600px){.grid{grid-template-columns:1fr!important}.stats{grid-template-columns:repeat(2,1fr)}}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
 
-<div id="installBanner" class="install-banner">📲 <b>Install FEEL THE NOISE App</b> <button class="btn" style="padding:5px 10px;margin-left:10px;background:#fff;color:var(--accent)" id="installBtn">Install</button> <button onclick="document.getElementById('installBanner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;float:right">x</button></div>
-
 <div id="quickInvoiceModal" class="modal"><div class="modal-content"><h3>🧾 Quick Quote</h3><input type="text" id="quickInvName" placeholder="Customer Name"><input type="tel" id="quickInvPhone" placeholder="Customer Phone"><input type="email" id="quickInvEmail" placeholder="Customer Email"><input type="text" id="quickInvItem" placeholder="Service Name"><input type="number" id="quickInvQty" placeholder="Qty" value="1"><input type="number" id="quickInvPrice" placeholder="Price R"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvTax"> Add 15% VAT</label><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvPaid"> Mark as PAID</label><button class="btn" onclick="downloadQuickInvoice()" style="width:100%">Download PDF</button><button class="btn-gray" onclick="document.getElementById('quickInvoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
 <div id="invoiceModal" class="modal"><div class="modal-content"><h3>📄 Edit Quote Details</h3><input type="text" id="invCustName" placeholder="Customer Name"><input type="tel" id="invCustPhone" placeholder="Customer Phone"><input type="email" id="invCustEmail" placeholder="Customer Email"><input type="text" id="invCustAddress" placeholder="Customer Address"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invTaxToggle"> Add 15% VAT</label><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invPaidToggle"> Mark as PAID</label><button class="btn" onclick="downloadFinalInvoice()" style="width:100%">Download PDF</button><button class="btn-gray" onclick="document.getElementById('invoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
 <div id="customerModal" class="modal"><div class="modal-content"><h3>Customer Details</h3><input type="text" id="custName" placeholder="Your Name"><input type="tel" id="custPhone" placeholder="Your Phone Number"><input type="email" id="custEmail" placeholder="Your Email Address"><div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 mdkoscar50@gmail.com</b></div><button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button><button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
-
-<div id="noteModal" class="modal"><div class="modal-content"><h3 id="noteModalTitle">📝 Add Admin Note</h3><input type="text" id="noteTitle" placeholder="Title (e.g. Customer hasn't paid)"><select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up Call</option></select><textarea id="noteContent" placeholder="Details..."></textarea><input type="date" id="noteDate"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="notePinned"> 📌 Pin this note (show on top)</label><button class="btn" onclick="saveNote()" style="width:100%">Save Note</button><button class="btn-gray" onclick="document.getElementById('noteModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
-
-<div id="vaultEditModal" class="modal"><div class="modal-content"><h3>✏️ Edit Document</h3><input type="text" id="vaultEditName" placeholder="Document Name"><select id="vaultEditType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select><input type="text" id="vaultEditUrl" placeholder="Catbox URL"><button class="btn" onclick="saveVaultEdit()" style="width:100%">Save Changes</button><button class="btn-gray" onclick="document.getElementById('vaultEditModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
+<div id="noteModal" class="modal"><div class="modal-content"><h3 id="noteModalTitle">📝 Add Admin Note</h3><input type="text" id="noteTitle" placeholder="Title"><select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up Call</option></select><textarea id="noteContent" placeholder="Details..."></textarea><input type="date" id="noteDate"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="notePinned"> 📌 Pin this note</label><button class="btn" onclick="saveNote()" style="width:100%">Save Note</button><button class="btn-gray" onclick="document.getElementById('noteModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
 
 <div id="clientView" style="display:none">
   <div class="client-header"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo" style="margin:0 auto"><h2>FEEL THE NOISE</h2><p>Sound Solution</p><div class="search-box" style="max-width:500px;margin:10px auto"><input type="text" id="clientSearchInput" placeholder="Search services..." onkeyup="searchProducts()"></div></div>
-  <div class="container"><div class="client-link"><b>📲 Share this with customers:</b><br><code id="clientLink"></code></div><div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div><div class="bank-info"><b>📍 Location:</b> Shushumela Ext 2<br><b>🏦 Pay to:</b> Capitec 1621732043 | <b>📱 WhatsApp:</b> 066 279 6762 | <b>📞 Calls:</b> 071 213 4478 | <b>📧 Email:</b> mdkoscar50@gmail.com</div><div class="nav-cats"><button onclick="filterCat('All', event)" class="active">All</button><button onclick="filterCat('Sound', event)">Sound</button><button onclick="filterCat('Promotion', event)">Promotion</button><button onclick="filterCat('Hosting', event)">Hosting</button><button onclick="filterCat('Events', event)">Events</button></div><h2 style="margin:20px 0">📋 Services & Pricing</h2><div class="grid" id="clientProductGrid"><div class="loading">Loading services...</div></div></div>
+  <div class="container"><div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div><div class="nav-cats"><button onclick="filterCat('All', event)" class="active">All</button><button onclick="filterCat('Sound', event)">Sound</button><button onclick="filterCat('Promotion', event)">Promotion</button><button onclick="filterCat('Hosting', event)">Hosting</button><button onclick="filterCat('Events', event)">Events</button></div><h2 style="margin:20px 0">📋 Services & Pricing</h2><div class="grid" id="clientProductGrid"><div class="loading">Loading services...</div></div></div>
   <div class="cart-bar" id="clientCartBar"><b>Cart: <span id="clientCartCount">0</span> | Total: R<span id="clientCartTotal">0</span></b><button class="btn" onclick="openCustomerModal()">Request Quote</button></div>
 </div>
 
 <div id="loginScreen"><div class="login-box"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" style="width:90px;margin:0 auto;display:block;border-radius:15px"><h2>FEEL THE NOISE PORTAL</h2><div id="loginError" class="error"></div><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" onclick="doLogin()" style="width:100%">Login</button></div></div>
 
 <div id="app" style="display:none">
-  <div class="header"><div class="header-top"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo"><div class="search-box"><input type="text" id="searchInput" placeholder="Search services..." onkeyup="searchProducts()"></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" style="padding:5px 10px;font-size:12px;background:#fff;color:var(--accent)" onclick="toggleDark()">🌙</button><span class="role-badge" id="userRole">ADMIN</span><button class="btn" style="padding:5px 10px;font-size:12px" onclick="logout()">Logout</button></div></div><div class="nav-cats"><button onclick="filterCat('All', event)" class="active">All</button><button onclick="filterCat('Sound', event)">Sound</button><button onclick="filterCat('Promotion', event)">Promotion</button><button onclick="filterCat('Hosting', event)">Hosting</button><button onclick="filterCat('Events', event)">Events</button></div></div>
+  <div class="header"><div class="header-top"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo"><div class="search-box"><input type="text" id="searchInput" placeholder="Search services..." onkeyup="searchProducts()"></div><div style="display:flex;gap:8px;align-items:center"><span class="role-badge" id="userRole">ADMIN</span><button class="btn" style="padding:5px 10px;font-size:12px" onclick="logout()">Logout</button></div></div><div class="nav-cats"><button onclick="filterCat('All', event)" class="active">All</button><button onclick="filterCat('Sound', event)">Sound</button><button onclick="filterCat('Promotion', event)">Promotion</button><button onclick="filterCat('Hosting', event)">Hosting</button><button onclick="filterCat('Events', event)">Events</button></div></div>
   <div class="container">
     <div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div>
     <div class="admin" id="adminPanel">
@@ -112,7 +97,6 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
         <div class="tab" onclick="showTab('notes', this)">📝 Notes</div>
         <div class="tab" onclick="showTab('stock', this)">Stock</div>
         <div class="tab" onclick="showTab('orders', this)">Requests</div>
-        <div class="tab" id="usersTab" onclick="showTab('users', this)">Users</div>
         <div class="tab" onclick="showTab('reports', this)">Reports</div>
       </div>
 
@@ -128,16 +112,11 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
           <div class="stat-card" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)"><h4 id="statMonth">R0</h4><small>This Month</small></div>
           <div class="stat-card" style="background:linear-gradient(135deg,#fdcb6e,#e17055)"><h4 id="statScore">0%</h4><small>Funding Ready</small></div>
         </div>
-        <div class="admin" style="background:rgba(255,0,100,0.1);border-left:4px solid var(--accent);margin-bottom:15px">
-          <h4>📲 Customer Quote Link</h4><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="text" id="clientShareLink" readonly style="flex:1;min-width:200px"><button class="btn" onclick="copyClientLink()">Copy</button><button class="btn-green" onclick="shareClientWhatsApp()">WhatsApp</button><button class="btn-blue" onclick="previewClient()">Preview</button></div>
-        </div>
-        <div class="bank-info"><b>🏦 Business Account:</b> Capitec 1621732043<br><b>📱 WhatsApp:</b> 066 279 6762<br><b>📞 Calls:</b> 071 213 4478<br><b>📧 Email:</b> mdkoscar50@gmail.com<br><b>📍 Address:</b> Shushumela Ext 2</div>
         <button class="btn-blue" onclick="document.getElementById('quickInvoiceModal').style.display='flex'" style="margin-bottom:15px">🧾 Quick Quote</button>
       </div>
 
       <div id="tab-income" style="display:none">
-        <h3>💰 Daily Income Tracker - For Bank</h3>
-        <p style="font-size:11px;color:var(--muted)">Shows daily sales - Bank loves this history. Instead of just Orders list.</p>
+        <h3>💰 Daily Income Tracker (For Bank)</h3>
         <div class="stats">
           <div class="stat-card"><h4 id="incToday">R0</h4><small>Today</small></div>
           <div class="stat-card" style="background:linear-gradient(135deg,#00b894,#0984e3)"><h4 id="incWeek">R0</h4><small>This Week</small></div>
@@ -150,62 +129,68 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 
       <div id="tab-tax" style="display:none">
         <h3>🧾 Simple Tax Helper (SA 2026)</h3>
-        <div class="bank-info"><b>Threshold:</b> R95,750/year - Below this = no income tax (SARS 2026). This is guide only.</div>
+        <div class="bank-info"><b>Threshold:</b> R95,750/year - Below = no income tax.</div>
         <div class="stats"><div class="stat-card"><h4 id="taxYear">R0</h4><small>Yearly Income</small></div><div class="stat-card" id="taxStatusCard"><h4 id="taxStatus">Safe</h4><small>Status</small></div></div>
-        <div class="admin" style="background:#111"><p><b>Monthly Breakdown for Bank:</b></p><div id="taxBreakdown"></div></div>
+        <div class="admin" style="background:#111"><p><b>Monthly Breakdown:</b></p><div id="taxBreakdown"></div></div>
       </div>
 
       <div id="tab-funding" style="display:none">
-        <h3>🏦 Funding Readiness Score - For Bank Loans</h3>
+        <h3>🏦 Funding Readiness Score</h3>
         <div style="text-align:center;padding:20px;background:linear-gradient(135deg,#ff0064,#ff3385);border-radius:15px;margin:10px 0;color:#fff">
           <h1 id="fundScoreText" style="font-size:52px;margin:0;font-weight:800">0%</h1>
           <p id="fundLevel" style="font-size:18px;font-weight:800;margin:5px 0">LEVEL 1: Hustler 🌱</p>
           <div class="progress-bar" style="background:rgba(0,0,0,0.3)"><div id="fundProgress" class="progress-fill" style="width:0%">0%</div></div>
           <p id="fundBadge" style="font-size:12px;margin:8px 0">🎯 Earn badges</p>
-          <p id="fundNext" style="font-size:11px;opacity:0.9">Next unlock: Upload ID (+10%)</p>
+          <p id="fundNext" style="font-size:11px;opacity:0.9">Next unlock</p>
         </div>
-        <div id="fundChecklist"></div><div class="bank-info" id="fundAdvice" style="font-weight:700"></div><div class="bank-info" id="fundMotivate" style="background:rgba(0,184,148,0.15);border-left:4px solid var(--green)"></div>
-        <button class="btn" onclick="downloadFundingReport()">📄 Download Funding Report PDF for Bank</button>
+        <div id="fundChecklist"></div><div class="bank-info" id="fundAdvice"></div><div class="bank-info" id="fundMotivate" style="background:rgba(0,184,148,0.15);border-left:4px solid var(--green)"></div>
+        <button class="btn" onclick="downloadFundingReport()">📄 Download Funding Report PDF</button>
       </div>
 
       <div id="tab-vault" style="display:none">
-        <h3>📁 Document Vault - For Bank (Upload & Download PDF)</h3>
-        <p style="font-size:11px;color:var(--muted)">Upload to catbox.moe - permanent link. Supports PDF, JPG, PNG. You can download as PDF or original.</p>
+        <h3>📁 Document Vault - Firebase Realtime 1GB Storage</h3>
+        <p style="font-size:11px;color:var(--muted)">No catbox.moe. Files stored as base64 in Realtime Database. Max 7MB per file (Realtime limit). For bank documents + PDF download.</p>
         <select id="vaultType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select>
-        <label style="font-size:12px;margin-top:10px;display:block">📤 Method 1: Upload File directly to Catbox (auto link) - PDF & Images:</label>
-        <input type="file" id="vaultFile" accept="image/*,.pdf,.doc,.docx">
-        <button class="btn" id="vaultUploadBtn" onclick="uploadVaultCatbox()">⬆️ Upload to Catbox.moe & Save to Vault</button>
-        <div id="vaultUploadStatus" style="font-size:12px;margin:8px 0;color:var(--green)"></div>
-        <label style="font-size:12px;margin-top:15px;display:block">🔗 Method 2: Paste existing Catbox link:</label>
-        <input type="text" id="vaultLinkInput" placeholder="https://files.catbox.moe/xxxxxx.pdf">
-        <button class="btn-blue" onclick="saveVaultLink()">💾 Save Link to Vault</button>
+
+        <div style="border:2px dashed #ff0064;border-radius:12px;padding:20px;text-align:center;cursor:pointer;background:rgba(255,0,100,0.05);margin-top:10px" onclick="document.getElementById('vaultFile').click()">
+          <h4 style="margin:0">📤 Click to Upload PDF / Image to Vault</h4>
+          <p style="font-size:10px;color:#aaa">PDF, JPG, PNG - Stored in Firebase Realtime (1GB) - Max 7MB per file</p>
+          <input type="file" id="vaultFile" accept="image/*,.pdf,.doc,.docx" style="display:none">
+        </div>
+
+        <div id="vaultFileInfo" style="display:none;margin-top:10px;background:#111;padding:10px;border-radius:8px">
+          <p id="vaultFName" style="font-weight:700"></p>
+          <p id="vaultFSize" style="font-size:11px;color:#aaa"></p>
+          <img id="vaultImgPrev" style="display:none;max-width:100%;max-height:150px;border-radius:8px;margin:8px 0">
+          <button class="btn" id="vaultUploadBtn" onclick="uploadVaultRealtime()">⬆️ Save to Vault (Realtime DB)</button>
+          <div id="vaultUploadStatus" style="font-size:12px;margin:8px 0;color:var(--green)"></div>
+        </div>
+
+        <div style="background:#111;padding:10px;border-radius:10px;margin:12px 0">
+          <b>💾 Vault Space Used:</b> <span id="vaultUsageText">0 MB</span>
+          <div style="background:#222;border-radius:10px;height:12px;overflow:hidden;margin:8px 0"><div id="vaultUsageFill" style="height:100%;background:linear-gradient(90deg,#00b894,#00cec9);width:0%"></div></div>
+          <small style="color:#aaa">Firebase Realtime free quota is 1GB total. Delete files to free space.</small>
+        </div>
+
         <div class="vault-grid" id="vaultGrid" style="margin-top:15px"></div>
       </div>
 
       <div id="tab-notes" style="display:none">
-        <h3>📝 Admin Notes - Reminders</h3>
-        <p style="font-size:11px;color:var(--muted)">For bank: track unpaid customers, appointments, to-do. Pin important notes to top.</p>
+        <h3>📝 Admin Notes</h3>
         <div class="stats"><div class="stat-card"><h4 id="noteTotal">0</h4><small>Total</small></div><div class="stat-card" style="background:linear-gradient(135deg,#e17055,#fdcb6e)"><h4 id="noteUnpaid">0</h4><small>Unpaid</small></div><div class="stat-card" style="background:linear-gradient(135deg,#00b894,#00cec9)"><h4 id="notePinnedCount">0</h4><small>Pinned</small></div></div>
         <div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap"><button class="btn" onclick="openNoteModal()">➕ Add Note</button><select id="noteFilter" onchange="loadNotes()" style="width:auto"><option value="all">All Notes</option><option value="pinned">📌 Pinned</option><option value="unpaid">💰 Unpaid</option><option value="appointment">📅 Appointments</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up</option></select></div>
         <div id="notesList"></div>
       </div>
 
-      <div id="tab-products" style="display:none">
-        <h3 id="formTitle">➕ Add Service</h3><button class="btn-purple" onclick="seedDatabase()">⚡ Load FEEL THE NOISE Services</button>
-        <input type="text" id="pName" placeholder="Service Name"><select id="pCat"><option>Sound</option><option>Promotion</option><option>Hosting</option><option>Events</option><option>Specialty</option></select>
-        <input type="text" id="pImg" placeholder="Image URL"><input type="number" id="pPrice" placeholder="Price R"><input type="number" id="pOldPrice" placeholder="Old Price R"><input type="number" id="pStock" placeholder="Stock Qty"><textarea id="pDesc" placeholder="Description"></textarea>
-        <div style="display:flex;gap:10px"><button class="btn" id="saveBtn" onclick="saveProduct()" style="flex:1">Save Service</button><button class="btn-gray" id="cancelBtn" onclick="cancelEdit()" style="flex:1;display:none">Cancel</button></div>
-        <h3 style="margin-top:20px">📋 Manage Services</h3><input type="text" id="adminSearch" class="admin-search" placeholder="🔍 Search..."><div id="productList"></div>
-      </div>
+      <div id="tab-products" style="display:none"><h3 id="formTitle">➕ Add Service</h3><button class="btn-purple" onclick="seedDatabase()">⚡ Load FEEL THE NOISE Services</button><input type="text" id="pName" placeholder="Service Name"><select id="pCat"><option>Sound</option><option>Promotion</option><option>Hosting</option><option>Events</option><option>Specialty</option></select><input type="text" id="pImg" placeholder="Image URL"><input type="number" id="pPrice" placeholder="Price R"><input type="number" id="pOldPrice" placeholder="Old Price R"><input type="number" id="pStock" placeholder="Stock Qty"><textarea id="pDesc" placeholder="Description"></textarea><div style="display:flex;gap:10px"><button class="btn" id="saveBtn" onclick="saveProduct()" style="flex:1">Save Service</button><button class="btn-gray" id="cancelBtn" onclick="cancelEdit()" style="flex:1;display:none">Cancel</button></div><h3 style="margin-top:20px">📋 Manage Services</h3><input type="text" id="adminSearch" placeholder="🔍 Search..."><div id="productList"></div></div>
       <div id="tab-stock" style="display:none"><h3>📦 Stock Management</h3><div id="stockList"></div></div>
       <div id="tab-orders" style="display:none"><h3>📦 Customer Requests</h3><div id="ordersList">Loading requests...</div></div>
-      <div id="tab-users" style="display:none"><h3>👥 Users & Roles</h3><p><b>CEO:</b> ceo@feelthenoisesoundsolution.co.za</p><p><b>Manager:</b> manager@feelthenoisesoundsolution.co.za</p></div>
-      <div id="tab-reports" style="display:none"><h3>📊 Reports</h3><button class="btn-purple" onclick="downloadReport()">Download PDF Report</button> <button class="btn-green" onclick="downloadCSV()">Download CSV Spreadsheet</button></div>
+      <div id="tab-reports" style="display:none"><h3>📊 Reports</h3><button class="btn-purple" onclick="downloadReport()">Download PDF Report</button> <button class="btn-green" onclick="downloadCSV()">Download CSV</button></div>
     </div>
     <h2 style="margin:20px 0">⭐ Featured Services</h2><div class="grid" id="productGrid"><div class="loading">Loading services...</div></div>
   </div>
   <div class="cart-bar" id="cartBar"><b>Cart: <span id="cartCount">0</span> | Total: R<span id="cartTotal">0</span></b><button class="btn" onclick="openCustomerModal()">Request Quote</button></div>
-  <footer class="site-footer"><div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div><div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div><div class="footer-line">📍 Shushumela Ext 2 | 🏦 Capitec: 1621732043</div><div class="footer-copy">© 2026 Feel The Noise Sound Solution. Reg: Twinz Cooperate Services Pty Ltd 2024/4444303/07</div></footer>
+  <footer class="site-footer"><div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div><div class="footer-line">📞 066 279 6762 | 📞 071 213 4478 | 📧 mdkoscar50@gmail.com</div><div class="footer-line">📍 Shushumela Ext 2 | 🏦 Capitec: 1621732043</div></footer>
 </div>
 
 <script type="module">
@@ -228,11 +213,7 @@ const COMPANY_LOGO = "https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg";
 const BUSINESS_WHATSAPP = "27662796762";
 const BANK_ACCOUNT = "Capitec 1621732043";
 document.addEventListener('DOMContentLoaded', () => {
-  setClientLink();
-  const urlParams = new URLSearchParams(window.location.search);
-  const isClientMode = urlParams.has('client');
   const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
   const db = getDatabase(app);
   const auth = getAuth(app);
   const productsRef = ref(db, 'feelthenoisesoundsolution/categories');
@@ -240,17 +221,24 @@ document.addEventListener('DOMContentLoaded', () => {
   const vaultRef = ref(db, 'feelthenoisesoundsolution/vault');
   const notesRef = ref(db, 'feelthenoisesoundsolution/notes');
   let products = {}; let orders = {}; let vault = {}; let notes = {}; let cart = [];
-  let currentUser = {role:'reception'}; let currentFilter = 'All'; let editingId = null; let editingNoteId = null; let editingVaultId = null; let deferredPrompt; let currentInvoiceId = null;
+  let currentUser = {role:'reception'}; let currentFilter = 'All'; let editingId = null; let editingNoteId = null; let deferredPrompt; let currentInvoiceId = null;
+  let vaultFile=null;
 
-  window.addEventListener('beforeinstallprompt', (e) => {e.preventDefault();deferredPrompt = e;document.getElementById('installBanner').style.display = 'block';});
-  document.getElementById('installBtn').onclick = () => {if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(() => {deferredPrompt = null;document.getElementById('installBanner').style.display = 'none';});}};
-  if(isClientMode){document.getElementById('loginScreen').style.display = 'none';document.getElementById('app').style.display = 'none';document.getElementById('clientView').style.display = 'block';document.getElementById('clientLink').innerText = window.location.origin + window.location.pathname + '?client=1';}
-  const loginScreen = document.getElementById('loginScreen');const appDiv = document.getElementById('app');const clientProductGrid = document.getElementById('clientProductGrid');const productGrid = document.getElementById('productGrid');const productList = document.getElementById('productList');const stockList = document.getElementById('stockList');const ordersList = document.getElementById('ordersList');const searchInput = document.getElementById('searchInput');const clientSearchInput = document.getElementById('clientSearchInput');const adminSearch = document.getElementById('adminSearch');const cartBar = document.getElementById('cartBar');const clientCartBar = document.getElementById('clientCartBar');const cartCount = document.getElementById('cartCount');const clientCartCount = document.getElementById('clientCartCount');const cartTotal = document.getElementById('cartTotal');const clientCartTotal = document.getElementById('clientCartTotal');const pName = document.getElementById('pName'); const pCat = document.getElementById('pCat');const pImg = document.getElementById('pImg');const pPrice = document.getElementById('pPrice');const pOldPrice = document.getElementById('pOldPrice'); const pStock = document.getElementById('pStock');const pDesc = document.getElementById('pDesc'); const saveBtn = document.getElementById('saveBtn');const cancelBtn = document.getElementById('cancelBtn'); const formTitle = document.getElementById('formTitle');const loginError = document.getElementById('loginError');
-  if(adminSearch) adminSearch.addEventListener('keyup', buildProductList);
+  const loginScreen = document.getElementById('loginScreen');const appDiv = document.getElementById('app');const productGrid = document.getElementById('productGrid');const productList = document.getElementById('productList');const stockList = document.getElementById('stockList');const ordersList = document.getElementById('ordersList');const searchInput = document.getElementById('searchInput');const adminSearch = document.getElementById('adminSearch');const cartBar = document.getElementById('cartBar');const pName = document.getElementById('pName'); const pCat = document.getElementById('pCat');const pImg = document.getElementById('pImg');const pPrice = document.getElementById('pPrice');const pOldPrice = document.getElementById('pOldPrice'); const pStock = document.getElementById('pStock');const pDesc = document.getElementById('pDesc'); const saveBtn = document.getElementById('saveBtn');const cancelBtn = document.getElementById('cancelBtn'); const formTitle = document.getElementById('formTitle');const loginError = document.getElementById('loginError');
+
+  function base64ToBlob(base64, mime){
+    try{
+      let byteString=atob((base64.split(',')[1]||base64));
+      let ab=new ArrayBuffer(byteString.length);
+      let ia=new Uint8Array(ab);
+      for(let i=0;i<byteString.length;i++) ia[i]=byteString.charCodeAt(i);
+      return new Blob([ab],{type:mime});
+    }catch(e){ return null; }
+  }
+
   window.doLogin = async () => {loginError.innerText = 'Logging in...';try{await signInWithEmailAndPassword(auth, loginEmail.value, loginPass.value);loginError.innerText = '';} catch(e){loginError.innerText = 'Login failed: ' + e.message}};
   window.logout = () => { signOut(auth) }
   onAuthStateChanged(auth, async user => {
-    if(isClientMode) return;
     if(user){
       let role = 'reception';
       if(user.email === 'ceo@feelthenoisesoundsolution.co.za') role = 'ceo';
@@ -259,14 +247,12 @@ document.addEventListener('DOMContentLoaded', () => {
       loginScreen.style.display = 'none'; appDiv.style.display = 'block';
       document.getElementById('userRole').innerText = currentUser.role.toUpperCase();
       document.getElementById('userRole').className = 'role-badge role-' + currentUser.role;
-      if(currentUser.role == 'reception') document.getElementById('usersTab').style.display = 'none';
       const snapshot = await get(productsRef);
       if(!snapshot.exists()){seedDatabase();}
-      buildProductList(); buildStockList(); buildOrders(); updateDashboard(); setClientLink();
     } else { loginScreen.style.display = 'block'; appDiv.style.display = 'none'; }
   })
-  window.showTab = (tab, el) => {document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['dashboard','products','income','tax','funding','vault','notes','stock','orders','users','reports'].forEach(t=>{let d=document.getElementById('tab-'+t); if(d) d.style.display = t==tab?'block':'none';});}
-  onValue(productsRef, snap => { products = snap.val() || {}; renderProducts(); renderClientProducts(); buildProductList(); buildStockList(); updateDashboard(); })
+  window.showTab = (tab, el) => {document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['dashboard','products','income','tax','funding','vault','notes','stock','orders','reports'].forEach(t=>{let d=document.getElementById('tab-'+t); if(d) d.style.display = t==tab?'block':'none';});}
+  onValue(productsRef, snap => { products = snap.val() || {}; renderProducts(); buildProductList(); buildStockList(); updateDashboard(); })
   onValue(ordersRef, snap => { orders = snap.val() || {}; buildOrders(); updateDashboard(); loadIncome(); loadTax(); loadFunding(); })
   onValue(vaultRef, snap => { vault = snap.val() || {}; loadVault(); loadFunding(); })
   onValue(notesRef, snap => { notes = snap.val() || {}; loadNotes(); })
@@ -300,42 +286,36 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('taxStatus').innerText=status; document.getElementById('taxStatusCard').style.background=color;
     let monthly={}; Object.values(orders).forEach(o=>{ let m=new Date(o.date).toLocaleString('default',{month:'long'}); monthly[m]=(monthly[m]||0)+o.total; });
     let html=''; Object.entries(monthly).forEach(([m,t])=>html+=`<div style="display:flex;justify-content:space-between;padding:6px;border-bottom:1px solid var(--border)"><span>${m}</span><span>R${t}</span></div>`);
-    document.getElementById('taxBreakdown').innerHTML=html||'No income yet - Add sales to see breakdown for SARS';
+    document.getElementById('taxBreakdown').innerHTML=html||'No income yet';
   }
   function calcFundingScore(){
     let score=0; let details=[]; let badges=[]; let next="";
     let months={}; Object.values(orders).forEach(o=>{ let key=new Date(o.date).toISOString().slice(0,7); months[key]=(months[key]||0)+o.total; });
     let monthCount=Object.keys(months).length; let totalIncome=Object.values(orders).reduce((a,b)=>a+b.total,0); let avgMonthly=monthCount>0?totalIncome/monthCount:0; let salesCount=Object.keys(orders).length;
-    if(monthCount>=1){ score+=5; details.push(`✅ ${monthCount} month(s) sales history tracked (5%)`); } else { details.push(`❌ No sales history yet (0%)`); if(!next) next="Record first sale (+5%)"; }
-    if(monthCount>=3){ score+=10; badges.push("📅 3-Month Hustler"); details.push(`✅ 3+ months continuous sales (10%)`); } else if(monthCount>0){ details.push(`❌ Only ${monthCount}/3 months - Keep selling (+10%)`); if(!next) next="Reach 3 months history (+10%)"; }
+    if(monthCount>=1){ score+=5; details.push(`✅ ${monthCount} month(s) sales (5%)`); }
+    if(monthCount>=3){ score+=10; badges.push("📅 3-Month Hustler"); details.push(`✅ 3+ months continuous (10%)`); }
     if(avgMonthly>=1000){ score+=5; details.push(`✅ Avg R${avgMonthly.toFixed(0)}/month (5%)`); }
-    if(avgMonthly>=3000){ score+=10; badges.push("💰 R3k Club"); details.push(`✅ Avg R${avgMonthly.toFixed(0)}/month (10%)`); } else if(avgMonthly>0){ details.push(`❌ Avg R${avgMonthly.toFixed(0)} - Grow to R3000+/month (+10%)`); if(!next) next="Grow avg to R3000 (+10%)"; }
+    if(avgMonthly>=3000){ score+=10; badges.push("💰 R3k Club"); details.push(`✅ Avg R${avgMonthly.toFixed(0)}/month (10%)`); }
     if(salesCount>=5){ score+=5; details.push(`✅ ${salesCount} transactions (5%)`); }
-    if(salesCount>=10){ score+=10; badges.push("🔥 10 Sales Club"); details.push(`✅ ${salesCount} sales (10%)`); } else { details.push(`❌ ${salesCount}/10 sales - Get to 10 (+10%)`); if(!next) next=`Get ${10-salesCount} more sales (+10%)`; }
+    if(salesCount>=10){ score+=10; badges.push("🔥 10 Sales"); details.push(`✅ ${salesCount} sales (10%)`); }
     if(totalIncome>=5000){ score+=5; details.push(`✅ R${totalIncome} total income (5%)`); }
     let hasID=Object.values(vault).some(v=>v.type==='ID Document'); let hasCIPC=Object.values(vault).some(v=>v.type==='CIPC Certificate'); let hasAddress=Object.values(vault).some(v=>v.type==='Proof of Address'); let hasBank=Object.values(vault).some(v=>v.type==='Bank Confirmation'); let hasTax=Object.values(vault).some(v=>v.type==='Tax Clearance');
-    if(hasID){ score+=10; badges.push("🪪 ID Verified"); details.push(`✅ ID Document uploaded (10%)`); } else { details.push(`❌ Missing ID Document (0%) +10%`); if(!next) next="Upload ID Document (+10%)"; }
-    if(hasCIPC){ score+=15; badges.push("🏢 CIPC Registered"); details.push(`✅ CIPC Certificate (15%)`); } else { details.push(`❌ Missing CIPC (0%) +15%`); if(!next) next="Upload CIPC Certificate (+15%)"; }
-    if(hasAddress){ score+=5; details.push(`✅ Proof of Address (5%)`); } else { details.push(`❌ Missing Proof of Address (0%) +5%`); if(!next) next="Upload Proof of Address (+5%)"; }
-    if(hasBank){ score+=10; badges.push("🏦 Bank Ready"); details.push(`✅ Bank Confirmation Letter (10%)`); } else { details.push(`❌ Missing Bank Letter (0%) +10%`); if(!next) next="Upload Bank Confirmation (+10%)"; }
-    if(hasTax){ score+=10; badges.push("🧾 Tax Compliant"); details.push(`✅ Tax Clearance (10%)`); } else { details.push(`❌ Missing Tax Clearance (0%) +10%`); if(!next) next="Upload Tax Clearance (+10%)"; }
+    if(hasID){ score+=10; badges.push("🪪 ID Verified"); details.push(`✅ ID Document (10%)`); } else { details.push(`❌ Missing ID (0%) +10%`); if(!next) next="Upload ID (+10%)"; }
+    if(hasCIPC){ score+=15; badges.push("🏢 CIPC"); details.push(`✅ CIPC Certificate (15%)`); } else { details.push(`❌ Missing CIPC (0%) +15%`); if(!next) next="Upload CIPC (+15%)"; }
+    if(hasAddress){ score+=5; details.push(`✅ Proof of Address (5%)`); } else { details.push(`❌ Missing Address (0%) +5%`); if(!next) next="Upload Address (+5%)"; }
+    if(hasBank){ score+=10; badges.push("🏦 Bank Ready"); details.push(`✅ Bank Confirmation (10%)`); } else { details.push(`❌ Missing Bank Letter (0%) +10%`); if(!next) next="Upload Bank (+10%)"; }
+    if(hasTax){ score+=10; badges.push("🧾 Tax Compliant"); details.push(`✅ Tax Clearance (10%)`); } else { details.push(`❌ Missing Tax (0%) +10%`); if(!next) next="Upload Tax (+10%)"; }
     score=Math.min(score,100);
-    let level=""; let motivate="";
-    if(score<20){ level="LEVEL 1: Hustler 🌱"; motivate="You just started! Upload ID to get +10% instantly!"; }
-    else if(score<40){ level="LEVEL 2: Grinder 💪"; motivate="Grinding! Get CIPC to jump +15%."; }
-    else if(score<60){ level="LEVEL 3: Business Owner 💼"; motivate="Halfway! Banks now see you as serious."; }
-    else if(score<80){ level="LEVEL 4: CEO 🚀"; motivate="CEO level! You can walk into bank now."; }
-    else if(score<100){ level="LEVEL 5: Funding Ready 🏦"; motivate="🔥 FUNDING READY! Apply for SEFA, NYDA!"; }
-    else { level="LEVEL 6: Investor Ready 👑"; motivate="👑 MAX LEVEL! Ready for investors!"; }
-    return {score, details, level, badge: badges.join(" ")||"🎯 Complete tasks to earn badges", next: next||"✅ All tasks done! 100%!", motivate, totalIncome, monthCount, avgMonthly};
+    let level=score<20?"LEVEL 1: Hustler 🌱":score<40?"LEVEL 2: Grinder 💪":score<60?"LEVEL 3: Business Owner 💼":score<80?"LEVEL 4: CEO 🚀":score<100?"LEVEL 5: Funding Ready 🏦":"LEVEL 6: Investor Ready 👑";
+    return {score, details, level, badge: badges.join(" ")||"🎯 Complete tasks", next: next||"✅ All done! 100%!", motivate: score<50?"Upload documents to increase score":"You are funding ready!", totalIncome, monthCount, avgMonthly};
   }
   window.loadFunding = () => {
-    let result=calcFundingScore();
-    document.getElementById('fundChecklist').innerHTML=result.details.map(d=>`<div style="padding:8px;border:1px solid var(--border);margin:5px 0;border-radius:8px">${d}</div>`).join('')+`<div style="margin-top:10px;padding:10px;background:#111;border-radius:8px"><b>Total Income:</b> R${result.totalIncome} | <b>Months:</b> ${result.monthCount} | <b>Avg Monthly:</b> R${result.avgMonthly.toFixed(0)}</div>`;
-    document.getElementById('fundAdvice').innerText=result.score<50?`📈 NEXT: ${result.next}`:result.score<80?`🎯 ${100-result.score}% more to MAX! Next: ${result.next}`:`✅ ${result.next}`;
-    document.getElementById('fundMotivate').innerText=result.motivate;
+    let r=calcFundingScore();
+    document.getElementById('fundChecklist').innerHTML=r.details.map(d=>`<div style="padding:8px;border:1px solid var(--border);margin:5px 0;border-radius:8px">${d}</div>`).join('')+`<div style="margin-top:10px;padding:10px;background:#111;border-radius:8px"><b>Total:</b> R${r.totalIncome} | <b>Months:</b> ${r.monthCount} | <b>Avg:</b> R${r.avgMonthly.toFixed(0)}</div>`;
+    document.getElementById('fundAdvice').innerText=`📈 NEXT: ${r.next}`;
+    document.getElementById('fundMotivate').innerText=r.motivate;
   }
-  window.downloadFundingReport = () => { const doc=new jsPDF(); let r=calcFundingScore(); doc.text("Funding Readiness Report - FEEL THE NOISE",10,10); doc.text(`Score: ${r.score}% - ${r.level}`,10,20); doc.text(`Total Income: R${r.totalIncome}`,10,30); doc.text(`Months: ${r.monthCount} | Avg: R${r.avgMonthly.toFixed(0)}`,10,40); r.details.forEach((d,i)=>doc.text(d.substring(0,90),10,50+i*6)); doc.text(`Generated: ${new Date().toLocaleString()}`,10,130); doc.save("Funding-Report.pdf"); }
+  window.downloadFundingReport = () => { const doc=new jsPDF(); let r=calcFundingScore(); doc.text("Funding Report - FEEL THE NOISE",10,10); doc.text(`Score: ${r.score}% - ${r.level}`,10,20); r.details.forEach((d,i)=>doc.text(d.substring(0,90),10,50+i*6)); doc.save("Funding-Report.pdf"); }
 
   window.openNoteModal = (id=null) => {
     editingNoteId=id;
@@ -362,83 +342,146 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('noteTotal').innerText=Object.keys(notes).length;
     document.getElementById('noteUnpaid').innerText=Object.values(notes).filter(n=>n.type==='unpaid').length;
     document.getElementById('notePinnedCount').innerText=Object.values(notes).filter(n=>n.pinned).length;
-    if(filtered.length===0){ list.innerHTML='<p style="text-align:center;color:var(--muted)">No notes yet. Click Add Note! Example: Customer hasn\'t paid, Appointment tomorrow</p>'; return; }
+    if(filtered.length===0){ list.innerHTML='<p style="text-align:center;color:var(--muted)">No notes yet</p>'; return; }
     list.innerHTML=''; filtered.forEach(([id,n])=>{
       let icon=n.type==='unpaid'?'💰':n.type==='appointment'?'📅':n.type==='todo'?'✅':n.type==='followup'?'📞':'📝';
       let typeColor=n.type==='unpaid'?'var(--danger)':n.type==='appointment'?'var(--blue)':n.type==='todo'?'var(--green)':'var(--accent)';
-      list.innerHTML+=`<div class="note-card ${n.pinned?'note-pinned':''}"><div style="display:flex;justify-content:space-between;align-items:center"><b style="color:${typeColor}">${icon} ${n.title}</b><small>${n.date||''} ${n.pinned?'📌 PINNED':''}</small></div><div style="font-size:12px;margin:6px 0;color:var(--muted)">${n.content||''}</div><div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap"><button class="btn-blue" style="padding:5px 10px;font-size:11px" onclick="openNoteModal('${id}')">✏️ Edit</button><button class="btn" style="padding:5px 10px;font-size:11px;background:${n.pinned?'var(--green)':'var(--muted)'}" onclick="togglePinNote('${id}')">${n.pinned?'📌 Unpin':'📌 Pin'}</button><button class="btn-danger" style="padding:5px 10px;font-size:11px" onclick="deleteNote('${id}')">🗑️ Delete</button></div></div>`;
+      list.innerHTML+=`<div class="note-card ${n.pinned?'note-pinned':''}"><div style="display:flex;justify-content:space-between"><b style="color:${typeColor}">${icon} ${n.title}</b><small>${n.date||''} ${n.pinned?'📌':''}</small></div><div style="font-size:12px;margin:6px 0;color:var(--muted)">${n.content||''}</div><div style="display:flex;gap:6px;margin-top:10px"><button class="btn-blue" style="padding:5px 10px;font-size:11px" onclick="openNoteModal('${id}')">✏️ Edit</button><button class="btn" style="padding:5px 10px;font-size:11px;background:${n.pinned?'var(--green)':'var(--muted)'}" onclick="togglePinNote('${id}')">${n.pinned?'📌 Unpin':'📌 Pin'}</button><button class="btn-danger" style="padding:5px 10px;font-size:11px" onclick="deleteNote('${id}')">🗑️ Delete</button></div></div>`;
     });
   }
 
-  window.uploadVaultCatbox = async () => {
-    let file=document.getElementById('vaultFile').files[0]; let type=document.getElementById('vaultType').value; let statusEl=document.getElementById('vaultUploadStatus'); let btn=document.getElementById('vaultUploadBtn');
-    if(!file) return alert('Pick a file - PDF or Image to upload to Catbox.moe'); if(file.size > 200*1024*1024) return alert('File too big - Catbox limit 200MB');
-    statusEl.innerText='⏳ Uploading to catbox.moe... please wait'; btn.disabled=true; btn.innerText='Uploading...';
-    try { let form=new FormData(); form.append('reqtype','fileupload'); form.append('fileToUpload',file); let res=await fetch('https://catbox.moe/user/api.php',{method:'POST',body:form}); let url=(await res.text()).trim(); if(!url.startsWith('http')) throw new Error('Upload failed: '+url); let id=Date.now().toString(); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url, name:file.name, fileType:file.type, size:file.size, date:new Date().toISOString(), source:'catbox'}); statusEl.innerText='✅ Uploaded! Link: '+url; document.getElementById('vaultFile').value=''; alert('✅ Uploaded to Catbox.moe! Saved to Vault:\n'+url); } catch(e){ statusEl.innerText='❌ Failed: '+e.message; alert('Upload failed: '+e.message); } btn.disabled=false; btn.innerText='⬆️ Upload to Catbox.moe & Save to Vault';
-  }
-  window.saveVaultLink = async () => {
-    let link=document.getElementById('vaultLinkInput').value.trim(); let type=document.getElementById('vaultType').value; if(!link ||!link.startsWith('http')) return alert('Paste valid catbox link'); if(!link.includes('catbox.moe')){ if(!confirm('This is not a catbox.moe link. Save anyway?')) return; } let id=Date.now().toString(); let isPdf=link.toLowerCase().endsWith('.pdf'); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url:link, name:link.split('/').pop(), fileType:isPdf?'application/pdf':'image/*', size:0, date:new Date().toISOString(), source:'catbox-link'}); document.getElementById('vaultLinkInput').value=''; alert('✅ Catbox link saved to Vault!');
-  }
-  window.downloadVaultFile = async (url, name) => { try { let res=await fetch(url); let blob=await res.blob(); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name||'document'; a.click(); } catch(e){ window.open(url,'_blank'); } }
-  window.downloadVaultAsPDF = async (url, name) => {
-    try {
-      let isPdf=url.toLowerCase().endsWith('.pdf')||name.toLowerCase().endsWith('.pdf'); if(isPdf){ downloadVaultFile(url,name); return; }
-      let res=await fetch(url); let blob=await res.blob(); let reader=new FileReader();
-      reader.onload=()=>{ const doc=new jsPDF(); doc.addImage(reader.result,'JPEG',10,10,190,0); doc.save((name||'document').replace(/\.[^/.]+$/,"")+'.pdf'); };
-      reader.readAsDataURL(blob);
-    } catch(e){ alert('PDF convert failed, opening original'); window.open(url,'_blank'); }
-  }
+  // VAULT REALTIME 1GB - NO CATBOX
+  document.getElementById('vaultFile').onchange = e=>{
+    if(e.target.files[0]){
+      vaultFile=e.target.files[0];
+      if(vaultFile.size>7*1024*1024) return alert('Realtime limit 7MB per file. Your file is '+(vaultFile.size/1024/1024).toFixed(2)+'MB. Please compress or use smaller PDF.');
+      document.getElementById('vaultFName').innerText='📄 '+vaultFile.name;
+      document.getElementById('vaultFSize').innerText=`${vaultFile.type||'file'} • ${(vaultFile.size/1024/1024).toFixed(2)} MB`;
+      document.getElementById('vaultFileInfo').style.display='block';
+      if(vaultFile.type.startsWith('image/')){
+        let url=URL.createObjectURL(vaultFile);
+        let img=document.getElementById('vaultImgPrev'); img.src=url; img.style.display='block';
+      } else {
+        document.getElementById('vaultImgPrev').style.display='none';
+      }
+    }
+  };
+
+  window.uploadVaultRealtime = () => {
+    if(!vaultFile) return alert('Select file first');
+    let reader=new FileReader();
+    reader.onload=async e=>{
+      try{
+        let base64=e.target.result;
+        let id=Date.now().toString();
+        let docType=document.getElementById('vaultType').value;
+        let data={
+          base64: base64,
+          name: vaultFile.name,
+          fileType: vaultFile.type||'application/octet-stream',
+          type: docType,
+          size: vaultFile.size,
+          date: new Date().toISOString()
+        };
+        document.getElementById('vaultUploadStatus').innerText='⏳ Saving to Realtime DB (1GB storage)...';
+        await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), data);
+        document.getElementById('vaultUploadStatus').innerText='✅ Saved to Vault!';
+        document.getElementById('vaultFile').value='';
+        document.getElementById('vaultFileInfo').style.display='none';
+        vaultFile=null;
+      }catch(err){
+        document.getElementById('vaultUploadStatus').innerText='❌ Failed: '+err.message;
+        alert('Failed: '+err.message+' - File too big for Realtime. Try compress to <5MB');
+      }
+    };
+    reader.readAsDataURL(vaultFile);
+  };
+
+  window.downloadVaultFile = (id) => {
+    let v=vault[id];
+    if(!v ||!v.base64) return alert('File not found');
+    let blob=base64ToBlob(v.base64, v.fileType);
+    if(!blob) return alert('Invalid file');
+    let url=URL.createObjectURL(blob);
+    let a=document.createElement('a'); a.href=url; a.download=v.name||'document'; a.click();
+  };
+
+  window.downloadVaultAsPDF = (id) => {
+    let v=vault[id];
+    if(!v) return;
+    if(v.name.toLowerCase().endsWith('.pdf') || v.fileType==='application/pdf'){
+      downloadVaultFile(id); return;
+    }
+    if(v.fileType.startsWith('image/')){
+      let blob=base64ToBlob(v.base64, v.fileType);
+      let url=URL.createObjectURL(blob);
+      fetch(url).then(r=>r.blob()).then(b=>{
+        let reader=new FileReader();
+        reader.onload=()=>{
+          const doc=new jsPDF();
+          doc.addImage(reader.result,'JPEG',10,10,190,0);
+          doc.save(v.name.replace(/\.[^/.]+$/,"")+'.pdf');
+        };
+        reader.readAsDataURL(b);
+      });
+    } else {
+      downloadVaultFile(id);
+    }
+  };
+
+  window.viewVaultFile = (id) => {
+    let v=vault[id];
+    let blob=base64ToBlob(v.base64, v.fileType);
+    let url=URL.createObjectURL(blob);
+    window.open(url,'_blank');
+  };
+
+  window.deleteVault = (id) => { if(confirm('Delete this document from Vault? Space will be freed.')) remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)) }
+
   window.loadVault = () => {
     let grid=document.getElementById('vaultGrid'); if(!grid) return; grid.innerHTML='';
-    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload via Catbox.moe - PDF & Images get permanent link.</p>'; return; }
-    Object.entries(vault).forEach(([id,v])=>{
-      let isPdf = v.fileType==='application/pdf' || v.url?.toLowerCase().endsWith('.pdf') || v.name?.toLowerCase().endsWith('.pdf');
-      let preview = isPdf? `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>` : `<img src="${v.url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px" onerror="this.src='${COMPANY_LOGO}'">`;
-      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:8px;color:var(--green);word-break:break-all">${v.url.substring(0,35)}...</div><div style="font-size:9px;color:var(--muted)">${isPdf?'PDF':'Image'} • ${v.source||'catbox'}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px"><a href="${v.url}" target="_blank" style="background:var(--blue);color:#fff;padding:5px;border-radius:6px;font-size:10px;text-decoration:none;text-align:center">👁️ View</a><button onclick="downloadVaultFile('${v.url}','${v.name}')" style="background:#444;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">⬇️ Download</button></div><button onclick="downloadVaultAsPDF('${v.url}','${v.name}')" style="width:100%;margin-top:4px;background:var(--purple);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">📄 Download as PDF</button><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px"><button onclick="openVaultEdit('${id}')" style="background:var(--green);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">✏️ Edit</button><button onclick="copyVaultLink('${v.url}')" style="background:#333;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">📋 Copy</button></div><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">🗑️ Delete</button></div>`;
-    })
+    let totalBytes=0;
+    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload PDF or Image - stored in Firebase Realtime 1GB. You can download as PDF.</p>'; document.getElementById('vaultUsageText').innerText='0 MB / 1000 MB'; document.getElementById('vaultUsageFill').style.width='0%'; return; }
+    Object.entries(vault).reverse().forEach(([id,v])=>{
+      totalBytes+=(v.base64?.length||0)*0.75;
+      let isPdf = v.fileType==='application/pdf' || v.name?.toLowerCase().endsWith('.pdf');
+      let isImg = v.fileType?.startsWith('image/');
+      let preview = isImg? `<img src="${v.base64}" style="width:100%;height:80px;object-fit:cover;border-radius:6px">` : `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>`;
+      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:9px;color:var(--muted)">${isPdf?'PDF':isImg?'Image':'Doc'} • ${(v.size/1024).toFixed(0)}KB</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px"><button onclick="viewVaultFile('${id}')" style="background:var(--blue);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">👁️ View</button><button onclick="downloadVaultFile('${id}')" style="background:#444;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">⬇️ Download</button></div><button onclick="downloadVaultAsPDF('${id}')" style="width:100%;margin-top:4px;background:var(--purple);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">📄 Download as PDF</button><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">🗑️ Delete - Free Space</button></div>`;
+    });
+    let mb=totalBytes/1024/1024;
+    document.getElementById('vaultUsageText').innerText=mb.toFixed(2)+' MB / 1000 MB ('+Object.keys(vault).length+' files)';
+    document.getElementById('vaultUsageFill').style.width=Math.min(100,mb/10)+'%';
   }
-  window.copyVaultLink = (url) => { navigator.clipboard.writeText(url).then(()=>alert('📋 Catbox link copied:\n'+url)); }
-  window.openVaultEdit = (id) => { editingVaultId=id; let v=vault[id]; document.getElementById('vaultEditName').value=v.name; document.getElementById('vaultEditType').value=v.type; document.getElementById('vaultEditUrl').value=v.url; document.getElementById('vaultEditModal').style.display='flex'; }
-  window.saveVaultEdit = () => { if(!editingVaultId) return; let name=document.getElementById('vaultEditName').value.trim(); let type=document.getElementById('vaultEditType').value; let url=document.getElementById('vaultEditUrl').value.trim(); if(!name) return alert('Enter name'); if(!url.startsWith('http')) return alert('Enter valid URL'); update(ref(db, 'feelthenoisesoundsolution/vault/'+editingVaultId), {name, type, url}); document.getElementById('vaultEditModal').style.display='none'; editingVaultId=null; }
-  window.deleteVault = (id) => { if(confirm('Delete this document permanently from Vault? (Catbox file stays)')) remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)) }
 
   function getImages(p){ if(!p.img) return [COMPANY_LOGO]; return p.img.split(',').map(s=>s.trim()).filter(s=>s); }
   window.switchImage = (cardId, imgUrl, thumb) => { document.getElementById('main_'+cardId).src = imgUrl; document.querySelectorAll(`#card_${cardId}.card-imgs img`).forEach(i=>i.classList.remove('active')); if(thumb) thumb.classList.add('active'); }
   function getCartControls(id){ let item=cart.find(x=>x.id==id); if(!item) return `<button class="btn-cart" onclick="addToCart('${id}')">Request Quote</button>`; return `<div class="qty-controls"><button class="qty-btn" onclick="decreaseQty('${id}')">-</button><div class="qty-text">${item.qty}</div><button class="qty-btn" onclick="addToCart('${id}')">+</button></div>`; }
-   function renderClientProducts(){ if(!isClientMode) return; clientProductGrid.innerHTML=''; if(Object.keys(products).length===0){ clientProductGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">Loading services...</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(clientSearchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; clientProductGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
-  function renderProducts(){ if(isClientMode) return; productGrid.innerHTML=''; if(Object.keys(products).length===0){ productGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">No services yet. Click "Load FEEL THE NOISE Services"</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(searchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; productGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
-  window.searchProducts = () => { renderProducts(); renderClientProducts(); }
-  window.filterCat = (cat, e) => { currentFilter=cat; renderProducts(); renderClientProducts(); document.querySelectorAll('.nav-cats button').forEach(b=>b.classList.remove('active')); if(e) e.target.classList.add('active'); }
-  function buildProductList(){ if(currentUser.role=='reception') return; productList.innerHTML=''; let searchTerm=adminSearch.value.toLowerCase(); Object.entries(products).filter(([id,p])=>p.name.toLowerCase().includes(searchTerm)||p.category.toLowerCase().includes(searchTerm)).forEach(([id,p])=>{ productList.innerHTML+=`<div style="padding:10px;border:1px solid var(--border);border-radius:8px;margin:5px 0;background:#111"><b>${p.name}</b> - R${p.price} - Stock: ${p.stock} - <small>${p.category}</small><div style="float:right;gap:5px;display:flex"><button onclick="editProduct('${id}')" class="btn-blue" style="padding:5px 10px;font-size:12px">Edit</button>${currentUser.role=='ceo'?`<button onclick="deleteProduct('${id}')" class="btn-danger" style="padding:5px 10px;font-size:12px">Del</button>`:''}</div></div>`; }); if(productList.innerHTML==='') productList.innerHTML='<p style="text-align:center;color:var(--muted)">No services found</p>' }
-  function buildOrders(){ if(currentUser.role=='reception') return; ordersList.innerHTML=''; if(Object.keys(orders).length===0){ ordersList.innerHTML='<p>No requests yet</p>'; return; } Object.entries(orders).reverse().forEach(([id,o])=>{ let statusColor=o.status=='Completed'?'var(--green)':o.status=='Paid'?'var(--green)':'var(--accent)'; ordersList.innerHTML+=`<div class="order-card"><b>Request #${id.slice(-6)}</b> - R${o.total} - <span style="color:${statusColor};font-weight:700">${o.status}</span><br><small>${new Date(o.date).toLocaleString()}</small><br><small><b>Customer:</b> ${o.customerName||'Guest'} | ${o.customerPhone||o.user} | ${o.customerEmail||''}</small><br><small>${o.items.map(i=>`${i.name} x${i.qty}`).join(', ')}</small><br><div style="display:flex;gap:5px;margin-top:8px;flex-wrap:wrap"><button class="btn-blue" onclick="openInvoiceModal('${id}')">📄 Quote/Invoice</button><button class="btn-green" onclick="updateOrderStatus('${id}','Completed')">Mark Complete</button><button class="btn-gray" onclick="updateOrderStatus('${id}','Pending')">Mark Pending</button>${currentUser.role=='ceo'||currentUser.role=='manager'?`<button class="btn-danger" onclick="deleteOrder('${id}')">Delete</button>`:''}</div></div>`; }) }
+  function renderProducts(){ productGrid.innerHTML=''; if(Object.keys(products).length===0){ productGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">No services yet</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(searchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; productGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
+  window.searchProducts = () => { renderProducts(); }
+  window.filterCat = (cat, e) => { currentFilter=cat; renderProducts(); document.querySelectorAll('.nav-cats button').forEach(b=>b.classList.remove('active')); if(e) e.target.classList.add('active'); }
+  function buildProductList(){ productList.innerHTML=''; let searchTerm=adminSearch.value.toLowerCase(); Object.entries(products).filter(([id,p])=>p.name.toLowerCase().includes(searchTerm)||p.category.toLowerCase().includes(searchTerm)).forEach(([id,p])=>{ productList.innerHTML+=`<div style="padding:10px;border:1px solid var(--border);border-radius:8px;margin:5px 0;background:#111"><b>${p.name}</b> - R${p.price} - Stock: ${p.stock}<div style="float:right"><button onclick="editProduct('${id}')" class="btn-blue" style="padding:5px 10px;font-size:12px">Edit</button><button onclick="deleteProduct('${id}')" class="btn-danger" style="padding:5px 10px;font-size:12px">Del</button></div></div>`; }); }
+  function buildOrders(){ ordersList.innerHTML=''; if(Object.keys(orders).length===0){ ordersList.innerHTML='<p>No requests yet</p>'; return; } Object.entries(orders).reverse().forEach(([id,o])=>{ ordersList.innerHTML+=`<div class="order-card"><b>Request #${id.slice(-6)}</b> - R${o.total} - <span style="color:var(--green)">${o.status}</span><br><small>${new Date(o.date).toLocaleString()}</small><br><small>${o.customerName||'Guest'} | ${o.customerPhone||''}</small><br><small>${o.items.map(i=>`${i.name} x${i.qty}`).join(', ')}</small><br><div style="display:flex;gap:5px;margin-top:8px"><button class="btn-blue" onclick="openInvoiceModal('${id}')">📄 Quote</button><button class="btn-green" onclick="updateOrderStatus('${id}','Completed')">Complete</button><button class="btn-danger" onclick="deleteOrder('${id}')">Delete</button></div></div>`; }) }
   window.updateOrderStatus = (id, status) => { set(ref(db, 'feelthenoisesoundsolution/requests/' + id + '/status'), status); }
-  window.deleteOrder = (id) => { if(currentUser.role!= 'ceo' && currentUser.role!= 'manager') return alert('No permission'); if(confirm('Delete this request?')) remove(ref(db, 'feelthenoisesoundsolution/requests/' + id)) }
+  window.deleteOrder = (id) => { if(confirm('Delete?')) remove(ref(db, 'feelthenoisesoundsolution/requests/' + id)) }
   window.openInvoiceModal = (id) => { currentInvoiceId=id; let o=orders[id]; document.getElementById('invCustName').value=o.customerName||''; document.getElementById('invCustPhone').value=o.customerPhone||''; document.getElementById('invCustEmail').value=o.customerEmail||''; document.getElementById('invCustAddress').value=o.customerAddress||''; document.getElementById('invPaidToggle').checked=o.status=='Paid'; document.getElementById('invoiceModal').style.display='flex'; }
-  window.downloadFinalInvoice = () => { let o=orders[currentInvoiceId]; let custName=document.getElementById('invCustName').value||o.customerName||'Guest'; let custPhone=document.getElementById('invCustPhone').value||o.customerPhone||''; let custEmail=document.getElementById('invCustEmail').value||o.customerEmail||''; let custAddress=document.getElementById('invCustAddress').value||''; let addTax=document.getElementById('invTaxToggle').checked; let isPaid=document.getElementById('invPaidToggle').checked; let subtotal=o.total; let tax=addTax?subtotal*0.15:0; let grandTotal=subtotal+tax; set(ref(db, 'feelthenoisesoundsolution/requests/' + currentInvoiceId + '/status'), isPaid? 'Paid' : 'Pending'); const doc=new jsPDF(); doc.addImage(COMPANY_LOGO,'JPEG',10,10,25,25); doc.setFontSize(16); doc.setFont(undefined,'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION",40,18); doc.setFontSize(9); doc.setFont(undefined,'normal'); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com",40,24); doc.line(10,40,200,40); if(isPaid){ doc.setTextColor(0,184,148); doc.setFontSize(28); doc.setFont(undefined,'bold'); doc.text("PAID",160,35); doc.setTextColor(0,0,0); } doc.setFontSize(12); doc.text(`Quote #${currentInvoiceId.slice(-6)}`,10,50); doc.setFontSize(10); doc.text(`Customer: ${custName}`,10,58); doc.text(`Phone: ${custPhone}`,10,63); doc.text(`Email: ${custEmail}`,10,68); doc.text(`Address: ${custAddress}`,10,73); doc.text(`Date: ${new Date().toLocaleDateString()}`,10,78); let y=90; doc.setFont(undefined,'bold'); doc.text("Item",10,y); doc.text("Qty",120,y); doc.text("Price",150,y); doc.text("Total",180,y); y+=6; doc.setFont(undefined,'normal'); o.items.forEach(item=>{ doc.text(item.name.substring(0,30),10,y); doc.text(item.qty.toString(),120,y); doc.text('R'+item.price,150,y); doc.text('R'+(item.price*item.qty),180,y); y+=6; }); y+=6; doc.text(`Subtotal: R${subtotal}`,150,y); y+=6; if(addTax){ doc.text(`VAT 15%: R${tax.toFixed(2)}`,150,y); y+=6; } doc.setFont(undefined,'bold'); doc.text(`TOTAL: R${grandTotal.toFixed(2)}`,150,y); doc.save(`Quote-${currentInvoiceId.slice(-6)}.pdf`); }
-  window.editProduct = (id) => { if(currentUser.role == 'reception') return alert('No permission'); let p = products[id]; editingId = id; pName.value = p.name; pCat.value = p.category; pImg.value = p.img; pPrice.value = p.price; pOldPrice.value = p.oldPrice; pStock.value = p.stock; pDesc.value = p.desc; formTitle.innerText = "✏️ Editing: " + p.name; saveBtn.innerText = "Update Service"; saveBtn.style.background = "var(--blue)"; cancelBtn.style.display = "block"; document.getElementById('tab-products').scrollIntoView(); }
-  window.cancelEdit = () => { editingId = null; [pName,pImg,pPrice,pOldPrice,pStock,pDesc].forEach(i=>i.value=''); formTitle.innerText = "➕ Add Service"; saveBtn.innerText = "Save Service"; saveBtn.style.background = "var(--accent)"; cancelBtn.style.display = "none"; }
-  window.saveProduct = () => { if(currentUser.role == 'reception') return alert('No permission'); let productData = { name: pName.value.trim(), category: pCat.value, img: pImg.value.trim() || COMPANY_LOGO, price: Number(pPrice.value) || 0, oldPrice: Number(pOldPrice.value) || 0, stock: Number(pStock.value) || 0, desc: pDesc.value.trim() }; if(!productData.name){ return alert('Please enter service name') } if(editingId){ set(ref(db, 'feelthenoisesoundsolution/categories/' + editingId), productData).then(()=>{ alert('Service Updated!'); cancelEdit(); }).catch(err=> alert('Error: ' + err.message)); } else { let id = Date.now().toString(); set(ref(db, 'feelthenoisesoundsolution/categories/' + id), productData).then(()=>{ [pName,pImg,pPrice,pOldPrice,pStock,pDesc].forEach(i=>i.value=''); alert('Service Added!'); }).catch(err=> alert('Error: ' + err.message)); } }
-  function buildStockList(){ stockList.innerHTML = ''; Object.entries(products).forEach(([id,p])=>{ stockList.innerHTML += `<div style="display:flex;justify-content:space-between;align-items:center;padding:8px;border:1px solid var(--border);border-radius:8px;margin:5px 0"><div><b>${p.name}</b><br><small class="${p.stock<10?'stock-low':''}">Stock: ${p.stock}</small></div><div><input type="number" id="stock_${id}" value="0" style="width:80px"><button class="btn-green" onclick="updateStock('${id}')">+ Add</button></div></div>`; }) }
-  window.seedDatabase = () => { if(currentUser.role!= 'ceo' && currentUser.role!= 'manager') return alert('No permission'); const defaultData = [ {name:"Sound Engineering - Small Event", category:"Sound", price:2500, stock:10, img:COMPANY_LOGO, desc:"DJ, Live Band, Up to 200 People"}, {name:"Sound Engineering - Big Event", category:"Sound", price:8000, stock:5, img:COMPANY_LOGO, desc:"Festival, Concert, Full PA System"}, {name:"Event Promotion Package", category:"Promotion", price:1500, stock:20, img:COMPANY_LOGO, desc:"Social Media + Posters + Street Promo"}, {name:"Event Hosting + MC", category:"Hosting", price:1200, stock:15, img:COMPANY_LOGO, desc:"Professional MC + Event Management"}, {name:"Full Event Package", category:"Events", price:15000, stock:3, img:COMPANY_LOGO, desc:"Sound + Promotion + Hosting"} ]; defaultData.forEach(p=>{ let id = Date.now().toString() + Math.random(); set(ref(db, 'feelthenoisesoundsolution/categories/' + id), p); }); alert('✅ FEEL THE NOISE Sample Services loaded!') }
-  window.deleteProduct = (id) => { if(currentUser.role!= 'ceo') return alert('CEO only'); if(confirm('Delete this service?')) remove(ref(db, 'feelthenoisesoundsolution/categories/' + id)) }
-  window.updateStock = (id) => { let add = parseInt(document.getElementById('stock_'+id).value); set(ref(db, 'feelthenoisesoundsolution/categories/' + id + '/stock'), (products[id].stock||0) + add); document.getElementById('stock_'+id).value = 0; }
-  window.addToCart = (id) => { let p = products[id]; let item = cart.find(x=>x.id==id); if(item){ item.qty++ } else { cart.push({id,name:p.name,price:p.price,qty:1,category:p.category}) } updateCart(); renderProducts(); renderClientProducts(); }
-  window.decreaseQty = (id) => { let item = cart.find(x=>x.id==id); if(item){ item.qty--; if(item.qty <= 0){ cart = cart.filter(x=>x.id!=id); } } updateCart(); renderProducts(); renderClientProducts(); }
-  function updateCart(){ cartBar.style.display = cart.length?'block':'none'; clientCartBar.style.display = cart.length?'block':'none'; let count = cart.reduce((a,b)=>a+b.qty,0); let total = cart.reduce((a,b)=>a+b.qty*b.price,0); if(cartCount) cartCount.innerText = count; if(clientCartCount) clientCartCount.innerText = count; if(cartTotal) cartTotal.innerText = total; if(clientCartTotal) clientCartTotal.innerText = total; }
-  window.openCustomerModal = () => { if(cart.length === 0) return alert('Cart empty'); document.getElementById('customerModal').style.display = 'flex'; }
-  window.sendQuote = () => { let name = document.getElementById('custName').value.trim(); let phone = document.getElementById('custPhone').value.trim(); let email = document.getElementById('custEmail').value.trim(); if(!name ||!phone) return alert('Please enter Name and Phone'); const orderId = Date.now().toString(); const order = { user: isClientMode? name : currentUser.email, customerName: name, customerPhone: phone, customerEmail: email, items: cart, total: cart.reduce((a,b)=>a+b.qty*b.price,0), date: new Date().toISOString(), status: 'Pending' }; set(ref(db, 'feelthenoisesoundsolution/requests/' + orderId), order); let msg = `📦 NEW QUOTE REQUEST - FEEL THE NOISE SOUND SOLUTION\nName: ${name}\nPhone: ${phone}\nEmail: ${email}\n` + cart.map(i=>`${i.name} x${i.qty} - R${i.price}`).join('\n') + `\nTotal: R${order.total}\n\n🏦 Pay to: ${BANK_ACCOUNT}\n📱 WhatsApp: 066 279 6762\n📧 Email: mdkoscar50@gmail.com`; window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`); cart = []; updateCart(); renderProducts(); renderClientProducts(); document.getElementById('customerModal').style.display='none'; document.getElementById('custName').value=''; document.getElementById('custPhone').value=''; document.getElementById('custEmail').value=''; alert('Quote request sent to WhatsApp!') }
-  window.downloadReport = () => { const doc = new jsPDF(); doc.text("FEEL THE NOISE SOUND SOLUTION Business Report", 10, 10); doc.text(`Total Services: ${Object.keys(products).length}`, 10, 20); doc.text(`Total Stock: ${Object.values(products).reduce((a,b)=>a+(b.stock||0),0)}`, 10, 30); doc.text(`Pending Requests: ${Object.values(orders).filter(o=>o.status=='Pending').length}`, 10, 40); doc.text(`Contact: mdkoscar50@gmail.com`, 10, 50); doc.text(`Generated: ${new Date().toLocaleString()}`, 10, 60); doc.save("FEELTHE-Report.pdf"); }
-  window.downloadCSV = () => { if(Object.keys(orders).length === 0) return alert('No requests to export'); let csv = 'Request ID,Date,Customer Name,Phone,Email,Services,Total R,Status\n'; Object.entries(orders).forEach(([id,o])=>{ let items = o.items.map(i=>`${i.name} x${i.qty}`).join('; '); let date = new Date(o.date).toLocaleDateString(); csv += `"${id.slice(-6)}","${date}","${o.customerName||'Guest'}","${o.customerPhone||''}","${o.customerEmail||''}","${items}",${o.total},"${o.status}"\n`; }); const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `FEELTHE-Requests-${new Date().toISOString().split('T')[0]}.csv`; link.click(); }
-  window.downloadQuickInvoice = () => { let name = document.getElementById('quickInvName').value; let phone = document.getElementById('quickInvPhone').value; let email = document.getElementById('quickInvEmail').value; let item = document.getElementById('quickInvItem').value; let qty = Number(document.getElementById('quickInvQty').value) || 1; let price = Number(document.getElementById('quickInvPrice').value) || 0; let addTax = document.getElementById('quickInvTax').checked; let isPaid = document.getElementById('quickInvPaid').checked; if(!name ||!item ||!price) return alert('Please fill Name, Service and Price'); let subtotal = qty * price; let tax = addTax? subtotal * 0.15 : 0; let grandTotal = subtotal + tax; let invId = Date.now().toString().slice(-6); let orderId = Date.now().toString(); const order = { user: 'Walk-In', customerName: name, customerPhone: phone, customerEmail: email, items: [{name: item, qty: qty, price: price}], total: grandTotal, subtotal: subtotal, tax: tax, vat: addTax, paid: isPaid, date: new Date().toISOString(), status: isPaid? 'Paid' : 'Pending', type: 'Walk-In Quote' }; set(ref(db, 'feelthenoisesoundsolution/requests/' + orderId), order); const doc = new jsPDF(); doc.addImage(COMPANY_LOGO, 'JPEG', 10, 10, 25, 25); doc.setFontSize(16); doc.setFont(undefined, 'bold'); doc.text("FEEL THE NOISE SOUND SOLUTION", 40, 18); doc.setFontSize(9); doc.text("Shushumela Ext 2 | Bank: Capitec 1621732043 | Email: mdkoscar50@gmail.com", 40, 24); doc.line(10, 40, 200, 40); if(isPaid){ doc.setTextColor(0, 184, 148); doc.setFontSize(28); doc.setFont(undefined, 'bold'); doc.text("PAID", 150, 35, {angle: -20}); doc.setTextColor(0,0,0); } doc.setFontSize(18); doc.setFont(undefined, 'bold'); doc.text(isPaid? "TAX INVOICE" : "QUOTATION", 150, 50); doc.setFontSize(10); doc.text(`Quote #: ${invId}`, 150, 57); doc.text(`Date: ${new Date().toLocaleDateString()}`, 150, 62); doc.setFontSize(12); doc.text("TO:", 10, 50); doc.setFontSize(10); doc.text(name, 10, 57); if(phone) doc.text(phone, 10, 62); if(email) doc.text(email, 10, 67); let y = 90; doc.setFont(undefined, 'bold'); doc.text("Service", 10, y); doc.text("Qty", 120, y); doc.text("Rate", 145, y); doc.text("Amount", 175, y); y += 5; doc.line(10, y, 200, y); y += 7; doc.setFont(undefined, 'normal'); doc.text(item.substring(0,35), 10, y); doc.text(qty.toString(), 120, y); doc.text(`R${price}`, 145, y); doc.text(`R${subtotal}`, 175, y); y+=7; y += 5; doc.line(120, y, 200, y); y += 7; doc.text("Subtotal:", 145, y); doc.text(`R${subtotal.toFixed(2)}`, 175, y); y += 7; if(addTax){ doc.text("VAT 15%:", 145, y); doc.text(`R${tax.toFixed(2)}`, 175, y); y += 7; } doc.setFont(undefined, 'bold'); doc.setFontSize(12); doc.text("TOTAL:", 145, y); doc.text(`R${grandTotal.toFixed(2)}`, 175, y); if(isPaid){ y += 10; doc.setFontSize(10); doc.setTextColor(0, 184, 148); doc.text("✓ PAYMENT RECEIVED - THANK YOU", 145, y); doc.setTextColor(0,0,0); } doc.setFontSize(8); doc.setFont(undefined, 'normal'); doc.text("Bank: Capitec 1621732043 | WhatsApp: 066 279 6762 | Email: mdkoscar50@gmail.com", 105, 270, {align: "center"}); doc.text("Thank you for choosing FEEL THE NOISE SOUND SOLUTION", 105, 280, {align: "center"}); doc.save(`FEELTHE${isPaid? 'Invoice' : 'Quote'}-${invId}.pdf`); document.getElementById('quickInvoiceModal').style.display='none'; alert(`✅ ${isPaid? 'Invoice' : 'Quote'} saved!`) }
-  function setClientLink(){ let link = window.location.origin + window.location.pathname + '?client=1'; if(document.getElementById('clientShareLink')) document.getElementById('clientShareLink').value = link; if(document.getElementById('clientLink')) document.getElementById('clientLink').innerText = link; }
-  window.copyClientLink = () => { let link = document.getElementById('clientShareLink'); link.select(); document.execCommand('copy'); alert('Quote link copied! 📋'); }
-  window.shareClientWhatsApp = () => { let link = document.getElementById('clientShareLink').value; let msg = `📦 REQUEST QUOTE FROM FEEL THE NOISE SOUND SOLUTION\nBook services here:\n${link}\n\nBank: ${BANK_ACCOUNT}\nWhatsApp: 066 279 6762\nEmail: mdkoscar50@gmail.com`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
-  window.previewClient = () => { window.open(window.location.origin + window.location.pathname + '?client=1', '_blank'); }
-  window.toggleDark = () => { document.body.classList.toggle('dark-mode'); localStorage.setItem('darkMode', document.body.classList.contains('dark-mode')); }
-  if(localStorage.getItem('darkMode')==='true') document.body.classList.add('dark-mode');
+  window.downloadFinalInvoice = () => { let o=orders[currentInvoiceId]; let custName=document.getElementById('invCustName').value||o.customerName||'Guest'; let addTax=document.getElementById('invTaxToggle').checked; let isPaid=document.getElementById('invPaidToggle').checked; let subtotal=o.total; let tax=addTax?subtotal*0.15:0; let grandTotal=subtotal+tax; set(ref(db, 'feelthenoisesoundsolution/requests/' + currentInvoiceId + '/status'), isPaid? 'Paid' : 'Pending'); const doc=new jsPDF(); doc.text("FEEL THE NOISE - "+(isPaid?"INVOICE":"QUOTE"),10,10); doc.text("Customer: "+custName,10,20); doc.text("Total: R"+grandTotal.toFixed(2),10,30); o.items.forEach((item,i)=>{ doc.text(`${item.name} x${item.qty} - R${item.price*item.qty}`,10,40+i*10); }); doc.save("Quote.pdf"); document.getElementById('invoiceModal').style.display='none'; }
+  window.saveProduct = () => { let productData = { name: pName.value.trim(), category: pCat.value, img: pImg.value.trim() || COMPANY_LOGO, price: Number(pPrice.value) || 0, oldPrice: Number(pOldPrice.value) || 0, stock: Number(pStock.value) || 0, desc: pDesc.value.trim() }; if(!productData.name) return alert('Enter name'); let id=editingId||Date.now().toString(); set(ref(db, 'feelthenoisesoundsolution/categories/'+id), productData).then(()=>{ cancelEdit(); }); }
+  window.editProduct = (id) => { let p=products[id]; editingId=id; pName.value=p.name; pCat.value=p.category; pImg.value=p.img; pPrice.value=p.price; pOldPrice.value=p.oldPrice; pStock.value=p.stock; pDesc.value=p.desc; formTitle.innerText="✏️ Editing: "+p.name; saveBtn.innerText="Update"; cancelBtn.style.display="block"; }
+  window.cancelEdit = () => { editingId=null; [pName,pImg,pPrice,pOldPrice,pStock,pDesc].forEach(i=>i.value=''); formTitle.innerText="➕ Add Service"; saveBtn.innerText="Save Service"; cancelBtn.style.display="none"; }
+  window.deleteProduct = (id) => { if(confirm('Delete?')) remove(ref(db, 'feelthenoisesoundsolution/categories/'+id)) }
+  function buildStockList(){ stockList.innerHTML=''; Object.entries(products).forEach(([id,p])=>{ stockList.innerHTML+=`<div style="display:flex;justify-content:space-between;padding:8px;border:1px solid var(--border);margin:5px 0"><div><b>${p.name}</b><br><small>Stock: ${p.stock}</small></div><div><input type="number" id="stock_${id}" value="0" style="width:80px"><button class="btn-green" onclick="updateStock('${id}')">+ Add</button></div></div>`; }); }
+  window.seedDatabase = () => { const defaultData = [{name:"Sound - Small Event",category:"Sound",price:2500,stock:10,img:COMPANY_LOGO,desc:"DJ, Live Band"}]; defaultData.forEach(p=>{ let id=Date.now().toString()+Math.random(); set(ref(db, 'feelthenoisesoundsolution/categories/'+id), p); }); }
+  window.updateStock = (id) => { let add=parseInt(document.getElementById('stock_'+id).value); set(ref(db, 'feelthenoisesoundsolution/categories/'+id+'/stock'), (products[id].stock||0)+add); }
+  window.addToCart = (id) => { let p=products[id]; let item=cart.find(x=>x.id==id); if(item){ item.qty++ } else { cart.push({id,name:p.name,price:p.price,qty:1}) } updateCart(); renderProducts(); }
+  window.decreaseQty = (id) => { let item=cart.find(x=>x.id==id); if(item){ item.qty--; if(item.qty<=0) cart=cart.filter(x=>x.id!=id); } updateCart(); renderProducts(); }
+  function updateCart(){ cartBar.style.display=cart.length?'block':'none'; let count=cart.reduce((a,b)=>a+b.qty,0); let total=cart.reduce((a,b)=>a+b.qty*b.price,0); document.getElementById('cartCount').innerText=count; document.getElementById('cartTotal').innerText=total; }
+  window.openCustomerModal = () => { if(cart.length===0) return alert('Cart empty'); document.getElementById('customerModal').style.display='flex'; }
+  window.sendQuote = () => { let name=document.getElementById('custName').value.trim(); let phone=document.getElementById('custPhone').value.trim(); let email=document.getElementById('custEmail').value.trim(); if(!name||!phone) return alert('Enter Name and Phone'); const orderId=Date.now().toString(); const order={customerName:name,customerPhone:phone,customerEmail:email,items:cart,total:cart.reduce((a,b)=>a+b.qty*b.price,0),date:new Date().toISOString(),status:'Pending'}; set(ref(db, 'feelthenoisesoundsolution/requests/'+orderId), order); let msg=`NEW QUOTE\nName: ${name}\nPhone: ${phone}\nTotal: R${order.total}`; window.open(`https://wa.me/${BUSINESS_WHATSAPP}?text=${encodeURIComponent(msg)}`); cart=[]; updateCart(); renderProducts(); document.getElementById('customerModal').style.display='none'; }
+  window.downloadReport = () => { const doc=new jsPDF(); doc.text("FEEL THE NOISE Report",10,10); doc.save("Report.pdf"); }
+  window.downloadCSV = () => { let csv='ID,Date,Customer,Total,Status\n'; Object.entries(orders).forEach(([id,o])=>{ csv+=`${id},${new Date(o.date).toLocaleDateString()},${o.customerName},${o.total},${o.status}\n`; }); let blob=new Blob([csv],{type:'text/csv'}); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='Requests.csv'; a.click(); }
+  window.downloadQuickInvoice = () => { let name=document.getElementById('quickInvName').value; let item=document.getElementById('quickInvItem').value; let qty=Number(document.getElementById('quickInvQty').value)||1; let price=Number(document.getElementById('quickInvPrice').value)||0; if(!name||!item||!price) return alert('Fill Name, Service and Price'); let total=qty*price; const doc=new jsPDF(); doc.text(`Quote for ${name}`,10,10); doc.text(`${item} x${qty} = R${total}`,10,20); doc.save("Quote.pdf"); document.getElementById('quickInvoiceModal').style.display='none'; }
 });
-if('caches' in window){ caches.keys().then(names => names.forEach(name => caches.delete(name))); }
-if('serviceWorker' in navigator){ navigator.serviceWorker.getRegistrations().then(regs => regs.forEach(r => r.unregister())); }
 </script>
 </body>
 </html>
