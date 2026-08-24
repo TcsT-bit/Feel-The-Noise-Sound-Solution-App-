@@ -14,7 +14,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 :root{--bg:#060607;--card:rgba(20,20,25,0.6);--accent:#ff0064;--accent2:#ff3385;--green:#00b894;--blue:#0064ff;--purple:#6c5ce7;--text:#fff;--muted:#aaa;--border:rgba(255,255,255,0.1);--shadow:0 2px 8px rgba(255,0,100,0.2);--danger:#d63031}
-*{box-sizing:border-box;font-family:'Poppins',sans-serif}body{margin:0;background:var(--bg);color:var(--text)}
+*{box-sizing:border-box;font-family:'Poppins',sans-serif}body{margin:0;background:var(--bg);color:var(--text);backdrop-filter: blur(0px)}
 html, body{overflow-x:hidden; width:100%}
 .header{background:linear-gradient(90deg,#ff0064,#ff3385);padding:12px;color:#fff;position:sticky;top:0;z-index:99;box-shadow:var(--shadow)}
 .header-top{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}.logo{width:50px;height:50px;border-radius:12px;background:#fff;padding:3px;object-fit:cover;box-shadow:0 0 15px rgba(255,0,100,0.4)}
@@ -80,38 +80,117 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
 .dark-mode{--bg:#1a1a1a;--card:#2d3436;--text:#fff;--border:#444}
 .modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.7);display:none;justify-content:center;align-items:center;z-index:999}
 .modal-content{background:var(--card);padding:20px;border-radius:15px;width:90%;max-width:400px;border:1px solid var(--border)}
+/* ADDED - missing parts */
 .progress-bar{height:22px;background:#222;border-radius:11px;overflow:hidden;margin:10px 0;border:1px solid var(--border)}.progress-fill{height:100%;background:linear-gradient(90deg,#00b894,#00cec9);transition:width 0.6s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#fff}
 .vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:10px}.vault-item{background:#111;padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center}
 .note-card{background:#111;padding:12px;border-radius:10px;margin:8px 0;border-left:4px solid var(--accent);position:relative;animation:slideDown 0.3s}.note-pinned{border-left:4px solid var(--green);background:rgba(0,184,148,0.15);box-shadow:0 0 10px rgba(0,184,148,0.2)}
-@media(max-width:600px){.grid{grid-template-columns:1fr!important}.stats{grid-template-columns:repeat(2,1fr)}.tabs{font-size:12px}.tab{padding:8px 10px}.card-imgs img{width:38px;height:38px}}
+#customCtx{position:fixed;background:#222;border:1px solid #444;border-radius:10px;z-index:9999;display:none;min-width:230px;box-shadow:0 4px 15px rgba(0,0,0,0.5);overflow:hidden}
+#customCtx button{display:block;width:100%;text-align:left;background:none;border:none;color:#fff;padding:13px 15px;font-size:13px;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.06)}
+#customCtx button:hover{background:var(--accent)}
+@media(max-width:600px){
+.grid{grid-template-columns:1fr!important}
+.stats{grid-template-columns:repeat(2,1fr)}
+.tabs{font-size:12px}
+.tab{padding:8px 10px}
+.card-imgs img{width:38px;height:38px}
+}
 </style>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
-<div id="installBanner" class="install-banner">📲 <b>Install FEEL THE NOISE App</b> - Request quotes faster <button class="btn" style="padding:5px 10px;margin-left:10px;background:#fff;color:var(--accent)" id="installBtn">Install</button><button onclick="document.getElementById('installBanner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;float:right">x</button></div>
-<div id="quickInvoiceModal" class="modal"><div class="modal-content"><h3>🧾 Quick Quote</h3><input type="text" id="quickInvName" placeholder="Customer Name"><input type="tel" id="quickInvPhone" placeholder="Customer Phone"><input type="email" id="quickInvEmail" placeholder="Customer Email"><input type="text" id="quickInvItem" placeholder="Service Name"><input type="number" id="quickInvQty" placeholder="Qty" value="1"><input type="number" id="quickInvPrice" placeholder="Price R"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvTax"> Add 15% VAT</label><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvPaid"> Mark as PAID</label><button class="btn" onclick="downloadQuickInvoice()" style="width:100%">Download PDF</button><button class="btn-gray" onclick="document.getElementById('quickInvoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
-<div id="invoiceModal" class="modal"><div class="modal-content"><h3>📄 Edit Quote Details</h3><input type="text" id="invCustName" placeholder="Customer Name"><input type="tel" id="invCustPhone" placeholder="Customer Phone"><input type="email" id="invCustEmail" placeholder="Customer Email"><input type="text" id="invCustAddress" placeholder="Customer Address"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invTaxToggle"> Add 15% VAT</label><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invPaidToggle"> Mark as PAID</label><button class="btn" onclick="downloadFinalInvoice()" style="width:100%">Download PDF</button><button class="btn-gray" onclick="document.getElementById('invoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
-<div id="customerModal" class="modal"><div class="modal-content"><h3>Customer Details</h3><input type="text" id="custName" placeholder="Your Name"><input type="tel" id="custPhone" placeholder="Your Phone Number"><input type="email" id="custEmail" placeholder="Your Email Address"><div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec<br>Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 mdkoscar50@gmail.com</b><br>Send proof to WhatsApp or Email after booking</div><button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button><button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
-<div id="noteModal" class="modal"><div class="modal-content"><h3 id="noteModalTitle">📝 Add Admin Note</h3><input type="text" id="noteTitle" placeholder="Title"><select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up</option></select><textarea id="noteContent" placeholder="Details..."></textarea><input type="date" id="noteDate"><label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="notePinned"> 📌 Pin</label><button class="btn" onclick="saveNote()" style="width:100%">Save Note</button><button class="btn-gray" onclick="document.getElementById('noteModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
-<div id="vaultEditModal" class="modal"><div class="modal-content"><h3>✏️ Edit Document</h3><input type="text" id="vaultEditName" placeholder="Document Name"><select id="vaultEditType"><option value="ID Document">ID Document</option><option value="CIPC Certificate">CIPC Certificate</option><option value="Proof of Address">Proof of Address</option><option value="Bank Confirmation">Bank Confirmation</option><option value="Tax Clearance">Tax Clearance</option><option value="Other">Other</option></select><input type="text" id="vaultEditUrl" placeholder="Catbox URL - https://files.catbox.moe/..."><button class="btn" onclick="saveVaultEdit()" style="width:100%">Save Changes</button><button class="btn-gray" onclick="document.getElementById('vaultEditModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button></div></div>
 
-<div id="clientView" style="display:none">
-  <div class="client-header"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo" style="margin:0 auto"><h2>FEEL THE NOISE</h2><p>Sound Solution</p><div class="search-box" style="max-width:500px;margin:10px auto"><input type="text" id="clientSearchInput" placeholder="Search services..." onkeyup="searchProducts()"></div></div>
-  <div class="container"><div class="client-link"><b>📲 Share this:</b><br><code id="clientLink"></code></div><div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div><div class="bank-info"><b>📍 Location:</b> Shushumela Ext 2<br><b>🏦 Pay to:</b> Capitec 1621732043 | <b>📱 WhatsApp:</b> 066 279 6762</div><div class="nav-cats"><button onclick="filterCat('All', event)" class="active">All</button><button onclick="filterCat('Sound', event)">Sound</button><button onclick="filterCat('Promotion', event)">Promotion</button><button onclick="filterCat('Hosting', event)">Hosting</button><button onclick="filterCat('Events', event)">Events</button></div><h2 style="margin:20px 0">📋 Services & Pricing</h2><div class="grid" id="clientProductGrid"><div class="loading">Loading...</div></div></div>
-  <div class="cart-bar" id="clientCartBar"><b>Cart: <span id="clientCartCount">0</span> | Total: R<span id="clientCartTotal">0</span></b><button class="btn" onclick="openCustomerModal()">Request Quote</button></div>
-  <footer class="site-footer"><div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div><div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div><div class="footer-copy">© 2026 Twinz Cooperate Services Pty Ltd 2024/4444303/07</div></footer>
+<div id="customCtx">
+  <button onclick="ctxAction('open')">Open image in new tab</button>
+  <button onclick="ctxAction('preview')">Preview image</button>
+  <button onclick="ctxAction('copy')">Copy image link</button>
+  <button onclick="ctxAction('download')">⬇️ Download image</button>
+  <button onclick="ctxAction('pdf')" style="color:#a29bfe;font-weight:800">📄 Download as PDF</button>
+  <button onclick="ctxAction('share')">Share image</button>
 </div>
 
-<div id="loginScreen"><div class="login-box"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" style="width:90px;margin:0 auto;display:block;border-radius:15px"><h2>FEEL THE NOISE PORTAL</h2><div id="loginError" class="error"></div><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" onclick="doLogin()" style="width:100%">Login</button></div></div>
+<div id="installBanner" class="install-banner">
+  📲 <b>Install FEEL THE NOISE App</b> - Request quotes faster
+  <button class="btn" style="padding:5px 10px;margin-left:10px;background:#fff;color:var(--accent)" id="installBtn">Install</button>
+  <button onclick="document.getElementById('installBanner').style.display='none'" style="background:none;border:none;color:#fff;font-size:18px;float:right">x</button>
+</div>
+
+<div id="quickInvoiceModal" class="modal"> <div class="modal-content"> <h3>🧾 Quick Quote</h3> <input type="text" id="quickInvName" placeholder="Customer Name"> <input type="tel" id="quickInvPhone" placeholder="Customer Phone"> <input type="email" id="quickInvEmail" placeholder="Customer Email"> <input type="text" id="quickInvItem" placeholder="Service Name"> <input type="number" id="quickInvQty" placeholder="Qty" value="1"> <input type="number" id="quickInvPrice" placeholder="Price R"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvTax"> Add 15% VAT</label> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="quickInvPaid"> Mark as PAID</label> <button class="btn" onclick="downloadQuickInvoice()" style="width:100%">Download PDF</button> <button class="btn-gray" onclick="document.getElementById('quickInvoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<div id="invoiceModal" class="modal"> <div class="modal-content"> <h3>📄 Edit Quote Details</h3> <input type="text" id="invCustName" placeholder="Customer Name"> <input type="tel" id="invCustPhone" placeholder="Customer Phone"> <input type="email" id="invCustEmail" placeholder="Customer Email"> <input type="text" id="invCustAddress" placeholder="Customer Address"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invTaxToggle"> Add 15% VAT</label> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="invPaidToggle"> Mark as PAID</label> <button class="btn" onclick="downloadFinalInvoice()" style="width:100%">Download PDF</button> <button class="btn-gray" onclick="document.getElementById('invoiceModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<div id="customerModal" class="modal"> <div class="modal-content"> <h3>Customer Details</h3> <input type="text" id="custName" placeholder="Your Name"> <input type="tel" id="custPhone" placeholder="Your Phone Number"> <input type="email" id="custEmail" placeholder="Your Email Address"> <div class="bank-info"><b>🏦 Banking Details:</b><br>Capitec<br>Acc: 1621732043<br><b>📞 066 279 6762</b><br><b>📧 mdkoscar50@gmail.com</b><br>Send proof to WhatsApp or Email after booking</div> <button class="btn" onclick="sendQuote()" style="width:100%">Request Quote via WhatsApp</button> <button class="btn-gray" onclick="document.getElementById('customerModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<!-- ADDED MODALS -->
+<div id="noteModal" class="modal"> <div class="modal-content"> <h3 id="noteModalTitle">📝 Add Admin Note</h3> <input type="text" id="noteTitle" placeholder="Title"> <select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up Call</option></select> <textarea id="noteContent" placeholder="Details..."></textarea> <input type="date" id="noteDate"> <label style="display:flex;align-items:center;gap:8px;margin:10px 0"><input type="checkbox" id="notePinned"> 📌 Pin this note</label> <button class="btn" onclick="saveNote()" style="width:100%">Save Note</button> <button class="btn-gray" onclick="document.getElementById('noteModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+<div id="vaultEditModal" class="modal"> <div class="modal-content"> <h3>✏️ Edit Document</h3> <input type="text" id="vaultEditName" placeholder="Document Name"> <select id="vaultEditType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select> <input type="text" id="vaultEditUrl" placeholder="Catbox URL - https://files.catbox.moe/..."> <button class="btn" onclick="saveVaultEdit()" style="width:100%">Save Changes</button> <button class="btn-gray" onclick="document.getElementById('vaultEditModal').style.display='none'" style="width:100%;margin-top:8px">Cancel</button> </div> </div>
+
+<div id="clientView" style="display:none">
+  <div class="client-header">
+    <img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo" style="margin:0 auto">
+    <h2>FEEL THE NOISE</h2>
+    <p>Sound Solution</p>
+    <div class="search-box" style="max-width:500px;margin:10px auto"><input type="text" id="clientSearchInput" placeholder="Search services..." onkeyup="searchProducts()"></div>
+  </div>
+  <div class="container">
+    <div class="client-link"><b>📲 Share this with customers:</b><br><code id="clientLink"></code></div>
+    <div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div>
+    <div class="bank-info"><b>📍 Location:</b> Shushumela Ext 2<br><b>🏦 Pay to:</b> Capitec 1621732043 | <b>📱 WhatsApp:</b> 066 279 6762 | <b>📞 Calls:</b> 071 213 4478 | <b>📧 Email:</b> mdkoscar50@gmail.com</div>
+    <div class="nav-cats">
+      <button onclick="filterCat('All', event)" class="active">All</button>
+      <button onclick="filterCat('Sound', event)">Sound</button>
+      <button onclick="filterCat('Promotion', event)">Promotion</button>
+      <button onclick="filterCat('Hosting', event)">Hosting</button>
+      <button onclick="filterCat('Events', event)">Events</button>
+    </div>
+    <h2 style="margin:20px 0">📋 Services & Pricing</h2>
+    <div class="grid" id="clientProductGrid"><div class="loading">Loading services...</div></div>
+  </div>
+  <div class="cart-bar" id="clientCartBar">
+    <b>Cart: <span id="clientCartCount">0</span> | Total: R<span id="clientCartTotal">0</span></b>
+    <button class="btn" onclick="openCustomerModal()">Request Quote</button>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div>
+    <div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div>
+    <div class="footer-line">📍 Shushumela Ext 2</div>
+    <div class="footer-line">🏦 Capitec: 1621732043</div>
+    <div class="footer-copy">© 2026 Feel The Noise Sound Solution. Reg: Twinz Cooperate Services Pty Ltd 2024/4444303/07</div>
+  </footer>
+</div>
+
+<div id="loginScreen">
+  <div class="login-box">
+    <img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" style="width:90px;margin:0 auto;display:block;border-radius:15px">
+    <h2>FEEL THE NOISE PORTAL</h2>
+    <div id="loginError" class="error"></div>
+    <input type="email" id="loginEmail" placeholder="Email">
+    <input type="password" id="loginPass" placeholder="Password">
+    <button class="btn" onclick="doLogin()" style="width:100%">Login</button>
+  </div>
+</div>
 
 <div id="app" style="display:none">
-  <div class="header"><div class="header-top"><img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo"><div class="search-box"><input type="text" id="searchInput" placeholder="Search services..." onkeyup="searchProducts()"></div><div style="display:flex;gap:8px;align-items:center"><button class="btn" style="padding:5px 10px;font-size:12px;background:#fff;color:var(--accent)" onclick="toggleDark()">🌙</button><span class="role-badge" id="userRole">ADMIN</span><button class="btn" style="padding:5px 10px;font-size:12px" onclick="logout()">Logout</button></div></div><div class="nav-cats"><button onclick="filterCat('All', event)" class="active">All</button><button onclick="filterCat('Sound', event)">Sound</button><button onclick="filterCat('Promotion', event)">Promotion</button><button onclick="filterCat('Hosting', event)">Hosting</button><button onclick="filterCat('Events', event)">Events</button></div></div>
+  <div class="header">
+    <div class="header-top">
+      <img src="https://i.ibb.co/T3rcYCt/IMG-20260817-WA7376.jpg" class="logo">
+      <div class="search-box"><input type="text" id="searchInput" placeholder="Search services..." onkeyup="searchProducts()"></div>
+      <div style="display:flex;gap:8px;align-items:center">
+        <button class="btn" style="padding:5px 10px;font-size:12px;background:#fff;color:var(--accent)" onclick="toggleDark()">🌙</button>
+        <span class="role-badge" id="userRole">ADMIN</span><button class="btn" style="padding:5px 10px;font-size:12px" onclick="logout()">Logout</button>
+      </div>
+    </div>
+    <div class="nav-cats">
+      <button onclick="filterCat('All', event)" class="active">All</button>
+      <button onclick="filterCat('Sound', event)">Sound</button>
+      <button onclick="filterCat('Promotion', event)">Promotion</button>
+      <button onclick="filterCat('Hosting', event)">Hosting</button>
+      <button onclick="filterCat('Events', event)">Events</button>
+    </div>
+  </div>
   <div class="container">
     <div class="banner">🔊 SOUND ENGINEERING • EVENT PROMOTION • HOSTING 🔊</div>
     <div class="admin" id="adminPanel">
       <div class="tabs">
         <div class="tab active" onclick="showTab('dashboard', this)">Dashboard</div>
         <div class="tab" onclick="showTab('products', this)">Services</div>
+        <!-- ADDED TABS -->
         <div class="tab" onclick="showTab('income', this)">💰 Income</div>
         <div class="tab" onclick="showTab('tax', this)">🧾 Tax</div>
         <div class="tab" onclick="showTab('funding', this)">🏦 Funding</div>
@@ -123,40 +202,123 @@ input,select,textarea{width:100%;padding:10px;margin:6px 0;border:1px solid var(
         <div class="tab" onclick="showTab('reports', this)">Reports</div>
       </div>
 
-      <div id="tab-dashboard"><h3>📊 Dashboard</h3><div class="stats"><div class="stat-card"><h4 id="statProducts">0</h4><small>Total Services</small></div><div class="stat-card"><h4 id="statStock">0</h4><small>Total Stock</small></div><div class="stat-card"><h4 id="statOrders">0</h4><small>Pending</small></div></div><div class="stats" style="margin-top:10px"><div class="stat-card" style="background:linear-gradient(135deg,#00b894,#00cec9)"><h4 id="statToday">R0</h4><small>Today</small></div><div class="stat-card" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)"><h4 id="statMonth">R0</h4><small>Month</small></div><div class="stat-card" style="background:linear-gradient(135deg,#fdcb6e,#e17055)"><h4 id="statScore">0%</h4><small>Funding</small></div></div><div class="admin" style="background:rgba(255,0,100,0.1);border-left:4px solid var(--accent);margin-bottom:15px"><h4>📲 Customer Quote Link</h4><div style="display:flex;gap:8px;flex-wrap:wrap"><input type="text" id="clientShareLink" readonly style="flex:1;min-width:200px"><button class="btn" onclick="copyClientLink()">Copy</button><button class="btn-green" onclick="shareClientWhatsApp()">WhatsApp</button><button class="btn-blue" onclick="previewClient()">Preview</button></div></div><div class="bank-info"><b>🏦 Business:</b> Capitec 1621732043<br><b>📱 WhatsApp:</b> 066 279 6762</div><button class="btn-blue" onclick="document.getElementById('quickInvoiceModal').style.display='flex'" style="margin-bottom:15px">🧾 Quick Quote</button></div>
+      <div id="tab-dashboard">
+        <h3>📊 Dashboard</h3>
+        <div class="stats">
+          <div class="stat-card"><h4 id="statProducts">0</h4><small>Total Services</small></div>
+          <div class="stat-card"><h4 id="statStock">0</h4><small>Total Stock</small></div>
+          <div class="stat-card"><h4 id="statOrders">0</h4><small>Pending Requests</small></div>
+        </div>
+        <div class="stats" style="margin-top:10px">
+          <div class="stat-card" style="background:linear-gradient(135deg,#00b894,#00cec9)"><h4 id="statToday">R0</h4><small>Today Income</small></div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#6c5ce7,#a29bfe)"><h4 id="statMonth">R0</h4><small>This Month</small></div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#fdcb6e,#e17055)"><h4 id="statScore">0%</h4><small>Funding Ready</small></div>
+        </div>
+        <div class="admin" style="background:rgba(255,0,100,0.1);border-left:4px solid var(--accent);margin-bottom:15px">
+          <h4>📲 Customer Quote Link</h4>
+          <p style="font-size:12px;color:var(--muted)">Send this link to customers so they can request quotes online</p>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <input type="text" id="clientShareLink" readonly style="flex:1;min-width:200px">
+            <button class="btn" onclick="copyClientLink()">Copy</button>
+            <button class="btn-green" onclick="shareClientWhatsApp()">WhatsApp</button>
+            <button class="btn-blue" onclick="previewClient()">Preview</button>
+          </div>
+        </div>
+        <div class="bank-info"><b>🏦 Business Account:</b> Capitec 1621732043<br><b>📱 WhatsApp:</b> 066 279 6762<br><b>📞 Calls:</b> 071 213 4478<br><b>📧 Email:</b> mdkoscar50@gmail.com<br><b>📍 Address:</b> Shushumela Ext 2</div>
+        <button class="btn-blue" onclick="document.getElementById('quickInvoiceModal').style.display='flex'" style="margin-bottom:15px">🧾 Quick Quote</button>
+      </div>
 
-      <div id="tab-income" style="display:none"><h3>💰 Daily Income Tracker</h3><div class="stats"><div class="stat-card"><h4 id="incToday">R0</h4><small>Today</small></div><div class="stat-card" style="background:linear-gradient(135deg,#00b894,#0984e3)"><h4 id="incWeek">R0</h4><small>Week</small></div><div class="stat-card" style="background:linear-gradient(135deg,#6c5ce7,#fd79a8)"><h4 id="incMonth">R0</h4><small>Month</small></div></div><div style="display:flex;gap:10px;margin:15px 0"><input type="date" id="incomeDate"><button class="btn" onclick="filterIncomeByDate()">Filter</button><button class="btn-gray" onclick="loadIncome()">Reset</button></div><div id="incomeList"></div><button class="btn-green" onclick="downloadIncomeCSV()" style="margin-top:10px">Download Income CSV</button></div>
+      <!-- ADDED MISSING TAB CONTENTS -->
+      <div id="tab-income" style="display:none">
+        <h3>💰 Daily Income Tracker</h3>
+        <div class="stats">
+          <div class="stat-card"><h4 id="incToday">R0</h4><small>Today</small></div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#00b894,#0984e3)"><h4 id="incWeek">R0</h4><small>This Week</small></div>
+          <div class="stat-card" style="background:linear-gradient(135deg,#6c5ce7,#fd79a8)"><h4 id="incMonth">R0</h4><small>This Month</small></div>
+        </div>
+        <div style="display:flex;gap:10px;margin:15px 0"><input type="date" id="incomeDate"><button class="btn" onclick="filterIncomeByDate()">Filter</button><button class="btn-gray" onclick="loadIncome()">Reset</button></div>
+        <div id="incomeList"></div>
+        <button class="btn-green" onclick="downloadIncomeCSV()" style="margin-top:10px">Download Income CSV</button>
+      </div>
 
-      <div id="tab-tax" style="display:none"><h3>🧾 Simple Tax Helper (SA 2026)</h3><div class="bank-info"><b>Threshold:</b> R95,750/year</div><div class="stats"><div class="stat-card"><h4 id="taxYear">R0</h4><small>Yearly Income</small></div><div class="stat-card" id="taxStatusCard"><h4 id="taxStatus">Safe</h4><small>Status</small></div></div><div class="admin" style="background:#111"><p><b>Monthly Breakdown:</b></p><div id="taxBreakdown"></div></div></div>
+      <div id="tab-tax" style="display:none">
+        <h3>🧾 Simple Tax Helper (SA 2026)</h3>
+        <div class="bank-info"><b>Threshold:</b> R95,750/year (below = no income tax). Guide only, not SARS advice.</div>
+        <div class="stats"><div class="stat-card"><h4 id="taxYear">R0</h4><small>Yearly Income</small></div><div class="stat-card" id="taxStatusCard"><h4 id="taxStatus">Safe</h4><small>Status</small></div></div>
+        <div class="admin" style="background:#111"><p><b>Monthly Breakdown:</b></p><div id="taxBreakdown"></div></div>
+      </div>
 
-      <div id="tab-funding" style="display:none"><h3>🏦 Funding Readiness</h3><div style="text-align:center;padding:20px;background:linear-gradient(135deg,#ff0064,#ff3385);border-radius:15px;margin:10px 0;color:#fff"><h1 id="fundScoreText" style="font-size:52px;margin:0;font-weight:800">0%</h1><p id="fundLevel" style="font-size:18px;font-weight:800;margin:5px 0">LEVEL 1: Hustler 🌱</p><div class="progress-bar" style="background:rgba(0,0,0,0.3)"><div id="fundProgress" class="progress-fill" style="width:0%">0%</div></div><p id="fundBadge" style="font-size:12px;margin:8px 0">🎯 Earn badges</p><p id="fundNext" style="font-size:11px;opacity:0.9">Next unlock: Upload ID (+10%)</p></div><div id="fundChecklist"></div><div class="bank-info" id="fundAdvice" style="font-weight:700"></div><div class="bank-info" id="fundMotivate" style="background:rgba(0,184,148,0.15);border-left:4px solid var(--green);font-weight:600"></div><button class="btn" onclick="downloadFundingReport()">📄 Download Funding Report PDF</button></div>
+      <div id="tab-funding" style="display:none">
+        <h3>🏦 Funding Readiness</h3>
+        <div style="text-align:center;padding:20px;background:linear-gradient(135deg,#ff0064,#ff3385);border-radius:15px;margin:10px 0;color:#fff">
+          <h1 id="fundScoreText" style="font-size:52px;margin:0;font-weight:800">0%</h1>
+          <p id="fundLevel" style="font-size:18px;font-weight:800;margin:5px 0">LEVEL 1: Hustler 🌱</p>
+          <div class="progress-bar" style="background:rgba(0,0,0,0.3)"><div id="fundProgress" class="progress-fill" style="width:0%">0%</div></div>
+          <p id="fundBadge" style="font-size:12px;margin:8px 0">🎯 Earn badges</p>
+          <p id="fundNext" style="font-size:11px;opacity:0.9">Next unlock: Upload ID (+10%)</p>
+        </div>
+        <div id="fundChecklist"></div><div class="bank-info" id="fundAdvice" style="font-weight:700"></div><div class="bank-info" id="fundMotivate" style="background:rgba(0,184,148,0.15);border-left:4px solid var(--green)"></div>
+        <button class="btn" onclick="downloadFundingReport()">📄 Download Funding Report PDF</button>
+      </div>
 
       <div id="tab-vault" style="display:none">
-        <h3>📁 Document Vault - Catbox.moe Upload (PDF & Images)</h3>
-        <p style="font-size:12px;color:var(--muted)">Upload to catbox.moe - permanent catmoe link - auto creates files.catbox.moe URL. Supports PDF, JPG, PNG, etc. No Storage needed.</p>
-        <select id="vaultType"><option value="ID Document">ID Document</option><option value="CIPC Certificate">CIPC Certificate</option><option value="Proof of Address">Proof of Address</option><option value="Bank Confirmation">Bank Confirmation Letter</option><option value="Tax Clearance">Tax Clearance</option><option value="Other">Other</option></select>
+        <h3>📁 Document Vault - Catbox.moe Upload (PDF & Images) + PDF Download</h3>
+        <p style="font-size:12px;color:var(--muted)">Upload to catbox.moe - permanent catmoe link - supports PDF, JPG, PNG. Long-press image to get PDF option like your screenshot.</p>
+        <select id="vaultType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select>
         <label style="font-size:12px;margin-top:10px;display:block">📤 Method 1: Upload File directly to Catbox (auto link):</label>
         <input type="file" id="vaultFile" accept="image/*,.pdf">
         <button class="btn" id="vaultUploadBtn" onclick="uploadVaultCatbox()">⬆️ Upload to Catbox.moe & Save to Vault</button>
         <div id="vaultUploadStatus" style="font-size:12px;margin:8px 0;color:var(--green)"></div>
-        <label style="font-size:12px;margin-top:15px;display:block">🔗 Method 2: Paste existing Catbox / Catmoe link (files.catbox.moe):</label>
+        <label style="font-size:12px;margin-top:15px;display:block">🔗 Method 2: Paste existing Catbox / Catmoe link:</label>
         <input type="text" id="vaultLinkInput" placeholder="https://files.catbox.moe/xxxxxx.pdf or.jpg">
         <button class="btn-blue" onclick="saveVaultLink()">💾 Save Link to Vault</button>
         <div class="vault-grid" id="vaultGrid" style="margin-top:15px"></div>
       </div>
 
-      <div id="tab-notes" style="display:none"><h3>📝 Admin Notes</h3><div class="stats"><div class="stat-card"><h4 id="noteTotal">0</h4><small>Total</small></div><div class="stat-card" style="background:linear-gradient(135deg,#e17055,#fdcb6e)"><h4 id="noteUnpaid">0</h4><small>Unpaid</small></div><div class="stat-card" style="background:linear-gradient(135deg,#00b894,#00cec9)"><h4 id="notePinnedCount">0</h4><small>Pinned</small></div></div><div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap"><button class="btn" onclick="openNoteModal()">➕ Add Note</button><select id="noteFilter" onchange="loadNotes()" style="width:auto"><option value="all">All</option><option value="pinned">📌 Pinned</option><option value="unpaid">💰 Unpaid</option><option value="appointment">📅 Appointments</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up</option></select></div><div id="notesList"></div></div>
+      <div id="tab-notes" style="display:none">
+        <h3>📝 Admin Notes</h3>
+        <div class="stats"><div class="stat-card"><h4 id="noteTotal">0</h4><small>Total</small></div><div class="stat-card" style="background:linear-gradient(135deg,#e17055,#fdcb6e)"><h4 id="noteUnpaid">0</h4><small>Unpaid</small></div><div class="stat-card" style="background:linear-gradient(135deg,#00b894,#00cec9)"><h4 id="notePinnedCount">0</h4><small>Pinned</small></div></div>
+        <div style="display:flex;gap:8px;margin:10px 0;flex-wrap:wrap"><button class="btn" onclick="openNoteModal()">➕ Add Note</button><select id="noteFilter" onchange="loadNotes()" style="width:auto"><option value="all">All</option><option value="pinned">📌 Pinned</option><option value="unpaid">💰 Unpaid</option><option value="appointment">📅 Appointments</option><option value="todo">✅ To-Do</option><option value="followup">📞 Follow-Up</option></select></div>
+        <div id="notesList"></div>
+      </div>
 
-      <div id="tab-products" style="display:none"><h3 id="formTitle">➕ Add Service</h3><button class="btn-purple" onclick="seedDatabase()">⚡ Load Services</button><input type="text" id="pName" placeholder="Service Name"><select id="pCat"><option>Sound</option><option>Promotion</option><option>Hosting</option><option>Events</option><option>Specialty</option></select><input type="text" id="pImg" placeholder="Image URL"><input type="number" id="pPrice" placeholder="Price R"><input type="number" id="pOldPrice" placeholder="Old Price R"><input type="number" id="pStock" placeholder="Stock Qty"><textarea id="pDesc" placeholder="Description"></textarea><div style="display:flex;gap:10px"><button class="btn" id="saveBtn" onclick="saveProduct()" style="flex:1">Save Service</button><button class="btn-gray" id="cancelBtn" onclick="cancelEdit()" style="flex:1;display:none">Cancel</button></div><h3 style="margin-top:20px">📋 Manage Services</h3><input type="text" id="adminSearch" class="admin-search" placeholder="🔍 Search..."><div id="productList"></div></div>
+      <div id="tab-products" style="display:none">
+        <h3 id="formTitle">➕ Add Service</h3>
+        <button class="btn-purple" onclick="seedDatabase()">⚡ Load FEEL THE NOISE Services</button>
+        <input type="text" id="pName" placeholder="Service Name">
+        <select id="pCat"><option>Sound</option><option>Promotion</option><option>Hosting</option><option>Events</option><option>Specialty</option></select>
+        <input type="text" id="pImg" placeholder="Image URL">
+        <input type="number" id="pPrice" placeholder="Price R">
+        <input type="number" id="pOldPrice" placeholder="Old Price R">
+        <input type="number" id="pStock" placeholder="Stock Qty">
+        <textarea id="pDesc" placeholder="Description"></textarea>
+        <div style="display:flex;gap:10px">
+          <button class="btn" id="saveBtn" onclick="saveProduct()" style="flex:1">Save Service</button>
+          <button class="btn-gray" id="cancelBtn" onclick="cancelEdit()" style="flex:1;display:none">Cancel</button>
+        </div>
+        <h3 style="margin-top:20px">📋 Manage Services</h3>
+        <input type="text" id="adminSearch" class="admin-search" placeholder="🔍 Search...">
+        <div id="productList"></div>
+      </div>
       <div id="tab-stock" style="display:none"><h3>📦 Stock Management</h3><div id="stockList"></div></div>
-      <div id="tab-orders" style="display:none"><h3>📦 Customer Requests</h3><div id="ordersList">Loading...</div></div>
+      <div id="tab-orders" style="display:none"><h3>📦 Customer Requests</h3><div id="ordersList">Loading requests...</div></div>
       <div id="tab-users" style="display:none"><h3>👥 Users & Roles</h3><p><b>CEO:</b> ceo@feelthenoisesoundsolution.co.za</p><p><b>Manager:</b> manager@feelthenoisesoundsolution.co.za</p></div>
-      <div id="tab-reports" style="display:none"><h3>📊 Reports</h3><button class="btn-purple" onclick="downloadReport()">Download PDF Report</button> <button class="btn-green" onclick="downloadCSV()">Download CSV</button></div>
+      <div id="tab-reports" style="display:none"><h3>📊 Reports</h3><button class="btn-purple" onclick="downloadReport()">Download PDF Report</button> <button class="btn-green" onclick="downloadCSV()">Download CSV Spreadsheet</button></div>
     </div>
-    <h2 style="margin:20px 0">⭐ Featured Services</h2><div class="grid" id="productGrid"><div class="loading">Loading services...</div></div>
+    <h2 style="margin:20px 0">⭐ Featured Services</h2>
+    <div class="grid" id="productGrid"><div class="loading">Loading services...</div></div>
   </div>
-  <div class="cart-bar" id="cartBar"><b>Cart: <span id="cartCount">0</span> | Total: R<span id="cartTotal">0</span></b><button class="btn" onclick="openCustomerModal()">Request Quote</button></div>
-  <footer class="site-footer"><div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div><div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div><div class="footer-copy">© 2026 Twinz Cooperate Services Pty Ltd 2024/4444303/07</div></footer>
+  <div class="cart-bar" id="cartBar">
+    <b>Cart: <span id="cartCount">0</span> | Total: R<span id="cartTotal">0</span></b>
+    <button class="btn" onclick="openCustomerModal()">Request Quote</button>
+  </div>
+  <footer class="site-footer">
+    <div class="footer-title">FEEL THE NOISE SOUND SOLUTION</div>
+    <div class="footer-line">📞 <a href="tel:0662796762">066 279 6762</a> | 📞 <a href="tel:0712134478">071 213 4478</a> | 📧 <a href="mailto:mdkoscar50@gmail.com">mdkoscar50@gmail.com</a></div>
+    <div class="footer-line">📍 Shushumela Ext 2</div>
+    <div class="footer-line">🏦 Capitec: 1621732043</div>
+    <div class="footer-copy">© 2026 Feel The Noise Sound Solution. Reg: Twinz Cooperate Services Pty Ltd 2024/4444303/07</div>
+  </footer>
 </div>
 
 <script type="module">
@@ -192,6 +354,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const notesRef = ref(db, 'feelthenoisesoundsolution/notes');
   let products = {}; let orders = {}; let vault = {}; let notes = {}; let cart = [];
   let currentUser = {role:'reception'}; let currentFilter = 'All'; let editingId = null; let editingNoteId = null; let editingVaultId = null; let deferredPrompt; let currentInvoiceId = null;
+  let ctxUrl='', ctxName='';
   window.addEventListener('beforeinstallprompt', (e) => {e.preventDefault();deferredPrompt = e;document.getElementById('installBanner').style.display = 'block';});
   document.getElementById('installBtn').onclick = () => {if(deferredPrompt){deferredPrompt.prompt();deferredPrompt.userChoice.then(() => {deferredPrompt = null;document.getElementById('installBanner').style.display = 'none';});}};
   if(isClientMode){document.getElementById('loginScreen').style.display = 'none';document.getElementById('app').style.display = 'none';document.getElementById('clientView').style.display = 'block';document.getElementById('clientLink').innerText = window.location.origin + window.location.pathname + '?client=1';}
@@ -215,11 +378,12 @@ document.addEventListener('DOMContentLoaded', () => {
       buildProductList(); buildStockList(); buildOrders(); updateDashboard(); setClientLink();
     } else { loginScreen.style.display = 'block'; appDiv.style.display = 'none'; }
   })
-  window.showTab = (tab, el) => {document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['dashboard','products','income','tax','funding','vault','notes','stock','orders','users','reports'].forEach(t=>{document.getElementById('tab-'+t).style.display = t==tab?'block':'none'})}
+  window.showTab = (tab, el) => {document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));el.classList.add('active');['dashboard','products','income','tax','funding','vault','notes','stock','orders','users','reports'].forEach(t=>{let d=document.getElementById('tab-'+t); if(d) d.style.display = t==tab?'block':'none';});}
   onValue(productsRef, snap => { products = snap.val() || {}; renderProducts(); renderClientProducts(); buildProductList(); buildStockList(); updateDashboard(); })
   onValue(ordersRef, snap => { orders = snap.val() || {}; buildOrders(); updateDashboard(); loadIncome(); loadTax(); loadFunding(); })
   onValue(vaultRef, snap => { vault = snap.val() || {}; loadVault(); loadFunding(); })
   onValue(notesRef, snap => { notes = snap.val() || {}; loadNotes(); })
+
   function updateDashboard(){
     document.getElementById('statProducts').innerText = Object.keys(products).length;
     document.getElementById('statStock').innerText = Object.values(products).reduce((a,b)=>a+(b.stock||0),0);
@@ -230,6 +394,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('statToday').innerText='R'+todayTotal; document.getElementById('statMonth').innerText='R'+monthTotal;
     let sc=calcFundingScore(); document.getElementById('statScore').innerText=sc.score+'%'; document.getElementById('fundScoreText').innerText=sc.score+'%'; document.getElementById('fundProgress').innerText=sc.score+'%'; document.getElementById('fundProgress').style.width=sc.score+'%'; document.getElementById('fundLevel').innerText=sc.level; document.getElementById('fundBadge').innerText=sc.badge; document.getElementById('fundNext').innerText=sc.next;
   }
+
   window.loadIncome = () => {
     let list=document.getElementById('incomeList'); if(!list) return;
     let grouped={}; Object.values(orders).forEach(o=>{ let d=new Date(o.date).toLocaleDateString(); grouped[d]=(grouped[d]||0)+o.total; });
@@ -284,6 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('fundMotivate').innerText=result.motivate;
   }
   window.downloadFundingReport = () => { const doc=new jsPDF(); let r=calcFundingScore(); doc.text("Funding Readiness Report - FEEL THE NOISE",10,10); doc.text(`Score: ${r.score}% - ${r.level}`,10,20); doc.text(`Total Income: R${r.totalIncome}`,10,30); doc.text(`Months: ${r.monthCount} | Avg: R${r.avgMonthly.toFixed(0)}`,10,40); r.details.forEach((d,i)=>doc.text(d.substring(0,90),10,50+i*6)); doc.text(`Generated: ${new Date().toLocaleString()}`,10,130); doc.save("Funding-Report.pdf"); }
+
   window.openNoteModal = (id=null) => {
     editingNoteId=id;
     if(id && notes[id]){ let n=notes[id]; document.getElementById('noteModalTitle').innerText="✏️ Edit Note"; document.getElementById('noteTitle').value=n.title; document.getElementById('noteType').value=n.type; document.getElementById('noteContent').value=n.content; document.getElementById('noteDate').value=n.date||''; document.getElementById('notePinned').checked=n.pinned||false; }
@@ -317,71 +483,36 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ===== CATBOX.MOE VAULT - NEW ENHANCED LOGIC =====
+  // CATBOX.MOE VAULT + PDF DOWNLOAD OPTIONS
   window.uploadVaultCatbox = async () => {
-    let file=document.getElementById('vaultFile').files[0];
-    let type=document.getElementById('vaultType').value;
-    let statusEl=document.getElementById('vaultUploadStatus');
-    let btn=document.getElementById('vaultUploadBtn');
-    if(!file) return alert('Pick a file - PDF or Image to upload to Catbox.moe');
-    if(file.size > 200*1024*1024) return alert('File too big - Catbox limit 200MB');
-    statusEl.innerText='⏳ Uploading to catbox.moe... please wait';
-    btn.disabled=true; btn.innerText='Uploading...';
-    try {
-      let form=new FormData();
-      form.append('reqtype','fileupload');
-      form.append('fileToUpload',file);
-      let res=await fetch('https://catbox.moe/user/api.php',{method:'POST',body:form});
-      let url=(await res.text()).trim();
-      if(!url.startsWith('http')) throw new Error('Upload failed: '+url);
-      // url is like https://files.catbox.moe/xxxxxx.png/pdf
-      let id=Date.now().toString();
-      await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {
-        type,
-        url,
-        name:file.name,
-        fileType:file.type,
-        size:file.size,
-        date:new Date().toISOString(),
-        source:'catbox'
-      });
-      statusEl.innerText='✅ Uploaded! Link: '+url;
-      document.getElementById('vaultFile').value='';
-      alert('✅ Uploaded to Catbox.moe! Saved to Vault:\n'+url);
-    } catch(e){
-      statusEl.innerText='❌ Failed: '+e.message;
-      alert('Upload failed: '+e.message+' - Try again or paste catbox link manually');
-    }
-    btn.disabled=false; btn.innerText='⬆️ Upload to Catbox.moe & Save to Vault';
+    let file=document.getElementById('vaultFile').files[0]; let type=document.getElementById('vaultType').value; let statusEl=document.getElementById('vaultUploadStatus'); let btn=document.getElementById('vaultUploadBtn');
+    if(!file) return alert('Pick a file - PDF or Image to upload to Catbox.moe'); if(file.size > 200*1024*1024) return alert('File too big - Catbox limit 200MB');
+    statusEl.innerText='⏳ Uploading to catbox.moe... please wait'; btn.disabled=true; btn.innerText='Uploading...';
+    try { let form=new FormData(); form.append('reqtype','fileupload'); form.append('fileToUpload',file); let res=await fetch('https://catbox.moe/user/api.php',{method:'POST',body:form}); let url=(await res.text()).trim(); if(!url.startsWith('http')) throw new Error('Upload failed: '+url); let id=Date.now().toString(); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url, name:file.name, fileType:file.type, size:file.size, date:new Date().toISOString(), source:'catbox'}); statusEl.innerText='✅ Uploaded! Link: '+url; document.getElementById('vaultFile').value=''; alert('✅ Uploaded to Catbox.moe! Saved to Vault:\n'+url); } catch(e){ statusEl.innerText='❌ Failed: '+e.message; alert('Upload failed: '+e.message); } btn.disabled=false; btn.innerText='⬆️ Upload to Catbox.moe & Save to Vault';
   }
-
   window.saveVaultLink = async () => {
-    let link=document.getElementById('vaultLinkInput').value.trim();
-    let type=document.getElementById('vaultType').value;
-    if(!link ||!link.startsWith('http')) return alert('Paste valid catbox link - https://files.catbox.moe/...');
-    if(!link.includes('catbox.moe')){ if(!confirm('This is not a catbox.moe link. Save anyway?')) return; }
-    let id=Date.now().toString();
-    let isPdf=link.toLowerCase().endsWith('.pdf');
-    await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {
-      type,
-      url:link,
-      name:link.split('/').pop(),
-      fileType:isPdf?'application/pdf':'image/*',
-      size:0,
-      date:new Date().toISOString(),
-      source:'catbox-link'
-    });
-    document.getElementById('vaultLinkInput').value='';
-    alert('✅ Catbox link saved to Vault!');
+    let link=document.getElementById('vaultLinkInput').value.trim(); let type=document.getElementById('vaultType').value; if(!link ||!link.startsWith('http')) return alert('Paste valid catbox link'); if(!link.includes('catbox.moe')){ if(!confirm('This is not a catbox.moe link. Save anyway?')) return; } let id=Date.now().toString(); let isPdf=link.toLowerCase().endsWith('.pdf'); await set(ref(db, 'feelthenoisesoundsolution/vault/'+id), {type, url:link, name:link.split('/').pop(), fileType:isPdf?'application/pdf':'image/*', size:0, date:new Date().toISOString(), source:'catbox-link'}); document.getElementById('vaultLinkInput').value=''; alert('✅ Catbox link saved to Vault!');
   }
+  window.downloadVaultFile = async (url, name) => { try { let res=await fetch(url); let blob=await res.blob(); let a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=name||'document'; a.click(); } catch(e){ window.open(url,'_blank'); } }
+  window.downloadVaultAsPDF = async (url, name) => {
+    try {
+      let isPdf=url.toLowerCase().endsWith('.pdf')||name.toLowerCase().endsWith('.pdf'); if(isPdf){ downloadVaultFile(url,name); return; }
+      let res=await fetch(url); let blob=await res.blob(); let reader=new FileReader();
+      reader.onload=()=>{ const doc=new jsPDF(); doc.addImage(reader.result,'JPEG',10,10,190,0); doc.save((name||'document').replace(/\.[^/.]+$/,"")+'.pdf'); };
+      reader.readAsDataURL(blob);
+    } catch(e){ alert('PDF convert failed, opening original'); window.open(url,'_blank'); }
+  }
+  window.showCustomMenu = (e, url, name) => { e.preventDefault(); ctxUrl=url; ctxName=name; let menu=document.getElementById('customCtx'); menu.style.left=(e.touches?e.touches[0].clientX:e.clientX)+'px'; menu.style.top=(e.touches?e.touches[0].clientY:e.clientY)+'px'; menu.style.display='block'; }
+  window.ctxAction = (type) => { let menu=document.getElementById('customCtx'); menu.style.display='none'; if(type==='open') window.open(ctxUrl,'_blank'); if(type==='preview') window.open(ctxUrl,'_blank'); if(type==='copy') copyVaultLink(ctxUrl); if(type==='download') downloadVaultFile(ctxUrl,ctxName); if(type==='pdf') downloadVaultAsPDF(ctxUrl,ctxName); if(type==='share' && navigator.share) navigator.share({url:ctxUrl,title:ctxName}); }
+  document.addEventListener('click',()=>{ let m=document.getElementById('customCtx'); if(m) m.style.display='none'; });
 
   window.loadVault = () => {
     let grid=document.getElementById('vaultGrid'); if(!grid) return; grid.innerHTML='';
-    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload via Catbox.moe - PDF & Images get permanent link.</p>'; return; }
+    if(Object.keys(vault).length===0){ grid.innerHTML='<p style="text-align:center;color:var(--muted);grid-column:1/-1">No documents yet. Upload via Catbox.moe - PDF & Images get permanent link. Long-press for PDF option.</p>'; return; }
     Object.entries(vault).forEach(([id,v])=>{
       let isPdf = v.fileType==='application/pdf' || v.url?.toLowerCase().endsWith('.pdf') || v.name?.toLowerCase().endsWith('.pdf');
-      let preview = isPdf? `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>` : `<img src="${v.url}" style="width:100%;height:80px;object-fit:cover;border-radius:6px" onerror="this.src='${COMPANY_LOGO}'">`;
-      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:8px;color:var(--green);word-break:break-all">🔗 ${v.url.substring(0,35)}...</div><div style="font-size:9px;color:var(--muted)">${isPdf?'PDF':'Image'} • ${v.source||'catbox'} • ${v.date?new Date(v.date).toLocaleDateString():''}</div><div style="display:flex;gap:4px;margin-top:6px"><a href="${v.url}" target="_blank" style="flex:1;background:var(--blue);color:#fff;padding:4px 6px;border-radius:6px;font-size:10px;text-decoration:none;text-align:center">👁️ View</a><button onclick="openVaultEdit('${id}')" style="flex:1;background:var(--green);color:#fff;border:none;padding:4px 6px;border-radius:6px;font-size:10px;cursor:pointer">✏️ Edit</button></div><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:4px 6px;border-radius:6px;font-size:10px;cursor:pointer">🗑️ Delete</button><button onclick="copyVaultLink('${v.url}')" style="width:100%;margin-top:4px;background:#333;color:#fff;border:none;padding:4px 6px;border-radius:6px;font-size:10px;cursor:pointer">📋 Copy Link</button></div>`;
+      let preview = isPdf? `<div style="width:100%;height:80px;background:#222;display:flex;align-items:center;justify-content:center;border-radius:6px;font-size:30px">📄</div>` : `<img src="${v.url}" oncontextmenu="showCustomMenu(event,'${v.url}','${v.name}')" ontouchstart="if(window.tmr) clearTimeout(window.tmr); window.tmr=setTimeout(()=>showCustomMenu(event,'${v.url}','${v.name}'),700)" ontouchend="if(window.tmr) clearTimeout(window.tmr)" style="width:100%;height:80px;object-fit:cover;border-radius:6px" onerror="this.src='${COMPANY_LOGO}'">`;
+      grid.innerHTML+=`<div class="vault-item"><b>${v.type}</b>${preview}<div style="font-size:10px;margin:4px 0;word-break:break-all">${v.name}</div><div style="font-size:8px;color:var(--green);word-break:break-all">🔗 ${v.url.substring(0,35)}...</div><div style="font-size:9px;color:var(--muted)">${isPdf?'PDF':'Image'} • ${v.source||'catbox'}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:6px"><a href="${v.url}" target="_blank" style="background:var(--blue);color:#fff;padding:5px;border-radius:6px;font-size:10px;text-decoration:none;text-align:center">👁️ View</a><button onclick="downloadVaultFile('${v.url}','${v.name}')" style="background:#444;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">⬇️ Download</button></div><button onclick="downloadVaultAsPDF('${v.url}','${v.name}')" style="width:100%;margin-top:4px;background:var(--purple);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px;cursor:pointer">📄 Download as PDF</button><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:4px"><button onclick="openVaultEdit('${id}')" style="background:var(--green);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">✏️ Edit</button><button onclick="copyVaultLink('${v.url}')" style="background:#333;color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">📋 Copy</button></div><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:var(--danger);color:#fff;border:none;padding:5px;border-radius:6px;font-size:10px">🗑️ Delete</button></div>`;
     })
   }
   window.copyVaultLink = (url) => { navigator.clipboard.writeText(url).then(()=>alert('📋 Catbox link copied:\n'+url)); }
@@ -390,9 +521,9 @@ document.addEventListener('DOMContentLoaded', () => {
   window.deleteVault = (id) => { if(confirm('Delete this document permanently from Vault? (Catbox file stays)')) remove(ref(db, 'feelthenoisesoundsolution/vault/'+id)) }
 
   function getImages(p){ if(!p.img) return [COMPANY_LOGO]; return p.img.split(',').map(s=>s.trim()).filter(s=>s); }
-  window.switchImage = (cardId, imgUrl, thumb) => { document.getElementById('main_'+cardId).src = imgUrl; let container=document.getElementById('card_'+cardId); if(container){ container.querySelectorAll('.card-imgs img').forEach(i=>i.classList.remove('active')); } if(thumb) thumb.classList.add('active'); }
+  window.switchImage = (cardId, imgUrl, thumb) => { document.getElementById('main_'+cardId).src = imgUrl; document.querySelectorAll(`#card_${cardId}.card-imgs img`).forEach(i=>i.classList.remove('active')); if(thumb) thumb.classList.add('active'); }
   function getCartControls(id){ let item=cart.find(x=>x.id==id); if(!item) return `<button class="btn-cart" onclick="addToCart('${id}')">Request Quote</button>`; return `<div class="qty-controls"><button class="qty-btn" onclick="decreaseQty('${id}')">-</button><div class="qty-text">${item.qty}</div><button class="qty-btn" onclick="addToCart('${id}')">+</button></div>`; }
-  function renderClientProducts(){ if(!isClientMode) return; clientProductGrid.innerHTML=''; if(Object.keys(products).length===0){ clientProductGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">Loading services...</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(clientSearchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; clientProductGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
+   function renderClientProducts(){ if(!isClientMode) return; clientProductGrid.innerHTML=''; if(Object.keys(products).length===0){ clientProductGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">Loading services...</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(clientSearchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; clientProductGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
   function renderProducts(){ if(isClientMode) return; productGrid.innerHTML=''; if(Object.keys(products).length===0){ productGrid.innerHTML=`<p style="text-align:center;grid-column:1/-1">No services yet. Click "Load FEEL THE NOISE Services"</p>`; return; } Object.entries(products).filter(([id,p])=>{ let matchCat=currentFilter=='All'||p.category==currentFilter; let matchSearch=p.name.toLowerCase().includes(searchInput.value.toLowerCase()); return matchCat&&matchSearch; }).forEach(([id,p])=>{ let imgs=getImages(p); let mainImg=imgs[0]; let extraImgs=imgs.map((u,i)=>`<img src="${u}" class="${i==0?'active':''}" onclick="switchImage('${id}','${u}',this)" onerror="this.style.display='none'">`).join(''); let brands=p.desc? p.desc.split(',').map(b=>`<span class="brand-tag">${b}</span>`).join('') : ''; let cartBtn=p.stock>0?getCartControls(id):`<button class="btn-oos" disabled>Unavailable</button>`; productGrid.innerHTML+=`<div class="card" id="card_${id}"><img id="main_${id}" src="${mainImg}" loading="lazy" onerror="this.onerror=null;this.src='${COMPANY_LOGO}'"><div class="card-imgs">${extraImgs}</div><h4>${p.name}</h4>${brands}<div class="price">R${p.price} ${p.oldPrice?`<span class="old-price">R${p.oldPrice}</span>`:''}</div>${cartBtn}</div>`; }) }
   window.searchProducts = () => { renderProducts(); renderClientProducts(); }
   window.filterCat = (cat, e) => { currentFilter=cat; renderProducts(); renderClientProducts(); document.querySelectorAll('.nav-cats button').forEach(b=>b.classList.remove('active')); if(e) e.target.classList.add('active'); }
