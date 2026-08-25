@@ -2,332 +2,209 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TWINZ COOPERATE SERVICES | FUTURE OS</title>
+<title>TWINZ COOPERATE SERVICES | FUTURE OS AMBIENT</title>
 <meta name="theme-color" content="#060A14">
-<link rel="apple-touch-icon" href="https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root{
---bg:#050812;
---bg2:#070C1E;
---card:#11162A;
---card2:#151B33;
---card3:#1C2340;
---border:rgba(255,255,255,0.07);
---border2:rgba(255,255,255,0.12);
---border-blue:rgba(79,124,255,0.25);
---accent:#4F7CFF;
---accent2:#3B82F6;
---accent-glow:0 0 20px rgba(79,124,255,0.35);
---green:#10B981;
---purple:#8B5CF6;
---text:#E6E8F0;
---text-bright:#FFFFFF;
---muted:#8A90A8;
---muted2:#5A6280;
---danger:#EF4444;
---shadow:0 8px 32px rgba(0,0,0,0.4);
---shadow-blue:0 8px 32px rgba(79,124,255,0.15);
---radius:20px;
---radius-sm:12px;
---radius-full:999px;
+--bg:#050812;--card:#11162A;--card2:#151B33;--card3:#1C2340;
+--border:rgba(255,255,255,0.07);--border2:rgba(255,255,255,0.12);--border-blue:rgba(79,124,255,0.25);
+--accent:#4F7CFF;--accent2:#3B82F6;--green:#10B981;--purple:#8B5CF6;
+--text:#E6E8F0;--text-bright:#FFFFFF;--muted:#8A90A8;--muted2:#5A6280;
+--danger:#EF4444;--radius:20px;--radius-sm:12px;
 }
 *{box-sizing:border-box;font-family:'Inter',sans-serif}
 body{
-margin:0;
-background:
-radial-gradient(800px 500px at 20% 0%, rgba(79,124,255,0.15), transparent 60%),
-radial-gradient(600px 400px at 90% 20%, rgba(59,130,246,0.12), transparent 60%),
-radial-gradient(1000px 600px at 50% 100%, rgba(15,23,42,0.8), transparent),
-var(--bg);
-color:var(--text);
-min-height:100vh;
-letter-spacing:-0.01em;
+margin:0;background:var(--bg);color:var(--text);min-height:100vh;
+position:relative;overflow-x:hidden;
 }
-html,body{overflow-x:hidden;width:100%}
+/* AMBIENT LIGHTING - ALIVE */
+.ambient-wrap{
+position:fixed;inset:0;pointer-events:none;z-index:-1;overflow:hidden;
+}
+.ambient-orb{
+position:absolute;border-radius:50%;filter:blur(80px);opacity:0.55;
+animation:floatAmbient 12s ease-in-out infinite;
+}
+.orb-1{
+width:700px;height:700px;
+background:radial-gradient(circle at 30% 30%, rgba(79,124,255,0.35), rgba(59,130,246,0.15) 40%, transparent 70%);
+top:-200px;left:-150px;
+animation-delay:0s;
+}
+.orb-2{
+width:600px;height:600px;
+background:radial-gradient(circle at 50% 50%, rgba(99,102,241,0.25), rgba(79,124,255,0.1) 50%, transparent 70%);
+top:30%;right:-200px;
+animation-delay:2s;
+}
+.orb-3{
+width:800px;height:800px;
+background:radial-gradient(circle at 40% 40%, rgba(15,23,42,0.9), rgba(79,124,255,0.12) 30%, transparent 70%);
+bottom:-300px;left:20%;
+animation-delay:4s;
+}
+.orb-4{
+width:500px;height:500px;
+background:radial-gradient(circle, rgba(59,130,246,0.18), transparent 70%);
+top:60%;left:10%;
+animation-delay:1s;
+}
+@keyframes floatAmbient{
+0%,100%{transform:translate(0,0) scale(1)}
+33%{transform:translate(30px,-30px) scale(1.05)}
+66%{transform:translate(-20px,20px) scale(0.95)}
+}
+body:before{
+content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+background:
+radial-gradient(1200px 600px at 15% 0%, rgba(79,124,255,0.12), transparent 60%),
+radial-gradient(800px 500px at 85% 15%, rgba(139,92,246,0.08), transparent 60%),
+linear-gradient(180deg, rgba(5,8,18,0) 0%, rgba(5,8,18,0.8) 100%);
+}
+html,body{width:100%}
 .header{
-background:rgba(8,12,28,0.85);
-backdrop-filter:blur(20px) saturate(1.2);
+background:rgba(8,12,28,0.72);
+backdrop-filter:blur(24px) saturate(1.4);
 border-bottom:1px solid var(--border);
-padding:14px 18px;
-position:sticky;top:0;z-index:99;
+padding:14px 18px;position:sticky;top:0;z-index:99;
+box-shadow:0 1px 0 rgba(255,255,255,0.04) inset, 0 10px 30px rgba(0,0,0,0.3);
 }
 .header-top{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;max-width:1400px;margin:0 auto}
-.logo{width:44px;height:44px;border-radius:12px;background:#fff;padding:4px;object-fit:cover;box-shadow:0 0 20px rgba(79,124,255,0.3);border:1px solid var(--border2)}
-.search-box{
-flex:1;max-width:460px;
-background:rgba(255,255,255,0.06);
-border:1px solid var(--border);
-border-radius:999px;
-padding:11px 16px;
-display:flex;align-items:center;
-transition:0.25s;
-}
-.search-box:focus-within{
-background:rgba(255,255,255,0.08);
-border-color:var(--border-blue);
-box-shadow:0 0 0 3px rgba(79,124,255,0.15), var(--accent-glow);
-}
-.search-box input{border:none;outline:none;width:100%;background:transparent;color:var(--text-bright);font-size:13.5px;font-weight:500}
+.logo{width:44px;height:44px;border-radius:12px;background:#fff;padding:4px;object-fit:cover;box-shadow:0 0 24px rgba(79,124,255,0.4), 0 0 0 1px rgba(255,255,255,0.1);border:1px solid var(--border2)}
+.search-box{flex:1;max-width:460px;background:rgba(255,255,255,0.06);border:1px solid var(--border);border-radius:999px;padding:11px 16px;display:flex;align-items:center;transition:0.3s;backdrop-filter:blur(10px)}
+.search-box:focus-within{background:rgba(255,255,255,0.08);border-color:rgba(79,124,255,0.35);box-shadow:0 0 0 4px rgba(79,124,255,0.12), 0 0 20px rgba(79,124,255,0.2)}
+.search-box input{border:none;outline:none;width:100%;background:transparent;color:#fff;font-size:13.5px;font-weight:500}
 .search-box input::placeholder{color:var(--muted2)}
 .nav-cats{display:flex;gap:8px;overflow-x:auto;margin-top:14px;padding-bottom:2px;scrollbar-width:none;max-width:1400px;margin:14px auto 0}
 .nav-cats::-webkit-scrollbar{display:none}
-.nav-cats button{
-background:rgba(255,255,255,0.06);
-border:1px solid var(--border);
-color:var(--muted);
-padding:9px 16px;
-border-radius:999px;
-font-weight:600;font-size:12.5px;
-cursor:pointer;white-space:nowrap;
-transition:all 0.25s;
-}
-.nav-cats button:hover{background:rgba(255,255,255,0.09);color:var(--text);border-color:var(--border2)}
-.nav-cats button.active{
-background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);
-color:#fff;border-color:transparent;
-box-shadow:0 4px 16px rgba(79,124,255,0.35), 0 0 0 1px rgba(79,124,255,0.3);
-}
-.container{max-width:1400px;margin:0 auto;padding:16px}
+.nav-cats button{background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);padding:9px 16px;border-radius:999px;font-weight:600;font-size:12.5px;cursor:pointer;white-space:nowrap;transition:0.3s;backdrop-filter:blur(8px)}
+.nav-cats button:hover{background:rgba(255,255,255,0.08);color:var(--text);border-color:var(--border2);box-shadow:0 0 15px rgba(255,255,255,0.05)}
+.nav-cats button.active{background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);color:#fff;border-color:transparent;box-shadow:0 4px 20px rgba(79,124,255,0.4), 0 0 0 1px rgba(79,124,255,0.4), 0 0 30px rgba(79,124,255,0.2)}
+.container{max-width:1400px;margin:0 auto;padding:16px;position:relative}
 .banner{
-background:linear-gradient(135deg, rgba(17,22,42,0.9) 0%, rgba(21,27,51,0.9) 100%);
-border:1px solid var(--border);
-border-left:1px solid var(--border-blue);
+background:linear-gradient(135deg, rgba(17,22,42,0.85) 0%, rgba(21,27,51,0.75) 100%);
+backdrop-filter:blur(16px);
+border:1px solid var(--border);border-left:1px solid var(--border-blue);
 padding:18px;border-radius:16px;text-align:center;margin:16px 0;
-font-weight:700;font-size:13.5px;letter-spacing:0.02em;
-box-shadow:var(--shadow);
-color:var(--text);
+font-weight:700;font-size:13.5px;box-shadow:0 8px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(255,255,255,0.04) inset;
 position:relative;overflow:hidden;
 }
-.banner:before{
-content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg, transparent, rgba(79,124,255,0.5), transparent);
-}
-.banner:after{
-content:'';position:absolute;bottom:-50%;left:-20%;width:140%;height:200%;
-background:radial-gradient(ellipse at center, rgba(79,124,255,0.08), transparent 60%);
-pointer-events:none;
-}
+.banner:before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(79,124,255,0.5), transparent)}
+.banner:after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(600px 200px at 50% 0%, rgba(79,124,255,0.1), transparent);pointer-events:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
 .card{
 display:flex;flex-direction:column;min-height:400px;
-background:linear-gradient(180deg, rgba(21,27,51,0.9) 0%, rgba(17,22,42,0.95) 100%);
-border:1px solid var(--border);
-border-radius:20px;
-padding:12px;
-box-shadow:var(--shadow);
-position:relative;
-overflow:hidden;
-transition:all 0.3s cubic-bezier(0.4,0,0.2,1);
+background:linear-gradient(180deg, rgba(21,27,51,0.85) 0%, rgba(17,22,42,0.9) 100%);
+backdrop-filter:blur(12px);
+border:1px solid var(--border);border-radius:20px;padding:12px;
+box-shadow:0 8px 32px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.03) inset;
+position:relative;overflow:hidden;transition:all 0.35s cubic-bezier(0.4,0,0.2,1);
 }
 .card:before{
 content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+background:linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+opacity:0.8;
 }
-.card:hover{
-transform:translateY(-4px);
-border-color:var(--border2);
-box-shadow:0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05), var(--shadow-blue);
+.card:after{
+content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
+background:radial-gradient(300px 200px at 30% 20%, rgba(79,124,255,0.08), transparent 60%);
+opacity:0;transition:opacity 0.35s;pointer-events:none;
 }
-.card img{width:100%;height:170px;object-fit:cover;border-radius:14px;background:var(--card2);border:1px solid var(--border)}
-.card-imgs{display:flex;gap:6px;margin-top:8px;overflow-x:auto;padding-bottom:2px}
+.card:hover:after{opacity:1}
+.card:hover{transform:translateY(-5px);border-color:rgba(255,255,255,0.12);box-shadow:0 16px 50px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06) inset, 0 0 30px rgba(79,124,255,0.15)}
+.card img{width:100%;height:170px;object-fit:cover;border-radius:14px;background:var(--card2);border:1px solid var(--border);position:relative;z-index:1}
+.card-imgs{display:flex;gap:6px;margin-top:8px;overflow-x:auto;position:relative;z-index:1}
 .card-imgs::-webkit-scrollbar{display:none}
 .card-imgs img{width:44px;height:44px;border-radius:10px;object-fit:cover;flex-shrink:0;cursor:pointer;border:2px solid transparent;transition:0.2s;opacity:0.7}
-.card-imgs img:hover{opacity:1}
-.card-imgs img.active{border-color:var(--accent);opacity:1;box-shadow:0 0 10px rgba(79,124,255,0.4)}
-.card h4{margin:12px 0 6px;font-size:13.5px;font-weight:700;line-height:1.35;color:var(--text-bright);letter-spacing:-0.01em}
-.price{font-weight:800;font-size:16px;margin-top:auto;color:var(--text-bright);letter-spacing:-0.02em}
-.btn-cart{
-background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);
-color:#fff;border:none;width:100%;padding:12px;border-radius:12px;
-font-weight:700;font-size:12.5px;cursor:pointer;
-transition:all 0.25s;
-box-shadow:0 4px 16px rgba(79,124,255,0.3);
-}
-.btn-cart:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,124,255,0.4)}
+.card-imgs img.active{border-color:var(--accent);opacity:1;box-shadow:0 0 12px rgba(79,124,255,0.5)}
+.card h4{margin:12px 0 6px;font-size:13.5px;font-weight:700;line-height:1.35;color:#fff;position:relative;z-index:1}
+.price{font-weight:800;font-size:16px;margin-top:auto;color:#fff;position:relative;z-index:1}
+.btn-cart{background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);color:#fff;border:none;width:100%;padding:12px;border-radius:12px;font-weight:700;font-size:12.5px;cursor:pointer;transition:0.25s;box-shadow:0 4px 16px rgba(79,124,255,0.3);position:relative;z-index:1;overflow:hidden}
+.btn-cart:before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);transition:left 0.5s}
+.btn-cart:hover:before{left:100%}
+.btn-cart:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(79,124,255,0.4)}
 .btn-oos{background:rgba(255,255,255,0.06);color:var(--muted2);border:1px solid var(--border);width:100%;padding:12px;border-radius:12px;font-weight:600}
-.qty-controls{display:flex;gap:6px;align-items:center;margin-top:12px}
-.qty-btn{background:rgba(255,255,255,0.07);border:1px solid var(--border);color:#fff;width:36px;height:36px;border-radius:11px;font-weight:700;cursor:pointer;transition:0.2s}
-.qty-btn:hover{background:rgba(255,255,255,0.1)}
-.qty-text{background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:7px 12px;border-radius:11px;font-weight:700;min-width:44px;text-align:center;font-size:13px;color:var(--text-bright)}
+.qty-controls{display:flex;gap:6px;align-items:center;margin-top:12px;position:relative;z-index:1}
+.qty-btn{background:rgba(255,255,255,0.07);border:1px solid var(--border);color:#fff;width:36px;height:36px;border-radius:11px;font-weight:700;cursor:pointer}
+.qty-text{background:rgba(255,255,255,0.06);border:1px solid var(--border);padding:7px 12px;border-radius:11px;font-weight:700;min-width:44px;text-align:center;font-size:13px;color:#fff}
 .admin{
-background:linear-gradient(180deg, rgba(17,22,42,0.8) 0%, rgba(13,17,33,0.9) 100%);
-border:1px solid var(--border);
-border-radius:20px;
-padding:20px;
-margin:18px 0;
-box-shadow:var(--shadow);
-position:relative;
-}
-.admin:before{
-content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg, transparent, rgba(79,124,255,0.2), transparent);
-}
-.login-box{
-max-width:400px;margin:70px auto;
-background:linear-gradient(180deg, rgba(21,27,51,0.95) 0%, rgba(13,17,33,0.98) 100%);
-border:1px solid var(--border2);
-padding:28px;border-radius:24px;
-box-shadow:0 20px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05);
-position:relative;overflow:hidden;
-}
-.login-box:before{
-content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;
-background:radial-gradient(ellipse at 30% 20%, rgba(79,124,255,0.15), transparent 50%);
-pointer-events:none;
-}
-.role-badge{padding:6px 11px;border-radius:999px;font-size:10px;font-weight:800;color:#fff;letter-spacing:0.04em;box-shadow:0 2px 8px rgba(0,0,0,0.2)}
-.role-ceo{background:linear-gradient(135deg,#8B5CF6,#6366F1)}.role-manager{background:linear-gradient(135deg,#4F7CFF,#3B82F6)}.role-sales{background:#0EA5E9}.role-reception{background:linear-gradient(135deg,#10B981,#059669)}
-.tabs{display:flex;gap:7px;border-bottom:1px solid var(--border);margin-bottom:18px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none}
-.tabs::-webkit-scrollbar{display:none}
-.tab{
-padding:9px 15px;cursor:pointer;font-weight:600;white-space:nowrap;
-border-radius:999px;
-background:rgba(255,255,255,0.05);
-border:1px solid var(--border);
-color:var(--muted);font-size:12.5px;transition:all 0.25s;
-}
-.tab:hover{background:rgba(255,255,255,0.08);color:var(--text)}
-.tab.active{background:var(--text-bright);color:#060A14;border-color:var(--text-bright);box-shadow:0 2px 12px rgba(255,255,255,0.15)}
-input,select,textarea{
-width:100%;padding:12px 14px;margin:6px 0;
-border:1px solid var(--border);
-border-radius:12px;
-background:rgba(255,255,255,0.05);
-color:var(--text-bright);font-size:13.5px;font-weight:500;
-transition:all 0.25s;
-}
-input:focus,select:focus,textarea:focus{
-outline:none;
-border-color:var(--border-blue);
-background:rgba(255,255,255,0.07);
-box-shadow:0 0 0 3px rgba(79,124,255,0.15);
-}
-input::placeholder,textarea::placeholder{color:var(--muted2)}
-.btn{
-background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);
-color:#fff;border:1px solid transparent;
-padding:11px 18px;border-radius:12px;
-font-weight:700;font-size:12.5px;cursor:pointer;
-transition:all 0.25s;
-box-shadow:0 4px 16px rgba(79,124,255,0.25);
-}
-.btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(79,124,255,0.35)}
-.btn-blue{background:rgba(255,255,255,0.07);color:var(--text);border-color:var(--border);box-shadow:none}
-.btn-blue:hover{background:rgba(255,255,255,0.1)}
-.btn-green{background:linear-gradient(135deg,#10B981,#059669);box-shadow:0 4px 16px rgba(16,185,129,0.25)}
-.btn-purple{background:linear-gradient(135deg,#8B5CF6,#6366F1);box-shadow:0 4px 16px rgba(139,92,246,0.25)}
-.btn-gray{background:rgba(255,255,255,0.06);color:var(--muted);border-color:var(--border);box-shadow:none}
-.btn-danger{background:linear-gradient(135deg,#EF4444,#DC2626);box-shadow:0 4px 16px rgba(239,68,68,0.25)}
-.cart-bar{
-position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-background:rgba(15,20,40,0.9);
+background:linear-gradient(180deg, rgba(17,22,42,0.75) 0%, rgba(13,17,33,0.85) 100%);
 backdrop-filter:blur(20px);
-border:1px solid var(--border2);
-color:#fff;padding:12px 14px 12px 20px;border-radius:999px;
-display:none;z-index:100;gap:14px;align-items:center;
-box-shadow:0 12px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05), 0 0 30px rgba(79,124,255,0.15);
+border:1px solid var(--border);border-radius:20px;padding:20px;margin:18px 0;
+box-shadow:0 12px 40px rgba(0,0,0,0.35), 0 0 0 1px rgba(255,255,255,0.04) inset;
+position:relative;overflow:hidden;
 }
+.admin:before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(79,124,255,0.3), transparent)}
+.admin:after{content:'';position:absolute;top:0;left:0;right:0;bottom:0;background:radial-gradient(800px 400px at 20% 0%, rgba(79,124,255,0.06), transparent);pointer-events:none}
+.login-box{max-width:400px;margin:70px auto;background:linear-gradient(180deg, rgba(22,28,54,0.9) 0%, rgba(13,17,33,0.95) 100%);backdrop-filter:blur(24px);border:1px solid var(--border2);padding:28px;border-radius:24px;box-shadow:0 24px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.06) inset, 0 0 40px rgba(79,124,255,0.1);position:relative;overflow:hidden}
+.login-box:before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%, rgba(79,124,255,0.18), transparent 50%);pointer-events:none}
+.role-badge{padding:6px 11px;border-radius:999px;font-size:10px;font-weight:800;color:#fff;box-shadow:0 2px 10px rgba(0,0,0,0.3)}
+.role-ceo{background:linear-gradient(135deg,#8B5CF6,#6366F1)}.role-manager{background:linear-gradient(135deg,#4F7CFF,#3B82F6)}.role-sales{background:#0EA5E9}.role-reception{background:linear-gradient(135deg,#10B981,#059669)}
+.tabs{display:flex;gap:7px;border-bottom:1px solid var(--border);margin-bottom:18px;overflow-x:auto;padding-bottom:14px;scrollbar-width:none;position:relative;z-index:1}
+.tabs::-webkit-scrollbar{display:none}
+.tab{padding:9px 15px;cursor:pointer;font-weight:600;white-space:nowrap;border-radius:999px;background:rgba(255,255,255,0.05);border:1px solid var(--border);color:var(--muted);font-size:12.5px;transition:0.25s;backdrop-filter:blur(6px)}
+.tab.active{background:#fff;color:#060A14;border-color:#fff;box-shadow:0 4px 16px rgba(255,255,255,0.2), 0 0 20px rgba(255,255,255,0.1)}
+input,select,textarea{width:100%;padding:12px 14px;margin:6px 0;border:1px solid var(--border);border-radius:12px;background:rgba(255,255,255,0.05);color:#fff;font-size:13.5px;backdrop-filter:blur(6px);transition:0.25s}
+input:focus,select:focus,textarea:focus{outline:none;border-color:rgba(79,124,255,0.4);background:rgba(255,255,255,0.08);box-shadow:0 0 0 4px rgba(79,124,255,0.12), 0 0 20px rgba(79,124,255,0.15)}
+.btn{background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);color:#fff;border:1px solid transparent;padding:11px 18px;border-radius:12px;font-weight:700;font-size:12.5px;cursor:pointer;transition:0.25s;box-shadow:0 4px 16px rgba(79,124,255,0.3);position:relative;overflow:hidden}
+.btn:hover{transform:translateY(-1px);box-shadow:0 8px 24px rgba(79,124,255,0.4)}
+.btn-blue{background:rgba(255,255,255,0.07);color:var(--text);border-color:var(--border);box-shadow:none}
+.btn-green{background:linear-gradient(135deg,#10B981,#059669)}.btn-purple{background:linear-gradient(135deg,#8B5CF6,#6366F1)}.btn-gray{background:rgba(255,255,255,0.06);color:var(--muted);border-color:var(--border);box-shadow:none}.btn-danger{background:linear-gradient(135deg,#EF4444,#DC2626)}
+.cart-bar{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:rgba(15,20,40,0.85);backdrop-filter:blur(20px);border:1px solid var(--border2);color:#fff;padding:12px 14px 12px 20px;border-radius:999px;display:none;z-index:100;gap:14px;align-items:center;box-shadow:0 16px 50px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06) inset, 0 0 30px rgba(79,124,255,0.2)}
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
-.stat-card{
-background:linear-gradient(180deg, rgba(21,27,51,0.8) 0%, rgba(17,22,42,0.9) 100%);
-border:1px solid var(--border);
-padding:16px;border-radius:16px;text-align:left;
-box-shadow:var(--shadow);
-position:relative;overflow:hidden;
-transition:0.25s;
-}
-.stat-card:before{
-content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
-}
-.stat-card:hover{border-color:var(--border2);transform:translateY(-1px)}
-.stat-card h4{margin:6px 0 0;font-size:22px;font-weight:800;letter-spacing:-0.03em;color:var(--text-bright)}
+.stat-card{background:linear-gradient(180deg, rgba(21,27,51,0.75) 0%, rgba(17,22,42,0.85) 100%);backdrop-filter:blur(12px);border:1px solid var(--border);padding:16px;border-radius:16px;text-align:left;box-shadow:0 8px 24px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.03) inset;position:relative;overflow:hidden;transition:0.3s}
+.stat-card:before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent)}
+.stat-card:after{content:'';position:absolute;bottom:-30px;right:-30px;width:100px;height:100px;background:radial-gradient(circle, rgba(79,124,255,0.15), transparent 70%);pointer-events:none;opacity:0;transition:0.3s}
+.stat-card:hover:after{opacity:1}
+.stat-card:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.1);box-shadow:0 12px 32px rgba(0,0,0,0.35), 0 0 20px rgba(79,124,255,0.1)}
+.stat-card h4{margin:6px 0 0;font-size:22px;font-weight:800;color:#fff}
 .stat-card small{color:var(--muted);font-weight:600;font-size:10.5px;text-transform:uppercase;letter-spacing:0.06em}
-.install-banner{
-background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);
-color:#fff;padding:12px 16px;border-radius:14px;
-margin:12px auto;max-width:1400px;
-display:none;justify-content:space-between;align-items:center;
-font-size:13px;font-weight:600;
-box-shadow:0 8px 24px rgba(79,124,255,0.3);
-}
-.bank-info{
-background:linear-gradient(135deg, rgba(21,27,51,0.8) 0%, rgba(17,22,42,0.9) 100%);
-border:1px solid var(--border);
-border-left:2px solid var(--accent);
-padding:12px 14px;border-radius:12px;margin:10px 0;font-size:12.5px;
-box-shadow:var(--shadow);
-}
+.install-banner{background:linear-gradient(135deg, #4F7CFF 0%, #3B82F6 100%);color:#fff;padding:12px 16px;border-radius:14px;margin:12px auto;max-width:1400px;display:none;justify-content:space-between;align-items:center;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(79,124,255,0.35)}
+.bank-info{background:linear-gradient(135deg, rgba(21,27,51,0.75) 0%, rgba(17,22,42,0.85) 100%);backdrop-filter:blur(10px);border:1px solid var(--border);border-left:2px solid var(--accent);padding:12px 14px;border-radius:12px;margin:10px 0;font-size:12.5px;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
 .progress{height:8px;background:rgba(255,255,255,0.06);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
-.progress-fill{height:100%;background:linear-gradient(90deg, #4F7CFF, #60A5FA);transition:width 0.6s;box-shadow:0 0 10px rgba(79,124,255,0.5)}
+.progress-fill{height:100%;background:linear-gradient(90deg, #4F7CFF, #60A5FA);transition:width 0.6s;box-shadow:0 0 12px rgba(79,124,255,0.6)}
 .vault-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px}
-.vault-item{
-background:linear-gradient(180deg, rgba(21,27,51,0.8) 0%, rgba(17,22,42,0.9) 100%);
-border:1px solid var(--border);
-border-radius:16px;padding:12px;text-align:center;
-transition:0.25s;
-}
-.vault-item:hover{border-color:var(--border2);transform:translateY(-2px)}
-.note-card{
-background:linear-gradient(180deg, rgba(21,27,51,0.8) 0%, rgba(17,22,42,0.9) 100%);
-border:1px solid var(--border);
-border-left:2px solid var(--accent);
-border-radius:14px;padding:14px;margin:10px 0;
-box-shadow:var(--shadow);
-}
-.note-pinned{border-left-color:var(--green);background:linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(21,27,51,0.9) 100%);border-left:2px solid var(--green)}
-.modal{position:fixed;inset:0;background:rgba(5,8,18,0.75);backdrop-filter:blur(16px) saturate(1.2);display:none;justify-content:center;align-items:center;z-index:999;padding:16px}
-.modal-content{
-background:linear-gradient(180deg, rgba(22,28,54,0.95) 0%, rgba(15,20,40,0.98) 100%);
-border:1px solid var(--border2);
-padding:22px;border-radius:20px;width:90%;max-width:420px;
-box-shadow:0 20px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06);
-position:relative;overflow:hidden;
-}
-.modal-content:before{
-content:'';position:absolute;top:0;left:0;right:0;height:1px;
-background:linear-gradient(90deg, transparent, rgba(79,124,255,0.4), transparent);
-}
-.site-footer{
-background:rgba(8,12,28,0.6);
-border-top:1px solid var(--border);
-padding:22px 10px;text-align:center;margin-top:28px;
-font-size:11px;color:var(--muted);
-backdrop-filter:blur(10px);
-}
+.vault-item{background:linear-gradient(180deg, rgba(21,27,51,0.75) 0%, rgba(17,22,42,0.85) 100%);backdrop-filter:blur(10px);border:1px solid var(--border);border-radius:16px;padding:12px;text-align:center;transition:0.25s}
+.vault-item:hover{border-color:var(--border2);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,0.3), 0 0 15px rgba(79,124,255,0.08)}
+.note-card{background:linear-gradient(180deg, rgba(21,27,51,0.75) 0%, rgba(17,22,42,0.85) 100%);backdrop-filter:blur(10px);border:1px solid var(--border);border-left:2px solid var(--accent);border-radius:14px;padding:14px;margin:10px 0;box-shadow:0 4px 16px rgba(0,0,0,0.2)}
+.note-pinned{border-left-color:var(--green);background:linear-gradient(135deg, rgba(16,185,129,0.12) 0%, rgba(21,27,51,0.85) 100%)}
+.modal{position:fixed;inset:0;background:rgba(5,8,18,0.78);backdrop-filter:blur(20px) saturate(1.2);display:none;justify-content:center;align-items:center;z-index:999;padding:16px}
+.modal-content{background:linear-gradient(180deg, rgba(24,30,58,0.95) 0%, rgba(15,20,40,0.98) 100%);backdrop-filter:blur(24px);border:1px solid var(--border2);padding:22px;border-radius:20px;width:90%;max-width:420px;box-shadow:0 24px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.06) inset, 0 0 40px rgba(79,124,255,0.1);position:relative;overflow:hidden}
+.modal-content:before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg, transparent, rgba(79,124,255,0.5), transparent)}
+.site-footer{background:rgba(8,12,28,0.5);border-top:1px solid var(--border);padding:22px 10px;text-align:center;margin-top:28px;font-size:11px;color:var(--muted);backdrop-filter:blur(12px)}
 @media(max-width:900px){.stats{grid-template-columns:1fr 1fr}.grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:600px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.grid{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}.ambient-orb{filter:blur(60px)}}
 </style>
 </head>
 <body>
+<div class="ambient-wrap">
+<div class="ambient-orb orb-1"></div>
+<div class="ambient-orb orb-2"></div>
+<div class="ambient-orb orb-3"></div>
+<div class="ambient-orb orb-4"></div>
+</div>
 
-<div id="installBanner" class="install-banner"><span>📲 Install TWINZ Future OS</span><div style="display:flex;gap:8px"><button class="btn" style="background:#fff;color:var(--accent);border-color:#fff;box-shadow:none" id="installBtn">Install</button><button onclick="document.getElementById('installBanner').style.display='none'" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:999px;width:32px;height:32px;cursor:pointer">✕</button></div></div>
+<div id="installBanner" class="install-banner"><span>📲 Install Future OS - Ambient Edition</span><div style="display:flex;gap:8px"><button class="btn" style="background:#fff;color:var(--accent);border-color:#fff;box-shadow:none" id="installBtn">Install</button><button onclick="document.getElementById('installBanner').style.display='none'" style="background:rgba(255,255,255,0.15);border:1px solid rgba(255,255,255,0.2);color:#fff;border-radius:999px;width:32px;height:32px;cursor:pointer">✕</button></div></div>
 
-<div id="quickInvoiceModal" class="modal"><div class="modal-content"><h3 style="margin:0 0 4px;color:#fff">🧾 Quick Invoice</h3><p style="margin:0 0 12px;color:var(--muted);font-size:12px">Future OS • Walk-in</p><input id="quickInvName" placeholder="Customer Name"><input id="quickInvPhone" placeholder="Phone"><input id="quickInvEmail" placeholder="Email"><input id="quickInvItem" placeholder="Service"><input type="number" id="quickInvQty" value="1"><input type="number" id="quickInvPrice" placeholder="Price R"><label style="display:flex;gap:8px;font-size:12.5px;margin:10px 0;color:var(--muted)"><input type="checkbox" id="quickInvTax" style="width:auto;margin:0"> Add 15% VAT</label><label style="display:flex;gap:8px;font-size:12.5px;color:var(--muted)"><input type="checkbox" id="quickInvPaid" checked style="width:auto;margin:0"> PAID</label><button class="btn" style="width:100%;margin-top:12px" onclick="downloadQuickInvoice()">Download PDF</button><button class="btn-gray" style="width:100%;margin-top:8px" onclick="document.getElementById('quickInvoiceModal').style.display='none'">Cancel</button></div></div>
+<div id="quickInvoiceModal" class="modal"><div class="modal-content"><h3 style="margin:0 0 4px;color:#fff">🧾 Quick Invoice</h3><p style="margin:0 0 12px;color:var(--muted);font-size:12px">Ambient OS • Walk-in</p><input id="quickInvName" placeholder="Customer Name"><input id="quickInvPhone" placeholder="Phone"><input id="quickInvEmail" placeholder="Email"><input id="quickInvItem" placeholder="Service"><input type="number" id="quickInvQty" value="1"><input type="number" id="quickInvPrice" placeholder="Price R"><label style="display:flex;gap:8px;font-size:12.5px;margin:10px 0;color:var(--muted)"><input type="checkbox" id="quickInvTax" style="width:auto;margin:0"> Add 15% VAT</label><label style="display:flex;gap:8px;font-size:12.5px;color:var(--muted)"><input type="checkbox" id="quickInvPaid" checked style="width:auto;margin:0"> PAID</label><button class="btn" style="width:100%;margin-top:12px" onclick="downloadQuickInvoice()">Download PDF</button><button class="btn-gray" style="width:100%;margin-top:8px" onclick="document.getElementById('quickInvoiceModal').style.display='none'">Cancel</button></div></div>
 <div id="invoiceModal" class="modal"><div class="modal-content"><h3 style="color:#fff">📄 Edit Invoice</h3><input id="invCustName" placeholder="Customer"><input id="invCustPhone" placeholder="Phone"><input id="invCustEmail" placeholder="Email"><input id="invCustAddress" placeholder="Address"><label style="display:flex;gap:8px;font-size:12.5px;margin:10px 0;color:var(--muted)"><input type="checkbox" id="invTaxToggle" style="width:auto;margin:0"> VAT 15%</label><label style="display:flex;gap:8px;font-size:12.5px;color:var(--muted)"><input type="checkbox" id="invPaidToggle" style="width:auto;margin:0"> PAID</label><button class="btn" style="width:100%" onclick="downloadFinalInvoice()">Download PDF</button><button class="btn-gray" style="width:100%;margin-top:8px" onclick="document.getElementById('invoiceModal').style.display='none'">Cancel</button></div></div>
 <div id="customerModal" class="modal"><div class="modal-content"><h3 style="color:#fff">Customer Details</h3><input id="custName" placeholder="Name"><input id="custPhone" placeholder="Phone"><input id="custEmail" placeholder="Email"><div class="bank-info">🏦 Standard Bank 10264594434 • Branch 006145<br>📞 0682547352 | 0698949596</div><div id="waChoiceContainer"></div><button class="btn" style="width:100%" onclick="sendQuote()">WhatsApp Request</button><button class="btn-gray" style="width:100%;margin-top:8px" onclick="document.getElementById('customerModal').style.display='none'">Cancel</button></div></div>
 <div id="noteModal" class="modal"><div class="modal-content"><h3 id="noteModalTitle" style="color:#fff">📝 Add Note</h3><input id="noteTitle" placeholder="Title - e.g Customer hasn't paid"><select id="noteType"><option value="general">General Note</option><option value="unpaid">💰 Unpaid Customer</option><option value="appointment">📅 Appointment</option><option value="todo">✅ To-Do Next</option><option value="followup">📞 Follow-Up Call</option></select><textarea id="noteContent" placeholder="Details..."></textarea><input type="date" id="noteDate"><label style="display:flex;gap:8px;font-size:12.5px;margin:10px 0;color:var(--muted)"><input type="checkbox" id="notePinned" style="width:auto;margin:0"> 📌 Pin this note</label><button class="btn" style="width:100%" onclick="saveNote()">Save Note</button><button class="btn-gray" style="width:100%;margin-top:8px" onclick="document.getElementById('noteModal').style.display='none'">Cancel</button></div></div>
 
 <div id="clientView" style="display:none">
-  <div style="text-align:center;padding:24px 16px;background:linear-gradient(180deg, rgba(17,22,42,0.9) 0%, rgba(5,8,18,0.9) 100%);border-bottom:1px solid var(--border)"><img src="https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png" class="logo" style="margin:0 auto"><h2 style="margin:10px 0 4px;color:#fff;letter-spacing:-0.02em">TWINZ COOPERATE SERVICES PTY LTD</h2><div class="search-box" style="max-width:500px;margin:14px auto"><input type="text" id="clientSearchInput" placeholder="Search services..." onkeyup="searchProducts()"></div></div>
-  <div class="container">
-    <div class="bank-info"><b>📍</b> Burgersfort 1150 | <b>🏦</b> Standard Bank 10264594434 | Branch 006145</div>
-    <div class="nav-cats"><button onclick="filterCat('Consulting', event)" class="active">Consulting</button><button onclick="filterCat('Admin', event)">Admin</button><button onclick="filterCat('Projects', event)">Projects</button><button onclick="filterCat('Tech', event)">Tech</button><button onclick="filterCat('Products', event)">Products</button></div>
-    <div id="vinCheck" style="display:none" class="admin"><h3 style="color:#fff">🚗 VIN Decoder</h3><input type="text" id="vinInput" placeholder="Enter 17 Character VIN" maxlength="17"><button class="btn" onclick="decodeVIN()" style="width:100%;margin-top:10px">Decode VIN</button><div id="vinResult" style="display:none;margin-top:10px;padding:12px;background:rgba(255,255,255,0.06);border-radius:12px;border:1px solid var(--border)"></div></div>
-    <h2 style="margin:20px 0 12px;font-size:18px;font-weight:800;color:#fff">Services & Pricing</h2>
-    <div class="grid" id="clientProductGrid"></div>
-  </div>
+  <div style="text-align:center;padding:24px 16px;background:linear-gradient(180deg, rgba(17,22,42,0.9) 0%, rgba(5,8,18,0.9) 100%);border-bottom:1px solid var(--border);backdrop-filter:blur(20px)"><img src="https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png" class="logo" style="margin:0 auto"><h2 style="margin:10px 0 4px;color:#fff">TWINZ COOPERATE SERVICES PTY LTD</h2><div class="search-box" style="max-width:500px;margin:14px auto"><input type="text" id="clientSearchInput" placeholder="Search services..." onkeyup="searchProducts()"></div></div>
+  <div class="container"><div class="bank-info"><b>📍</b> Burgersfort 1150 | <b>🏦</b> Standard Bank 10264594434 | Branch 006145</div><div class="nav-cats"><button onclick="filterCat('Consulting', event)" class="active">Consulting</button><button onclick="filterCat('Admin', event)">Admin</button><button onclick="filterCat('Projects', event)">Projects</button><button onclick="filterCat('Tech', event)">Tech</button><button onclick="filterCat('Products', event)">Products</button></div><div id="vinCheck" style="display:none" class="admin"><h3 style="color:#fff">🚗 VIN Decoder</h3><input type="text" id="vinInput" placeholder="Enter 17 Character VIN" maxlength="17"><button class="btn" onclick="decodeVIN()" style="width:100%;margin-top:10px">Decode VIN</button><div id="vinResult" style="display:none;margin-top:10px;padding:12px;background:rgba(255,255,255,0.06);border-radius:12px;border:1px solid var(--border)"></div></div><h2 style="margin:20px 0 12px;font-size:18px;font-weight:800;color:#fff">Services & Pricing</h2><div class="grid" id="clientProductGrid"></div></div>
   <div class="cart-bar" id="clientCartBar"><b style="font-size:13px">Cart: <span id="clientCartCount">0</span> • R<span id="clientCartTotal">0</span></b><button class="btn" style="background:#fff;color:#060A14;box-shadow:none" onclick="openCustomerModal()">Request</button></div>
 </div>
 
-<div id="loginScreen"><div class="login-box"><img src="https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png" style="width:88px;margin:0 auto 16px;display:block;border-radius:14px;border:1px solid var(--border)"><h2 style="text-align:center;color:#fff;margin:0 0 6px">TWINZ FUTURE OS</h2><p style="text-align:center;color:var(--muted);font-size:12.5px;margin:0 0 14px">Secure • Encrypted • Future Ready</p><div id="loginError" style="color:var(--danger);text-align:center;font-size:13px"></div><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" style="width:100%;margin-top:12px;padding:13px" onclick="doLogin()">Login to Future OS</button></div></div>
+<div id="loginScreen"><div class="login-box"><img src="https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png" style="width:88px;margin:0 auto 16px;display:block;border-radius:14px;border:1px solid var(--border2)"><h2 style="text-align:center;color:#fff;margin:0 0 6px">TWINZ AMBIENT OS</h2><p style="text-align:center;color:var(--muted);font-size:12.5px;margin:0 0 14px">Future • Alive • Encrypted</p><div id="loginError" style="color:var(--danger);text-align:center;font-size:13px"></div><input type="email" id="loginEmail" placeholder="Email"><input type="password" id="loginPass" placeholder="Password"><button class="btn" style="width:100%;margin-top:12px;padding:13px" onclick="doLogin()">Login to Ambient OS</button></div></div>
 
 <div id="app" style="display:none">
   <div class="header"><div class="header-top"><img src="https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png" class="logo"><div class="search-box"><input type="text" id="searchInput" placeholder="Search services, vault, notes..." onkeyup="searchProducts()"></div><div style="display:flex;gap:8px;align-items:center"><span class="role-badge" id="userRole">ADMIN</span><button class="btn-gray" style="padding:8px 12px;border-radius:999px;font-size:12px" onclick="logout()">Logout</button></div></div><div class="nav-cats"><button onclick="filterCat('Consulting', event)" class="active">Consulting</button><button onclick="filterCat('Admin', event)">Admin</button><button onclick="filterCat('Projects', event)">Projects</button><button onclick="filterCat('Tech', event)">Tech</button><button onclick="filterCat('Products', event)">Products</button><button onclick="filterCat('VIN', event)">VIN Check</button></div></div>
   <div class="container">
-    <div class="banner">💎 FUTURE OS — Business Solutions • Encrypted • Bank Ready • 2026</div>
+    <div class="banner">💎 AMBIENT OS — Alive Lighting • Business Solutions • Bank Ready • Future 2026</div>
     <div class="admin">
       <div class="tabs">
         <div class="tab active" onclick="showTab('dashboard', this)">Dashboard</div>
@@ -345,7 +222,7 @@ backdrop-filter:blur(10px);
       </div>
 
       <div id="tab-dashboard">
-        <h3 style="margin:0 0 14px;color:#fff;letter-spacing:-0.02em">📊 Future Dashboard</h3>
+        <h3 style="margin:0 0 14px;color:#fff">📊 Ambient Dashboard</h3>
         <div class="stats">
           <div class="stat-card"><small>Total Services</small><h4 id="statProducts">0</h4></div>
           <div class="stat-card"><small>Total Stock</small><h4 id="statStock">0</h4></div>
@@ -364,29 +241,28 @@ backdrop-filter:blur(10px);
       <div id="tab-income" style="display:none">
         <h3 style="color:#fff">💰 Daily Income Tracker - For Bank</h3>
         <div class="stats"><div class="stat-card"><small>Today</small><h4 id="incToday">R0</h4></div><div class="stat-card"><small>7 Days</small><h4 id="incWeek">R0</h4></div><div class="stat-card"><small>This Month</small><h4 id="incMonth">R0</h4></div><div class="stat-card"><small>All Time</small><h4 id="incAll">R0</h4></div></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0"><input type="date" id="incomeDate" style="width:auto"><button class="btn" onclick="filterIncomeByDate()">Filter</button><button class="btn-gray" onclick="loadIncome()">Reset</button><button class="btn-green" onclick="downloadIncomeCSV()">📥 CSV for Bank</button></div>
-        <div id="incomeList"></div>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin:12px 0"><input type="date" id="incomeDate" style="width:auto"><button class="btn" onclick="filterIncomeByDate()">Filter</button><button class="btn-gray" onclick="loadIncome()">Reset</button><button class="btn-green" onclick="downloadIncomeCSV()">📥 CSV for Bank</button></div><div id="incomeList"></div>
       </div>
 
       <div id="tab-tax" style="display:none">
         <h3 style="color:#fff">🧾 Simple Tax Helper SA 2026</h3>
-        <div class="bank-info"><b>Threshold:</b> R95,750/year - below = no income tax (SARS guide)</div>
+        <div class="bank-info"><b>Threshold:</b> R95,750/year - below = no income tax (SARS)</div>
         <div class="stats"><div class="stat-card"><small>Yearly Income</small><h4 id="taxYear">R0</h4></div><div class="stat-card"><small>Status</small><h4 id="taxStatus">Safe</h4></div><div class="stat-card"><small>Months</small><h4 id="taxMonths">0</h4></div><div class="stat-card"><small>Avg / Month</small><h4 id="taxAvg">R0</h4></div></div>
         <div style="background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:12px;padding:12px"><b style="color:#fff">Monthly Breakdown:</b><div id="taxBreakdown" style="margin-top:8px"></div></div>
       </div>
 
       <div id="tab-funding" style="display:none">
         <h3 style="color:#fff">🏦 Funding Readiness Score</h3>
-        <div style="text-align:center;padding:28px;background:linear-gradient(135deg, #1A2340 0%, #11162A 100%);border:1px solid var(--border-blue);border-radius:20px;color:#fff;position:relative;overflow:hidden;box-shadow:0 0 40px rgba(79,124,255,0.15)"><div style="position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%, rgba(79,124,255,0.2), transparent 50%);pointer-events:none"></div><h1 id="fundScoreText" style="font-size:64px;margin:0;font-weight:900;letter-spacing:-3px;position:relative">0%</h1><p id="fundLevel" style="font-weight:800;margin:6px 0;position:relative">LEVEL 1: Hustler 🌱</p><div class="progress" style="background:rgba(255,255,255,0.08);margin:16px 0;position:relative"><div id="fundProgress" class="progress-fill" style="width:0%;background:#fff;color:#060A14">0%</div></div><p id="fundBadge" style="font-size:12px;margin:6px 0;position:relative">🎯</p><p id="fundNext" style="font-size:11px;opacity:0.7;position:relative"></p></div>
+        <div style="text-align:center;padding:28px;background:linear-gradient(135deg, rgba(26,35,64,0.9) 0%, rgba(17,22,42,0.95) 100%);border:1px solid var(--border-blue);border-radius:20px;color:#fff;position:relative;overflow:hidden;box-shadow:0 0 50px rgba(79,124,255,0.2), inset 0 1px 0 rgba(255,255,255,0.06)"><div style="position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(ellipse at 30% 20%, rgba(79,124,255,0.25), transparent 50%);pointer-events:none;animation:floatAmbient 10s infinite"></div><h1 id="fundScoreText" style="font-size:64px;margin:0;font-weight:900;letter-spacing:-3px;position:relative">0%</h1><p id="fundLevel" style="font-weight:800;margin:6px 0;position:relative">LEVEL 1: Hustler 🌱</p><div class="progress" style="background:rgba(255,255,255,0.08);margin:16px 0;position:relative"><div id="fundProgress" class="progress-fill" style="width:0%;background:#fff;color:#060A14">0%</div></div><p id="fundBadge" style="font-size:12px;margin:6px 0;position:relative">🎯</p><p id="fundNext" style="font-size:11px;opacity:0.7;position:relative"></p></div>
         <div id="fundChecklist" style="margin-top:14px"></div><div class="bank-info" id="fundAdvice" style="font-weight:700;margin-top:12px"></div><div class="bank-info" id="fundMotivate" style="background:rgba(16,185,129,0.08);border-left-color:var(--green)"></div><button class="btn" onclick="downloadFundingReport()" style="margin-top:12px">📄 Download Funding Report PDF</button>
       </div>
 
       <div id="tab-vault" style="display:none">
-        <h3 style="color:#fff">📁 Document Vault - Future Encrypted - Upload & Download PDF</h3>
-        <p style="color:var(--muted);font-size:12px">No catbox.moe - Firebase Realtime 1GB - Max 7MB/file - PDF + Download as PDF</p>
+        <h3 style="color:#fff">📁 Document Vault - Ambient Encrypted - Upload & Download PDF</h3>
+        <p style="color:var(--muted);font-size:12px">No catbox.moe - Firebase Realtime 1GB - Max 7MB/file - PDF + Download as PDF with ambient glow</p>
         <select id="vaultType"><option>ID Document</option><option>CIPC Certificate</option><option>Proof of Address</option><option>Bank Confirmation</option><option>Tax Clearance</option><option>Other</option></select>
-        <div style="border:1.5px dashed rgba(79,124,255,0.25);border-radius:16px;padding:28px;text-align:center;cursor:pointer;background:rgba(79,124,255,0.05);margin-top:12px;transition:0.25s" onclick="document.getElementById('vaultFile').click()" onmouseover="this.style.background='rgba(79,124,255,0.08)';this.style.borderColor='rgba(79,124,255,0.4)'" onmouseout="this.style.background='rgba(79,124,255,0.05)';this.style.borderColor='rgba(79,124,255,0.25)'"><div style="font-size:36px">📤</div><b style="color:#fff">Click to Upload PDF / Image to Vault</b><div style="color:var(--muted);font-size:11px;margin-top:4px">PDF, JPG, PNG - Realtime 1GB - Max 7MB - Future encrypted</div><input type="file" id="vaultFile" accept="image/*,.pdf,.doc,.docx" style="display:none"></div>
-        <div id="vaultFileInfo" style="display:none;margin-top:14px;background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:14px;border-radius:14px"><p id="vaultFName" style="font-weight:700;margin:0;color:#fff"></p><p id="vaultFSize" style="color:var(--muted);font-size:11px;margin:4px 0"></p><img id="vaultImgPrev" style="display:none;max-width:100%;max-height:180px;border-radius:12px;margin:8px 0"><button class="btn" style="width:100%" onclick="uploadVaultRealtime()">⬆️ Save to Vault (Encrypted)</button><div id="vaultUploadStatus" style="font-size:12px;margin-top:8px;color:var(--green)"></div></div>
+        <div style="border:1.5px dashed rgba(79,124,255,0.3);border-radius:16px;padding:28px;text-align:center;cursor:pointer;background:linear-gradient(135deg, rgba(79,124,255,0.06) 0%, rgba(21,27,51,0.5) 100%);margin-top:12px;transition:0.3s;position:relative;overflow:hidden" onclick="document.getElementById('vaultFile').click()" onmouseover="this.style.background='linear-gradient(135deg, rgba(79,124,255,0.1) 0%, rgba(21,27,51,0.6) 100%)';this.style.boxShadow='0 0 30px rgba(79,124,255,0.15)';this.style.borderColor='rgba(79,124,255,0.5)'" onmouseout="this.style.background='linear-gradient(135deg, rgba(79,124,255,0.06) 0%, rgba(21,27,51,0.5) 100%)';this.style.boxShadow='none';this.style.borderColor='rgba(79,124,255,0.3)'"><div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:200px;height:200px;background:radial-gradient(circle, rgba(79,124,255,0.15), transparent 70%);pointer-events:none;filter:blur(20px)"></div><div style="font-size:36px;position:relative">📤</div><b style="color:#fff;position:relative">Click to Upload PDF / Image to Ambient Vault</b><div style="color:var(--muted);font-size:11px;margin-top:4px;position:relative">PDF, JPG, PNG - Realtime 1GB - Max 7MB - Future alive</div><input type="file" id="vaultFile" accept="image/*,.pdf,.doc,.docx" style="display:none"></div>
+        <div id="vaultFileInfo" style="display:none;margin-top:14px;background:rgba(255,255,255,0.05);border:1px solid var(--border);padding:14px;border-radius:14px"><p id="vaultFName" style="font-weight:700;margin:0;color:#fff"></p><p id="vaultFSize" style="color:var(--muted);font-size:11px;margin:4px 0"></p><img id="vaultImgPrev" style="display:none;max-width:100%;max-height:180px;border-radius:12px;margin:8px 0"><button class="btn" style="width:100%" onclick="uploadVaultRealtime()">⬆️ Save to Ambient Vault</button><div id="vaultUploadStatus" style="font-size:12px;margin-top:8px;color:var(--green)"></div></div>
         <div style="margin-top:16px;background:rgba(255,255,255,0.05);border:1px solid var(--border);border-radius:14px;padding:14px"><div style="display:flex;justify-content:space-between;font-size:12px"><b style="color:#fff">💾 Space Used</b><span id="vaultUsageText">0 MB / 1000 MB</span></div><div class="progress" style="margin-top:10px"><div id="vaultUsageFill" class="progress-fill" style="width:0%"></div></div></div>
         <div class="vault-grid" id="vaultGrid" style="margin-top:18px"></div>
       </div>
@@ -410,7 +286,7 @@ backdrop-filter:blur(10px);
       <div id="tab-users" style="display:none"><h3 style="color:#fff">👥 Users</h3><p><b>CEO:</b> ceo@twinz.co.za</p><p><b>Manager:</b> manager@twinz.co.za</p></div>
       <div id="tab-reports" style="display:none"><h3 style="color:#fff">📊 Reports</h3><button class="btn-purple" onclick="downloadReport()">Download PDF Report</button> <button class="btn-green" onclick="downloadCSV()" style="margin-left:8px">Download CSV</button></div>
     </div>
-    <h2 style="margin:22px 0 12px;font-size:18px;font-weight:800;color:#fff;letter-spacing:-0.02em">⭐ Featured Services</h2><div class="grid" id="productGrid"></div>
+    <h2 style="margin:22px 0 12px;font-size:18px;font-weight:800;color:#fff">⭐ Featured Services</h2><div class="grid" id="productGrid"></div>
   </div>
   <div class="cart-bar" id="cartBar"><b style="font-size:13px">Cart: <span id="cartCount">0</span> • R<span id="cartTotal">0</span></b><button class="btn" style="background:#fff;color:#060A14;box-shadow:none" onclick="openCustomerModal()">Request</button></div>
 </div>
@@ -422,9 +298,6 @@ import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from
 const { jsPDF } = window.jspdf;
 const firebaseConfig = { apiKey: "AIzaSyDQgotEQATro5fwylK1cuRztfEispZ-cNQ", authDomain: "feel-the-noise-sound-solution.firebaseapp.com", databaseURL: "https://feel-the-noise-sound-solution-default-rtdb.firebaseio.com", projectId: "feel-the-noise-sound-solution", storageBucket: "feel-the-noise-sound-solution.firebasestorage.app", messagingSenderId: "425991834765", appId: "1:425991834765:web:9841fd2dd5615b087b26c4" };
 const COMPANY_NAME = "TWINZ COOPERATE SERVICES PTY LTD";
-const COMPANY_REG = "2024/444303/07";
-const COMPANY_BANK = "Standard Bank"; const COMPANY_ACC = "10264594434"; const COMPANY_BRANCH = "006145";
-const COMPANY_ADDRESS = "Limpopo Burgersfort 1150, Praktiseer Ext 02, Stand 3211";
 const COMPANY_LOGO = "https://i.ibb.co/jPQpD0Ft/IMG-20260605-WA0002.png";
 document.addEventListener('DOMContentLoaded', () => {
   const urlParams = new URLSearchParams(window.location.search);
@@ -489,12 +362,12 @@ document.addEventListener('DOMContentLoaded', () => {
   window.togglePinNote=id=>{let n=notes[id];update(ref(db,'feelthenoisesoundsolution/notes/'+id),{pinned:!n.pinned});};
   window.loadNotes=()=>{let list=document.getElementById('notesList');if(!list) return;let filter=document.getElementById('noteFilter')?.value||'all',filtered=Object.entries(notes);if(filter==='pinned') filtered=filtered.filter(([id,n])=>n.pinned);else if(filter!=='all') filtered=filtered.filter(([id,n])=>n.type===filter);filtered.sort((a,b)=>{if(a[1].pinned&&!b[1].pinned) return -1;if(!a[1].pinned&&b[1].pinned) return 1;return new Date(b[1].createdAt)-new Date(a[1].createdAt);});document.getElementById('noteTotal').innerText=Object.keys(notes).length;document.getElementById('noteUnpaid').innerText=Object.values(notes).filter(n=>n.type==='unpaid').length;document.getElementById('notePinnedCount').innerText=Object.values(notes).filter(n=>n.pinned).length;let appEl=document.getElementById('noteApp');if(appEl) appEl.innerText=Object.values(notes).filter(n=>n.type==='appointment').length;if(filtered.length===0){list.innerHTML='<p style="text-align:center;color:var(--muted)">No notes yet</p>';return;}list.innerHTML='';filtered.forEach(([id,n])=>{let icon=n.type==='unpaid'?'💰':n.type==='appointment'?'📅':n.type==='todo'?'✅':n.type==='followup'?'📞':'📝';list.innerHTML+=`<div class="note-card ${n.pinned?'note-pinned':''}"><div style="display:flex;justify-content:space-between"><b style="color:#fff">${icon} ${n.title}</b><small>${n.date||''} ${n.pinned?'📌 PINNED':''}</small></div><div style="font-size:12px;color:var(--muted);margin:8px 0">${n.content||''}</div><div style="display:flex;gap:6px"><button class="btn-blue" style="padding:6px 10px;font-size:11px;border:none;border-radius:9px" onclick="openNoteModal('${id}')">✏️ Edit</button><button class="btn-gray" style="padding:6px 10px;font-size:11px;border:none;border-radius:9px" onclick="togglePinNote('${id}')">${n.pinned?'Unpin':'📌 Pin'}</button><button class="btn-danger" style="padding:6px 10px;font-size:11px;border:none;border-radius:9px" onclick="deleteNote('${id}')">Delete</button></div></div>`;});};
   document.getElementById('vaultFile').onchange=e=>{if(e.target.files[0]){vaultFile=e.target.files[0];if(vaultFile.size>7*1024*1024) return alert('Max 7MB');document.getElementById('vaultFName').innerText=vaultFile.name;document.getElementById('vaultFSize').innerText=(vaultFile.size/1024).toFixed(0)+' KB • '+vaultFile.type;document.getElementById('vaultFileInfo').style.display='block';if(vaultFile.type.startsWith('image/')){let url=URL.createObjectURL(vaultFile);document.getElementById('vaultImgPrev').src=url;document.getElementById('vaultImgPrev').style.display='block';}}};
-  window.uploadVaultRealtime=()=>{if(!vaultFile) return alert('Select file');let reader=new FileReader();reader.onload=async ev=>{try{let id=Date.now().toString();await set(ref(db,'feelthenoisesoundsolution/vault/'+id),{base64:ev.target.result,name:vaultFile.name,fileType:vaultFile.type,type:document.getElementById('vaultType').value,size:vaultFile.size,date:new Date().toISOString()});document.getElementById('vaultUploadStatus').innerText='✅ Saved to Future Vault';document.getElementById('vaultFile').value='';document.getElementById('vaultFileInfo').style.display='none';vaultFile=null;}catch(err){alert(err.message);}};reader.readAsDataURL(vaultFile);};
+  window.uploadVaultRealtime=()=>{if(!vaultFile) return alert('Select file');let reader=new FileReader();reader.onload=async ev=>{try{let id=Date.now().toString();await set(ref(db,'feelthenoisesoundsolution/vault/'+id),{base64:ev.target.result,name:vaultFile.name,fileType:vaultFile.type,type:document.getElementById('vaultType').value,size:vaultFile.size,date:new Date().toISOString()});document.getElementById('vaultUploadStatus').innerText='✅ Saved to Ambient Vault';document.getElementById('vaultFile').value='';document.getElementById('vaultFileInfo').style.display='none';vaultFile=null;}catch(err){alert(err.message);}};reader.readAsDataURL(vaultFile);};
   window.downloadVaultFile=id=>{let v=vault[id];let blob=b64ToBlob(v.base64,v.fileType);let url=URL.createObjectURL(blob);let a=document.createElement('a');a.href=url;a.download=v.name;a.click();};
   window.downloadVaultAsPDF=id=>{let v=vault[id];if(v.fileType==='application/pdf'){downloadVaultFile(id);return;}let blob=b64ToBlob(v.base64,v.fileType);let url=URL.createObjectURL(blob);fetch(url).then(r=>r.blob()).then(b=>{let fr=new FileReader();fr.onload=()=>{const doc=new jsPDF();doc.addImage(fr.result,'JPEG',10,10,190,0);doc.save(v.name.replace(/\.[^/.]+$/,'')+'.pdf');};fr.readAsDataURL(b);});};
   window.viewVaultFile=id=>{let v=vault[id];let blob=b64ToBlob(v.base64,v.fileType);let url=URL.createObjectURL(blob);window.open(url,'_blank');};
   window.deleteVault=id=>{if(confirm('Delete?')) remove(ref(db,'feelthenoisesoundsolution/vault/'+id));};
-  window.loadVault=()=>{let grid=document.getElementById('vaultGrid');let totalBytes=0;if(!Object.keys(vault).length){grid.innerHTML='<p style="color:var(--muted);text-align:center;grid-column:1/-1">No documents yet - Future encrypted</p>';['vaultUsageText','vaultUsageTextSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.innerText='0 MB / 1000 MB';});['vaultUsageFill','vaultUsageFillSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.style.width='0%';});return;}grid.innerHTML=Object.entries(vault).reverse().map(([id,v])=>{totalBytes+=(v.base64?.length||0)*0.75;let isImg=v.fileType.startsWith('image/');let prev=isImg?`<img src="${v.base64}" style="width:100%;height:90px;object-fit:cover;border-radius:10px">`:`<div style="height:90px;display:grid;place-items:center;background:rgba(255,255,255,0.06);border-radius:10px;font-size:28px">📄</div>`;return `<div class="vault-item"><b style="font-size:11px;color:#fff">${v.type}</b>${prev}<div style="font-size:10px;margin:6px 0;word-break:break-all">${v.name}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px"><button onclick="viewVaultFile('${id}')" style="background:var(--accent);color:#fff;border:none;padding:6px;border-radius:9px;font-size:11px">View</button><button onclick="downloadVaultFile('${id}')" style="background:rgba(255,255,255,0.07);border:1px solid var(--border);color:#fff;padding:6px;border-radius:9px;font-size:11px">Download</button></div><button onclick="downloadVaultAsPDF('${id}')" style="width:100%;margin-top:4px;background:linear-gradient(135deg,#8B5CF6,#6366F1);color:#fff;border:none;padding:6px;border-radius:9px;font-size:11px">📄 Download as PDF</button><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;border:none;padding:6px;border-radius:9px;font-size:11px">Delete</button></div>`;}).join('');let mb=totalBytes/1024/1024;let txt=mb.toFixed(2)+' MB / 1000 MB ('+Object.keys(vault).length+' files)';['vaultUsageText','vaultUsageTextSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.innerText=txt;});['vaultUsageFill','vaultUsageFillSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.style.width=Math.min(100,mb/10)+'%';});};
+  window.loadVault=()=>{let grid=document.getElementById('vaultGrid');let totalBytes=0;if(!Object.keys(vault).length){grid.innerHTML='<p style="color:var(--muted);text-align:center;grid-column:1/-1">No documents - Ambient encrypted</p>';['vaultUsageText','vaultUsageTextSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.innerText='0 MB / 1000 MB';});['vaultUsageFill','vaultUsageFillSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.style.width='0%';});return;}grid.innerHTML=Object.entries(vault).reverse().map(([id,v])=>{totalBytes+=(v.base64?.length||0)*0.75;let isImg=v.fileType.startsWith('image/');let prev=isImg?`<img src="${v.base64}" style="width:100%;height:90px;object-fit:cover;border-radius:10px">`:`<div style="height:90px;display:grid;place-items:center;background:rgba(255,255,255,0.06);border-radius:10px;font-size:28px">📄</div>`;return `<div class="vault-item"><b style="font-size:11px;color:#fff">${v.type}</b>${prev}<div style="font-size:10px;margin:6px 0;word-break:break-all">${v.name}</div><div style="display:grid;grid-template-columns:1fr 1fr;gap:4px;margin-top:8px"><button onclick="viewVaultFile('${id}')" style="background:var(--accent);color:#fff;border:none;padding:6px;border-radius:9px;font-size:11px">View</button><button onclick="downloadVaultFile('${id}')" style="background:rgba(255,255,255,0.07);border:1px solid var(--border);color:#fff;padding:6px;border-radius:9px;font-size:11px">Download</button></div><button onclick="downloadVaultAsPDF('${id}')" style="width:100%;margin-top:4px;background:linear-gradient(135deg,#8B5CF6,#6366F1);color:#fff;border:none;padding:6px;border-radius:9px;font-size:11px">📄 Download as PDF</button><button onclick="deleteVault('${id}')" style="width:100%;margin-top:4px;background:linear-gradient(135deg,#EF4444,#DC2626);color:#fff;border:none;padding:6px;border-radius:9px;font-size:11px">Delete</button></div>`;}).join('');let mb=totalBytes/1024/1024;let txt=mb.toFixed(2)+' MB / 1000 MB ('+Object.keys(vault).length+' files)';['vaultUsageText','vaultUsageTextSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.innerText=txt;});['vaultUsageFill','vaultUsageFillSide'].forEach(id=>{let el=document.getElementById(id);if(el) el.style.width=Math.min(100,mb/10)+'%';});};
 
   function getImages(p){ if(!p.img) return [COMPANY_LOGO]; return p.img.split(',').map(s=>s.trim()).filter(s=>s); }
   window.switchImage = (cardId, imgUrl, thumb) => { document.getElementById('main_'+cardId).src = imgUrl; document.querySelectorAll(`#card_${cardId}.card-imgs img`).forEach(i=>i.classList.remove('active')); thumb.classList.add('active'); }
@@ -524,9 +397,6 @@ document.addEventListener('DOMContentLoaded', () => {
     set(ref(db, 'feelthenoisesoundsolution/requests/' + invId), order);
     const doc = new jsPDF(); doc.text(`Invoice for ${name} - ${item} - R${total}`, 10, 10); doc.save(`Invoice-${invId.slice(-6)}.pdf`); document.getElementById('quickInvoiceModal').style.display='none';
   }
-  function basicVINDecode(vin){ if(vin.length!== 17) return null; let wmi = vin.substring(0,3); return { country: wmi[0] == '1'? 'USA' : wmi[0] == 'J'? 'Japan' : 'Other' } }
-  window.decodeVIN = () => { let vin = document.getElementById('vinInput').value.toUpperCase().trim(); let resultDiv = document.getElementById('vinResult'); if(vin.length!== 17){ resultDiv.innerHTML = '❌ 17 chars'; resultDiv.style.display='block'; return; } let data = basicVINDecode(vin); resultDiv.innerHTML = `<b>VIN:</b> ${vin}<br><b>Country:</b> ${data.country}`; resultDiv.style.display='block'; }
-  window.adminDecodeVIN = () => { let vin = document.getElementById('adminVinInput').value.toUpperCase().trim(); let resultDiv = document.getElementById('adminVinResult'); if(vin.length!== 17){ resultDiv.innerHTML = '❌ 17 chars'; resultDiv.style.display='block'; return; } let data = basicVINDecode(vin); resultDiv.innerHTML = `<b>VIN:</b> ${vin}<br><b>Country:</b> ${data.country}`; resultDiv.style.display='block'; }
   window.editProduct = (id) => { if(currentUser.role == 'reception' || currentUser.role == 'sales') return alert('No permission'); let p = products[id]; editingId = id; pName.value = p.name; pCat.value = p.category; pImg.value = p.img; pPortfolio1.value = p.portfolio1 || ''; pPortfolio2.value = p.portfolio2 || ''; pPrice.value = p.price; pOldPrice.value = p.oldPrice; pStock.value = p.stock; pDesc.value = p.desc; formTitle.innerText = "✏️ Editing: " + p.name; saveBtn.innerText = "Update"; cancelBtn.style.display = "block"; }
   window.cancelEdit = () => { editingId = null; [pName,pImg,pPortfolio1,pPortfolio2,pPrice,pOldPrice,pStock,pDesc].forEach(i=>i.value=''); formTitle.innerText = "➕ Add Service"; saveBtn.innerText = "Save"; cancelBtn.style.display = "none"; }
   window.saveProduct = () => { let productData = { name: pName.value.trim(), category: pCat.value, img: pImg.value.trim() || COMPANY_LOGO, portfolio1: pPortfolio1.value.trim(), portfolio2: pPortfolio2.value.trim(), price: Number(pPrice.value) || 0, oldPrice: Number(pOldPrice.value) || 0, stock: Number(pStock.value) || 0, desc: pDesc.value.trim() }; if(!productData.name){ return alert('Enter name') } if(editingId){ set(ref(db, 'feelthenoisesoundsolution/categories/' + editingId), productData).then(()=>{ cancelEdit(); }); } else { let id = Date.now().toString(); set(ref(db, 'feelthenoisesoundsolution/categories/' + id), productData); } }
@@ -540,10 +410,10 @@ document.addEventListener('DOMContentLoaded', () => {
   window.downloadReport = () => { const doc = new jsPDF(); doc.text(`${COMPANY_NAME} Report`, 10, 10); doc.save("Report.pdf"); }
   window.downloadCSV = () => { if(Object.keys(orders).length === 0) return alert('No requests'); let csv = 'Request ID,Date,Customer,Total,Status\n'; Object.entries(orders).forEach(([id,o])=>{ let items = o.items.map(i=>`${i.name} x${i.qty}`).join('; '); let date = new Date(o.date).toLocaleDateString(); csv += `"${id.slice(-6)}","${date}","${o.customerName||'Guest'}","${o.total}","${o.status}"\n`; }); const blob = new Blob([csv], { type: 'text/csv' }); const link = document.createElement("a"); link.href = URL.createObjectURL(blob); link.download = `Requests.csv`; link.click(); }
   function setClientLink(){ let link = window.location.origin + window.location.pathname + '?client=1'; if(document.getElementById('clientShareLink')) document.getElementById('clientShareLink').value = link; }
-  window.copyClientLink = () => { let link = document.getElementById('clientShareLink'); link.select(); document.execCommand('copy'); alert('Link copied! Future OS'); }
-  window.shareClientWhatsApp = () => { let link = document.getElementById('clientShareLink').value; let msg = `💼 ${COMPANY_NAME} - Future OS\n\nRequest services:\n${link}`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
+  window.copyClientLink = () => { let link = document.getElementById('clientShareLink'); link.select(); document.execCommand('copy'); alert('Link copied! Ambient OS alive'); }
+  window.shareClientWhatsApp = () => { let link = document.getElementById('clientShareLink').value; let msg = `💼 ${COMPANY_NAME} - Ambient OS\n\nRequest services:\n${link}`; window.open(`https://wa.me/?text=${encodeURIComponent(msg)}`); }
   window.previewClientLink = () => { let link = document.getElementById('clientShareLink').value || (window.location.origin + window.location.pathname + '?client=1'); let preview = document.getElementById('clientPreview'); let frame = document.getElementById('clientPreviewFrame'); frame.src = link; preview.style.display = 'block'; preview.scrollIntoView({behavior:'smooth'}); }
-  window.seedDatabase = () => { const defaultData = [{name:"WiFi Installation", category:"Tech", price:1200, stock:50, img:COMPANY_LOGO, desc:"Installation"},{name:"Diagnostic", category:"Tech", price:350, stock:100, img:COMPANY_LOGO, desc:"PC Diagnostic"}]; defaultData.forEach(p=>{ let id = Date.now().toString() + Math.random(); set(ref(db, 'feelthenoisesoundsolution/categories/' + id), p); }); alert('✅ Future OS Services loaded!') }
+  window.seedDatabase = () => { const defaultData = [{name:"WiFi Installation", category:"Tech", price:1200, stock:50, img:COMPANY_LOGO, desc:"Installation"},{name:"Diagnostic", category:"Tech", price:350, stock:100, img:COMPANY_LOGO, desc:"PC Diagnostic"}]; defaultData.forEach(p=>{ let id = Date.now().toString() + Math.random(); set(ref(db, 'feelthenoisesoundsolution/categories/' + id), p); }); alert('✅ Ambient OS Services loaded!') }
 });
 </script>
 </body>
